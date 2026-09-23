@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Repair_Service_Center.Models;
 
@@ -8,7 +9,14 @@ public class HomeController : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        var student = new StudentInfo()
+        {
+            FullName = "Didyk Maksym",
+            Group = "SEs-26-1",
+            ProjectTopic = "Repair Service Center"
+        };
+            
+        return View(student);
     }
 
     public IActionResult Privacy()
