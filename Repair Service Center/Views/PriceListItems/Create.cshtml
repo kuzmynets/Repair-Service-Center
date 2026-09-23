@@ -1,0 +1,50 @@
+@model Repair_Service_Center.Models.PriceListItem
+
+@{
+    ViewData["Title"] = "Create Price List Item";
+}
+
+<h1>Create</h1>
+
+<h4>Price List Item</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="DeviceTypeId" class="form-label"></label>
+                <select asp-for="DeviceTypeId" class="form-select" asp-items="ViewBag.DeviceTypeId"></select>
+                <span asp-validation-for="DeviceTypeId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RepairTypeId" class="form-label"></label>
+                <select asp-for="RepairTypeId" class="form-select" asp-items="ViewBag.RepairTypeId"></select>
+                <span asp-validation-for="RepairTypeId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ComplexityLevelId" class="form-label"></label>
+                <select asp-for="ComplexityLevelId" class="form-select" asp-items="ViewBag.ComplexityLevelId"></select>
+                <span asp-validation-for="ComplexityLevelId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DurationMinutes" class="form-label"></label>
+                <input asp-for="DurationMinutes" class="form-control" />
+                <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" class="btn btn-link">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

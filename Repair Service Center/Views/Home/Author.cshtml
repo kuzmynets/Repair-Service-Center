@@ -1,0 +1,14 @@
+@model StudentInfo
+@{
+    ViewData["Title"] = "Author";
+}
+
+<div class="text-center">
+    <h1 class="display-5 mb-4">Information about student</h1>
+
+    <table class="table table-bordered w-auto mx-auto text-start">
+        <tr><th>Fullname</th><td>@Model.FullName</td></tr>
+        <tr><th>Group</th><td>@Model.Group</td></tr>
+        <tr><th>Project Topic</th><td>@Model.ProjectTopic</td></tr>
+    </table>
+</div>

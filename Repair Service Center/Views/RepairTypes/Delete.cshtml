@@ -1,0 +1,38 @@
+@model Repair_Service_Center.Models.RepairType
+
+@{
+    ViewData["Title"] = "Delete Repair Type";
+}
+
+<h1>Delete</h1>
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">@ViewData["Error"]</div>
+}
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Repair Type</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-link">Back to List</a>
+    </form>
+</div>

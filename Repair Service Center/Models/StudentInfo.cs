@@ -1,4 +1,4 @@
-﻿namespace Repair_Service_Center.Models;
+namespace Repair_Service_Center.Models;
 
 public class StudentInfo
 {

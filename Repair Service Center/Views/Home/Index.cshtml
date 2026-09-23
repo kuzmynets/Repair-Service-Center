@@ -1,14 +1,37 @@
-﻿@model StudentInfo
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-5 mb-4">Information about student</h1>
+<div class="p-4 p-md-5 mb-4 bg-light rounded-3 text-center">
+    <h1 class="display-5 fw-bold">Repair Service Center</h1>
+    <p class="lead">Repair of smartphones, laptops and home appliances. Choose a service from the price list or describe your problem.</p>
+    <a asp-controller="PriceListItems" asp-action="Index" class="btn btn-primary btn-lg me-2">Price List</a>
+    <a asp-controller="Orders" asp-action="Create" class="btn btn-outline-primary btn-lg">New Order</a>
+</div>
 
-    <table class="table table-bordered w-auto mx-auto text-start">
-        <tr><th>Fullname</th><td>@Model.FullName</td></tr>
-        <tr><th>Group</th><td>@Model.Group</td></tr>
-        <tr><th>Project Topic</th><td>@Model.ProjectTopic</td></tr>
-    </table>
+<div class="row text-center g-3">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title">@ViewData["ServicesCount"]</h2>
+                <p class="card-text">services in the price list</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title">@ViewData["TechniciansCount"]</h2>
+                <p class="card-text">technicians</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title">@ViewData["ActiveOrdersCount"]</h2>
+                <p class="card-text">orders in work</p>
+            </div>
+        </div>
+    </div>
 </div>

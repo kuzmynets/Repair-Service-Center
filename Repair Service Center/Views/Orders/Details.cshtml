@@ -1,0 +1,60 @@
+@model Repair_Service_Center.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CustomerPhone)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CustomerPhone)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-9">
+            @Model?.Status.GetDisplayName()
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ProblemDescription)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ProblemDescription)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TechnicianId)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Technician!.FullName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">Edit</a>
+    <a asp-action="Index" class="btn btn-link">Back to List</a>
+</div>

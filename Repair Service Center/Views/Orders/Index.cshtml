@@ -1,0 +1,42 @@
+@model IEnumerable<Repair_Service_Center.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h1>Orders</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CustomerName)</th>
+            <th>@Html.DisplayNameFor(model => model.CustomerPhone)</th>
+            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th>@Html.DisplayNameFor(model => model.TotalCost)</th>
+            <th>@Html.DisplayNameFor(model => model.TechnicianId)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+            <td>@Html.DisplayFor(modelItem => item.CustomerPhone)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+            <td>@item.Status.GetDisplayName()</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalCost)</td>
+            <td>@Html.DisplayFor(modelItem => item.Technician!.FullName)</td>
+            <td class="text-end text-nowrap">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
