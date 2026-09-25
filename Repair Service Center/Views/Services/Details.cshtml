@@ -1,0 +1,56 @@
+@model ServiceDetailsViewModel
+@{
+    var s = Model.Service;
+    ViewData["Title"] = $"{s.RepairType?.Name} \u2013 {s.DeviceType?.Name}";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Services</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index" asp-route-deviceTypeId="@s.DeviceTypeId">@s.DeviceType?.Name</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@s.RepairType?.Name</li>
+    </ol>
+</nav>
+
+<div class="card p-4 mb-5">
+    <div class="row g-4 align-items-center">
+        <div class="col-md-2 text-center">
+            <img src="@Url.Content("~/images/devices/" + UiHelper.DeviceIcon(s.DeviceType?.Name))"
+                 alt="@s.DeviceType?.Name" class="img-fluid" style="max-width: 110px"/>
+        </div>
+        <div class="col-md-6">
+            <div class="text-muted">@s.DeviceType?.Name</div>
+            <h1 class="h2">@s.RepairType?.Name</h1>
+            <span class="badge badge-level mb-3">@s.ComplexityLevel?.Name</span>
+            <p class="mb-2">@s.RepairType?.Description</p>
+            <ul class="small text-muted mb-0">
+                <li>free check of the device before the repair</li>
+                <li>original or high-quality parts</li>
+                <li>warranty for the work</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="price-box">
+                <div class="small text-muted">Price</div>
+                <div class="price price-lg">@s.Price.ToString("0") UAH</div>
+                <div class="small text-muted mb-3">Time: about @UiHelper.FormatDuration(s.DurationMinutes)</div>
+                <a asp-controller="RepairRequest" asp-action="Create" asp-route-serviceId="@s.Id"
+                   class="btn btn-accent w-100">Order this service</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.RelatedServices.Any())
+{
+    <h2 class="section-title">Other services for @s.DeviceType?.Name</h2>
+    <div class="row g-4">
+        @foreach (var related in Model.RelatedServices)
+        {
+            <div class="col-md-6 col-lg-4">
+                <partial name="_ServiceCard" model="related"/>
+            </div>
+        }
+    </div>
+}

@@ -1,62 +1,129 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Repair Service Center</title>
     <script type="importmap"></script>
+    <link rel="icon" type="image/svg+xml" href="~/images/logo.svg"/>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Repair_Service_Center.styles.css" asp-append-version="true"/>
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Repair Service Center</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+@{
+    // Current controller is used to highlight the active menu item
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    string[] adminControllers = { "Orders", "PriceListItems", "DeviceTypes", "RepairTypes", "ComplexityLevels", "Technicians" };
+    var isAdmin = adminControllers.Contains(controller);
+    string Active(string c, string? a = null) =>
+        c == controller && (a == null || a == action) ? "active" : "";
+}
+<body class="d-flex flex-column min-vh-100">
+<header class="no-print">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-brand shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                <img src="~/images/logo.svg" alt="" width="34" height="34"/>
+                <span class="fw-semibold">Repair Service Center</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link @Active("Home", "Index")" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="PriceListItems" asp-action="Index">Price List</a>
+                        <a class="nav-link @Active("Services")" asp-controller="Services" asp-action="Index">Services &amp; prices</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                        <a class="nav-link @Active("Home", "About")" asp-controller="Home" asp-action="About">About us</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav align-items-lg-center gap-lg-2">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Directories</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">Device Types</a></li>
-                            <li><a class="dropdown-item" asp-controller="RepairTypes" asp-action="Index">Repair Types</a></li>
-                            <li><a class="dropdown-item" asp-controller="ComplexityLevels" asp-action="Index">Complexity Levels</a></li>
+                        <a class="nav-link dropdown-toggle @(isAdmin ? "active" : "")" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">Admin panel</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">Orders</a></li>
+                            <li><a class="dropdown-item" asp-controller="PriceListItems" asp-action="Index">Price list</a></li>
+                            <li><hr class="dropdown-divider"/></li>
+                            <li><h6 class="dropdown-header">Directories</h6></li>
+                            <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">Device types</a></li>
+                            <li><a class="dropdown-item" asp-controller="RepairTypes" asp-action="Index">Repair types</a></li>
+                            <li><a class="dropdown-item" asp-controller="ComplexityLevels" asp-action="Index">Complexity levels</a></li>
                             <li><a class="dropdown-item" asp-controller="Technicians" asp-action="Index">Technicians</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Author">Author</a>
+                        <a class="btn btn-accent" asp-controller="RepairRequest" asp-action="Create">Request a repair</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    @if (isAdmin)
+    {
+        <div class="admin-bar">
+            <div class="container small">Admin panel &middot; manage directories, price list and orders</div>
+        </div>
+    }
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2026 - Repair Service Center - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<main role="main" class="flex-grow-1">
+    @if (ViewData["FullWidth"] is true)
+    {
+        @RenderBody()
+    }
+    else
+    {
+        <div class="container py-4">
+            @RenderBody()
+        </div>
+    }
+</main>
+
+<footer class="site-footer no-print">
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-md-5">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <img src="~/images/logo.svg" alt="" width="28" height="28"/>
+                    <span class="fw-semibold text-white">Repair Service Center</span>
+                </div>
+                <p class="small mb-0">Repair of smartphones, laptops, tablets and home appliances. Online requests, clear prices, warranty for every repair.</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h6 class="text-white">Customers</h6>
+                <ul class="list-unstyled small mb-0">
+                    <li><a asp-controller="Services" asp-action="Index">Services &amp; prices</a></li>
+                    <li><a asp-controller="RepairRequest" asp-action="Create">Request a repair</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About us</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4">
+                <h6 class="text-white">Contacts</h6>
+                <ul class="list-unstyled small mb-0">
+                    <li>Mon&ndash;Sat, 9:00&ndash;19:00</li>
+                    <li>+380 00 000 00 00 (demo)</li>
+                    <li>Khmelnytskyi, Ukraine</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-secondary"/>
+        <div class="d-flex flex-wrap justify-content-between small">
+            <span>&copy; @DateTime.Now.Year Repair Service Center &middot; course project</span>
+            <span>
+                <a asp-controller="Home" asp-action="Author">Author</a> &middot;
+                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </span>
+        </div>
     </div>
 </footer>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

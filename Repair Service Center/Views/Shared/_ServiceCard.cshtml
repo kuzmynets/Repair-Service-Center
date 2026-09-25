@@ -1,0 +1,25 @@
+@model PriceListItem
+@* Reusable card of one service. Used on the home page, in the catalog and on the details page. *@
+
+<div class="card service-card h-100">
+    <div class="card-body d-flex flex-column">
+        <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="@Url.Content("~/images/devices/" + UiHelper.DeviceIcon(Model.DeviceType?.Name))"
+                 alt="@Model.DeviceType?.Name" class="service-icon"/>
+            <div>
+                <div class="text-muted small">@Model.DeviceType?.Name</div>
+                <h5 class="card-title mb-0">@Model.RepairType?.Name</h5>
+            </div>
+        </div>
+        <span class="badge badge-level align-self-start mb-2">@Model.ComplexityLevel?.Name</span>
+        <p class="card-text text-muted small flex-grow-1">@Model.RepairType?.Description</p>
+        <div class="d-flex justify-content-between align-items-end mt-2">
+            <div>
+                <div class="price">@Model.Price.ToString("0") UAH</div>
+                <div class="small text-muted">about @UiHelper.FormatDuration(Model.DurationMinutes)</div>
+            </div>
+            <a asp-controller="Services" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-outline-brand btn-sm">Details</a>
+        </div>
+    </div>
+</div>

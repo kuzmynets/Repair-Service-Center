@@ -1,0 +1,61 @@
+@model ServiceCatalogViewModel
+@{
+    ViewData["Title"] = "Services & prices";
+
+    // Items for the sort drop-down; the current value is selected
+    var sortOptions = new SelectList(new[]
+    {
+        new { Value = "price", Text = "Price: low to high" },
+        new { Value = "price_desc", Text = "Price: high to low" },
+        new { Value = "duration", Text = "Fastest first" }
+    }, "Value", "Text", Model.Sort);
+}
+
+<div class="mb-4">
+    <h1>Services &amp; prices</h1>
+    <p class="text-muted mb-0">Choose your device and the service. For a non-standard problem the price is set after diagnostics.</p>
+</div>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <!-- Filter by device type -->
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-action="Index" asp-route-sort="@Model.Sort"
+           class="btn btn-sm @(Model.SelectedDeviceTypeId == null ? "btn-brand" : "btn-outline-brand")">All devices</a>
+        @foreach (var device in Model.DeviceTypes)
+        {
+            <a asp-action="Index" asp-route-deviceTypeId="@device.Id" asp-route-sort="@Model.Sort"
+               class="btn btn-sm @(Model.SelectedDeviceTypeId == device.Id ? "btn-brand" : "btn-outline-brand")">@device.Name</a>
+        }
+    </div>
+
+    <!-- Sort order (GET form, so the URL can be copied) -->
+    <form method="get" asp-action="Index" class="d-flex align-items-center gap-2">
+        @if (Model.SelectedDeviceTypeId != null)
+        {
+            <input type="hidden" name="deviceTypeId" value="@Model.SelectedDeviceTypeId"/>
+        }
+        <label for="sort" class="small text-muted text-nowrap">Sort by</label>
+        <select id="sort" name="sort" class="form-select form-select-sm" asp-items="sortOptions"
+                onchange="this.form.submit()"></select>
+        <noscript><button type="submit" class="btn btn-sm btn-brand">Apply</button></noscript>
+    </form>
+</div>
+
+@if (!Model.Services.Any())
+{
+    <div class="alert alert-info">
+        There are no services for this device in the price list yet.
+        You can still <a asp-controller="RepairRequest" asp-action="Create">describe your problem</a>.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var service in Model.Services)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <partial name="_ServiceCard" model="service"/>
+            </div>
+        }
+    </div>
+}

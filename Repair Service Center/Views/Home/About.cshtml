@@ -1,0 +1,71 @@
+@model IEnumerable<Technician>
+@{
+    ViewData["Title"] = "About us";
+}
+
+<div class="row align-items-center g-4 g-lg-5 mb-5">
+    <div class="col-lg-6">
+        <h1 class="mb-3">About us</h1>
+        <p class="lead">Repair Service Center is a workshop for repair of phones, computers and home appliances.</p>
+        <p class="text-muted">
+            We make the repair process clear for the customer: the prices are published on the site,
+            the request can be sent online, and every repair gets a warranty.
+            For non-standard problems our technician makes diagnostics first and then tells you the price.
+        </p>
+    </div>
+    <div class="col-lg-6">
+        <img src="~/images/workshop.svg" alt="Workshop of the service center" class="img-fluid rounded-4"/>
+    </div>
+</div>
+
+<h2 class="section-title">Why customers choose us</h2>
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="feature-box">
+            <h5>Clear prices</h5>
+            <p class="text-muted small mb-0">The price and the time of every service are in the price list before you order.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-box">
+            <h5>Warranty</h5>
+            <p class="text-muted small mb-0">We give a warranty for the work and for the new parts.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-box">
+            <h5>Online requests</h5>
+            <p class="text-muted small mb-0">Send a request from the site and follow its status.</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Our technicians</h2>
+<div class="row g-4 mb-5">
+    @foreach (var technician in Model)
+    {
+        <div class="col-sm-6 col-lg-4">
+            <div class="card h-100 text-center p-3">
+                <div class="avatar mx-auto mb-3">@technician.FullName.Substring(0, 1)</div>
+                <h5 class="mb-1">@technician.FullName</h5>
+                <p class="text-muted small mb-0">@technician.Specialization</p>
+            </div>
+        </div>
+    }
+</div>
+
+<h2 class="section-title">Contacts</h2>
+<div class="row g-4">
+    <div class="col-md-6">
+        <table class="table">
+            <tbody>
+            <tr><th>Address</th><td>Khmelnytskyi, Ukraine (demo address)</td></tr>
+            <tr><th>Phone</th><td>+380 00 000 00 00 (demo)</td></tr>
+            <tr><th>Working hours</th><td>Mon&ndash;Fri 9:00&ndash;19:00, Sat 10:00&ndash;16:00</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6 d-flex align-items-center">
+        <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent btn-lg">Request a repair</a>
+    </div>
+</div>

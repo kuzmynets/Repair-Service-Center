@@ -1,0 +1,59 @@
+@model RepairRequestViewModel
+@{
+    ViewData["Title"] = "Request a repair";
+}
+
+<div class="row g-4 g-lg-5">
+    <div class="col-lg-7">
+        <h1>Request a repair</h1>
+        <p class="text-muted">Fill in the form and we will call you back to confirm the time.</p>
+
+        <form asp-action="Create" method="post" class="card p-4">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="CustomerName" class="form-label"></label>
+                    <input asp-for="CustomerName" class="form-control" placeholder="e.g. Anna Shevchenko"/>
+                    <span asp-validation-for="CustomerName" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CustomerPhone" class="form-label"></label>
+                    <input asp-for="CustomerPhone" class="form-control" placeholder="+380..."/>
+                    <span asp-validation-for="CustomerPhone" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="PriceListItemId" class="form-label"></label>
+                    <select asp-for="PriceListItemId" asp-items="Model.Services" class="form-select">
+                        <option value="">&mdash; I don't know / other problem &mdash;</option>
+                    </select>
+                    <span asp-validation-for="PriceListItemId" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ProblemDescription" class="form-label"></label>
+                    <textarea asp-for="ProblemDescription" class="form-control" rows="4"
+                              placeholder="What happened with the device? Required if you did not choose a service."></textarea>
+                    <span asp-validation-for="ProblemDescription" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-accent btn-lg">Send request</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="info-box">
+            <h5>What happens next?</h5>
+            <ol class="small mb-0">
+                <li class="mb-2">If you chose a service, the request is <b>accepted</b> at once with the price from the price list.</li>
+                <li class="mb-2">If you described a problem, the request gets the status <b>pending</b>. Our technician checks it and tells you the price.</li>
+                <li>We call you to agree on the time when you bring the device.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

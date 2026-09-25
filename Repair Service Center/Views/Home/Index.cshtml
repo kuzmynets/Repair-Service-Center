@@ -1,37 +1,115 @@
+@model HomeIndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+    ViewData["FullWidth"] = true;
 }
 
-<div class="p-4 p-md-5 mb-4 bg-light rounded-3 text-center">
-    <h1 class="display-5 fw-bold">Repair Service Center</h1>
-    <p class="lead">Repair of smartphones, laptops and home appliances. Choose a service from the price list or describe your problem.</p>
-    <a asp-controller="PriceListItems" asp-action="Index" class="btn btn-primary btn-lg me-2">Price List</a>
-    <a asp-controller="Orders" asp-action="Create" class="btn btn-outline-primary btn-lg">New Order</a>
-</div>
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center g-4 g-lg-5">
+            <div class="col-lg-6">
+                <span class="hero-label">Service center &middot; Khmelnytskyi</span>
+                <h1 class="display-5 fw-bold mt-3">We repair your devices quickly and with a warranty</h1>
+                <p class="lead text-muted my-4">
+                    Smartphones, laptops, tablets and home appliances. Choose a service from the price list
+                    or simply describe the problem &mdash; we will call you back.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent btn-lg">Request a repair</a>
+                    <a asp-controller="Services" asp-action="Index" class="btn btn-outline-brand btn-lg">See prices</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="~/images/hero.svg" alt="Repair of a laptop and a smartphone" class="img-fluid hero-img"/>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="row text-center g-3">
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h2 class="card-title">@ViewData["ServicesCount"]</h2>
-                <p class="card-text">services in the price list</p>
+<!-- Numbers from ViewData -->
+<section class="stats-bar">
+    <div class="container">
+        <div class="row text-center g-3">
+            <div class="col-4">
+                <div class="stat-number">@ViewData["ServicesCount"]</div>
+                <div class="stat-label">services in the price list</div>
+            </div>
+            <div class="col-4">
+                <div class="stat-number">@ViewData["TechniciansCount"]</div>
+                <div class="stat-label">experienced technicians</div>
+            </div>
+            <div class="col-4">
+                <div class="stat-number">@ViewData["ActiveOrdersCount"]</div>
+                <div class="stat-label">orders in work now</div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h2 class="card-title">@ViewData["TechniciansCount"]</h2>
-                <p class="card-text">technicians</p>
+</section>
+
+<!-- Device types -->
+<section class="container py-5">
+    <h2 class="section-title">What do we repair?</h2>
+    <div class="row g-3">
+        @foreach (var device in Model.DeviceTypes)
+        {
+            <div class="col-6 col-md-4 col-lg">
+                <a asp-controller="Services" asp-action="Index" asp-route-deviceTypeId="@device.Id" class="device-tile">
+                    <img src="@Url.Content("~/images/devices/" + UiHelper.DeviceIcon(device.Name))" alt="" width="56" height="56"/>
+                    <span>@device.Name</span>
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- How it works -->
+<section class="bg-soft py-5">
+    <div class="container">
+        <h2 class="section-title">How it works</h2>
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <img src="~/images/step-choose.svg" alt="" width="72" height="72"/>
+                <h5 class="mt-3">1. Choose a service</h5>
+                <p class="text-muted small">Find your device in the price list and see the price and time at once.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/step-request.svg" alt="" width="72" height="72"/>
+                <h5 class="mt-3">2. Send a request</h5>
+                <p class="text-muted small">Fill in a short form. If the problem is not in the list, just describe it.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/step-done.svg" alt="" width="72" height="72"/>
+                <h5 class="mt-3">3. Get your device back</h5>
+                <p class="text-muted small">A technician repairs the device, and you get it back with a warranty.</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h2 class="card-title">@ViewData["ActiveOrdersCount"]</h2>
-                <p class="card-text">orders in work</p>
-            </div>
-        </div>
+</section>
+
+<!-- Featured services -->
+<section class="container py-5">
+    <div class="d-flex justify-content-between align-items-end mb-3">
+        <h2 class="section-title mb-0">Popular services</h2>
+        <a asp-controller="Services" asp-action="Index" class="small">All services &rarr;</a>
     </div>
-</div>
+    <div class="row g-4">
+        @foreach (var service in Model.FeaturedServices)
+        {
+            <div class="col-md-6 col-lg-4">
+                <partial name="_ServiceCard" model="service"/>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Call to action -->
+<section class="cta-band">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3 py-4">
+        <div>
+            <h4 class="mb-1">Not sure what is broken?</h4>
+            <p class="mb-0">Describe the problem &mdash; our technician will check it and tell you the price.</p>
+        </div>
+        <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-light btn-lg">Describe the problem</a>
+    </div>
+</section>
