@@ -54,6 +54,61 @@
         </dd>
     </dl>
 </div>
+
+<h4 class="mt-4">Items</h4>
+@if (Model!.Items.Any())
+{
+    <table class="table table-sm align-middle">
+        <thead>
+            <tr><th>Service</th><th>Time slot</th><th>Duration</th><th class="text-end">Price</th></tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @if (item.PriceListItem != null)
+                    {
+                        @($"{item.PriceListItem.DeviceType?.Name} \u2013 {item.PriceListItem.RepairType?.Name} ({item.PriceListItem.ComplexityLevel?.Name})")
+                    }
+                    else
+                    {
+                        <span class="text-muted">custom work</span>
+                    }
+                </td>
+                <td>
+                    @if (item.Slot != null)
+                    {
+                        <a asp-controller="Slots" asp-action="Details" asp-route-id="@item.SlotId">@item.Slot.TimeText</a>
+                    }
+                </td>
+                <td>@UiHelper.FormatDuration(item.DurationMinutes)</td>
+                <td class="text-end">@item.Price.ToString("0.00") UAH</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">No items. This is a custom request: the administrator sets the price after diagnostics.</p>
+}
+
+<h4 class="mt-4">Status history</h4>
+<ul class="status-history">
+    @foreach (var record in Model.StatusHistory.OrderBy(h => h.ChangedAt))
+    {
+        <li>
+            <span class="badge @UiHelper.StatusBadge(record.Status)">@record.Status.GetDisplayName()</span>
+            <span class="text-muted small ms-2">@record.ChangedAt.ToString("dd.MM.yyyy HH:mm")</span>
+            @if (!string.IsNullOrEmpty(record.Comment))
+            {
+                <span class="small ms-2">@record.Comment</span>
+            }
+        </li>
+    }
+</ul>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">Edit</a>
     <a asp-action="Index" class="btn btn-link">Back to List</a>

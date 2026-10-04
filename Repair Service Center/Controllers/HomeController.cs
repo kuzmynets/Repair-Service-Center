@@ -36,6 +36,11 @@ public class HomeController : Controller
                 .Include(p => p.ComplexityLevel)
                 .OrderBy(p => p.Price)
                 .Take(3)
+                .ToListAsync(),
+            LatestReviews = await _context.Reviews
+                .Where(r => r.IsApproved)
+                .OrderByDescending(r => r.CreatedAt)
+                .Take(3)
                 .ToListAsync()
         };
 

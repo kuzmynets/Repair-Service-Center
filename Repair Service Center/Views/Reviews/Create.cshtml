@@ -1,0 +1,55 @@
+@model Review
+@{
+    ViewData["Title"] = "Write a review";
+
+    var ratings = new SelectList(new[]
+    {
+        new { Value = 5, Text = "\u2605\u2605\u2605\u2605\u2605  Excellent" },
+        new { Value = 4, Text = "\u2605\u2605\u2605\u2605  Good" },
+        new { Value = 3, Text = "\u2605\u2605\u2605  Normal" },
+        new { Value = 2, Text = "\u2605\u2605  Bad" },
+        new { Value = 1, Text = "\u2605  Very bad" }
+    }, "Value", "Text", Model.Rating);
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <h1>Write a review</h1>
+        <p class="text-muted">Your review will be published after a check by the moderator.</p>
+
+        <form asp-action="Create" method="post" class="card p-4">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="AuthorName" class="form-label"></label>
+                    <input asp-for="AuthorName" class="form-control"/>
+                    <span asp-validation-for="AuthorName" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Rating" class="form-label"></label>
+                    <select asp-for="Rating" asp-items="ratings" class="form-select"></select>
+                    <span asp-validation-for="Rating" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Text" class="form-label"></label>
+                    <textarea asp-for="Text" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Text" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="OrderId" class="form-label"></label>
+                    <input asp-for="OrderId" class="form-control" placeholder="optional"/>
+                    <span asp-validation-for="OrderId" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-accent">Send review</button>
+                    <a asp-action="Index" class="btn btn-link">Back to reviews</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

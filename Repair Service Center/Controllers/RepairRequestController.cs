@@ -24,7 +24,7 @@ public class RepairRequestController : Controller
     public async Task<IActionResult> Create(int? serviceId)
     {
         var model = new RepairRequestViewModel { PriceListItemId = serviceId };
-        await FillServicesAsync(model);
+        await FillListsAsync(model);
         return View(model);
     }
 
@@ -34,30 +34,45 @@ public class RepairRequestController : Controller
     public async Task<IActionResult> Create(RepairRequestViewModel model)
     {
         PriceListItem? service = null;
+        Slot? slot = null;
 
         if (model.PriceListItemId.HasValue)
         {
+            // Standard request: a service from the price list + a free time slot
             service = await _context.PriceListItems
-                .Include(p => p.DeviceType)
-                .Include(p => p.RepairType)
-                .Include(p => p.ComplexityLevel)
                 .FirstOrDefaultAsync(p => p.Id == model.PriceListItemId.Value);
 
             if (service == null)
             {
                 ModelState.AddModelError(nameof(model.PriceListItemId), "The selected service does not exist.");
             }
+
+            if (!model.SlotId.HasValue)
+            {
+                ModelState.AddModelError(nameof(model.SlotId), "Please choose a convenient time.");
+            }
+            else
+            {
+                slot = await _context.Slots.FirstOrDefaultAsync(s => s.Id == model.SlotId.Value);
+
+                // The slot must exist, be free and be in the future
+                if (slot == null || slot.IsBooked || slot.StartTime <= DateTime.Now)
+                {
+                    ModelState.AddModelError(nameof(model.SlotId),
+                        "This time is already taken. Please choose another time.");
+                }
+            }
         }
         else if (string.IsNullOrWhiteSpace(model.ProblemDescription))
         {
-            // Without a service the customer must describe the problem
+            // Custom request: the customer must describe the problem
             ModelState.AddModelError(nameof(model.ProblemDescription),
                 "Choose a service or describe the problem.");
         }
 
         if (!ModelState.IsValid)
         {
-            await FillServicesAsync(model);
+            await FillListsAsync(model);
             return View(model);
         }
 
@@ -69,11 +84,48 @@ public class RepairRequestController : Controller
             // Standard request -> price is known; custom request -> waits for the administrator
             Status = service != null ? OrderStatus.Accepted : OrderStatus.Pending,
             TotalCost = service?.Price,
-            ProblemDescription = BuildDescription(service, model.ProblemDescription)
+            TechnicianId = slot?.TechnicianId,
+            ProblemDescription = string.IsNullOrWhiteSpace(model.ProblemDescription)
+                ? null
+                : model.ProblemDescription.Trim()
         };
 
+        if (service != null && slot != null)
+        {
+            // The price and the duration are copied from the price list
+            order.Items.Add(new OrderItem
+            {
+                PriceListItemId = service.Id,
+                SlotId = slot.Id,
+                Price = service.Price,
+                DurationMinutes = service.DurationMinutes
+            });
+            slot.IsBooked = true;
+        }
+
+        order.StatusHistory.Add(new OrderStatusHistory
+        {
+            Status = order.Status,
+            ChangedAt = DateTime.Now,
+            Comment = "Request created by the customer"
+        });
+
         _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            // Two customers booked the same slot at the same moment:
+            // the unique index on OrderItems.SlotId does not allow it
+            _context.ChangeTracker.Clear();
+            ModelState.AddModelError(nameof(model.SlotId),
+                "This time has just been booked by another customer. Please choose another time.");
+            await FillListsAsync(model);
+            return View(model);
+        }
 
         return RedirectToAction(nameof(Confirmation), new { id = order.Id });
     }
@@ -89,6 +141,10 @@ public class RepairRequestController : Controller
 
         var order = await _context.Orders
             .Include(o => o.Technician)
+            .Include(o => o.Items).ThenInclude(i => i.Slot)
+            .Include(o => o.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.DeviceType)
+            .Include(o => o.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.RepairType)
+            .Include(o => o.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.ComplexityLevel)
             .FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null)
@@ -100,9 +156,9 @@ public class RepairRequestController : Controller
     }
 
     /// <summary>
-    /// Fills the drop-down list with services from the price list.
+    /// Fills the drop-down lists: services from the price list and free time slots.
     /// </summary>
-    private async Task FillServicesAsync(RepairRequestViewModel model)
+    private async Task FillListsAsync(RepairRequestViewModel model)
     {
         var services = await _context.PriceListItems
             .Include(p => p.DeviceType)
@@ -118,16 +174,21 @@ public class RepairRequestController : Controller
             Text = $"{p.DeviceType!.Name} \u2013 {p.RepairType!.Name} ({p.ComplexityLevel!.Name}) \u2013 {p.Price:0} UAH",
             Selected = p.Id == model.PriceListItemId
         }).ToList();
-    }
 
-    private static string? BuildDescription(PriceListItem? service, string? problem)
-    {
-        if (service == null)
+        var now = DateTime.Now;
+        var slots = await _context.Slots
+            .Include(s => s.Technician)
+            .Where(s => !s.IsBooked && s.StartTime > now && s.StartTime < now.AddDays(14))
+            .OrderBy(s => s.StartTime)
+            .ThenBy(s => s.Technician!.FullName)
+            .Take(60)
+            .ToListAsync();
+
+        model.Slots = slots.Select(s => new SelectListItem
         {
-            return problem?.Trim();
-        }
-
-        var text = $"Service: {service.DeviceType!.Name} \u2013 {service.RepairType!.Name} ({service.ComplexityLevel!.Name})";
-        return string.IsNullOrWhiteSpace(problem) ? text : $"{text}. {problem.Trim()}";
+            Value = s.Id.ToString(),
+            Text = $"{s.TimeText} \u00b7 {s.Technician!.FullName}",
+            Selected = s.Id == model.SlotId
+        }).ToList();
     }
 }

@@ -169,7 +169,7 @@ public class PriceListItemsController : Controller
         }
         catch (DbUpdateException)
         {
-            ViewData["Error"] = "This record cannot be deleted because other data depends on it.";
+            ViewData["Error"] = "This service is used in orders and cannot be deleted.";
             return View(priceListItem);
         }
 

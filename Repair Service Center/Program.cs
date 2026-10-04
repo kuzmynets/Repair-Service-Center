@@ -15,6 +15,12 @@ builder.Services.AddDbContext<RepairServiceContext>(options =>
 
 var app = builder.Build();
 
+// Data that depends on the current date (time slots for the next week)
+using (var scope = app.Services.CreateScope())
+{
+    SeedData.Initialize(scope.ServiceProvider);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

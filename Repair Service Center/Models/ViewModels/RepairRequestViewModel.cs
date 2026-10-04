@@ -24,6 +24,10 @@ public class RepairRequestViewModel
     [Display(Name = "Service")]
     public int? PriceListItemId { get; set; }
 
+    // Time slot is chosen only for a service from the price list
+    [Display(Name = "Convenient time")]
+    public int? SlotId { get; set; }
+
     [StringLength(800)]
     [DataType(DataType.MultilineText)]
     [Display(Name = "Describe the problem")]
@@ -32,4 +36,7 @@ public class RepairRequestViewModel
     // Items for the drop-down list. They are not sent by the form, so no validation.
     [ValidateNever]
     public IEnumerable<SelectListItem> Services { get; set; } = new List<SelectListItem>();
+
+    [ValidateNever]
+    public IEnumerable<SelectListItem> Slots { get; set; } = new List<SelectListItem>();
 }

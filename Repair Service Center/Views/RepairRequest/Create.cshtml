@@ -29,6 +29,14 @@
                     </select>
                     <span asp-validation-for="PriceListItemId" class="text-danger small"></span>
                 </div>
+                <div class="col-12" id="slotBlock">
+                    <label asp-for="SlotId" class="form-label"></label>
+                    <select asp-for="SlotId" asp-items="Model.Slots" class="form-select">
+                        <option value="">&mdash; choose a free time &mdash;</option>
+                    </select>
+                    <div class="form-text">The technician is chosen automatically by the time slot.</div>
+                    <span asp-validation-for="SlotId" class="text-danger small"></span>
+                </div>
                 <div class="col-12">
                     <label asp-for="ProblemDescription" class="form-label"></label>
                     <textarea asp-for="ProblemDescription" class="form-control" rows="4"
@@ -48,7 +56,7 @@
             <ol class="small mb-0">
                 <li class="mb-2">If you chose a service, the request is <b>accepted</b> at once with the price from the price list.</li>
                 <li class="mb-2">If you described a problem, the request gets the status <b>pending</b>. Our technician checks it and tells you the price.</li>
-                <li>We call you to agree on the time when you bring the device.</li>
+                <li>For a service from the price list you choose a free time at once. For a custom problem we call you to agree on the time.</li>
             </ol>
         </div>
     </div>
@@ -56,4 +64,19 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        // The time is needed only for a service from the price list
+        (function () {
+            const service = document.getElementById('PriceListItemId');
+            const slotBlock = document.getElementById('slotBlock');
+            const slot = document.getElementById('SlotId');
+            function update() {
+                const hasService = service.value !== '';
+                slotBlock.classList.toggle('d-none', !hasService);
+                slot.disabled = !hasService;
+            }
+            service.addEventListener('change', update);
+            update();
+        })();
+    </script>
 }

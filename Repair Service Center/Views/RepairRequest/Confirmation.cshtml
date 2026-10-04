@@ -22,8 +22,31 @@
             <dt class="col-sm-4">Customer</dt>
             <dd class="col-sm-8">@Model.CustomerName, @Model.CustomerPhone</dd>
 
-            <dt class="col-sm-4">Service / problem</dt>
-            <dd class="col-sm-8">@Model.ProblemDescription</dd>
+            @foreach (var item in Model.Items)
+            {
+                <dt class="col-sm-4">Service</dt>
+                <dd class="col-sm-8">
+                    @item.PriceListItem?.DeviceType?.Name &ndash; @item.PriceListItem?.RepairType?.Name
+                    (@item.PriceListItem?.ComplexityLevel?.Name)
+                </dd>
+                if (item.Slot != null)
+                {
+                    <dt class="col-sm-4">Time</dt>
+                    <dd class="col-sm-8"><b>@item.Slot.TimeText</b></dd>
+                }
+            }
+
+            @if (Model.Technician != null)
+            {
+                <dt class="col-sm-4">Technician</dt>
+                <dd class="col-sm-8">@Model.Technician.FullName</dd>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.ProblemDescription))
+            {
+                <dt class="col-sm-4">Problem</dt>
+                <dd class="col-sm-8">@Model.ProblemDescription</dd>
+            }
 
             <dt class="col-sm-4">Price</dt>
             <dd class="col-sm-8">

@@ -42,4 +42,10 @@ public class Order
     [Display(Name = "Technician")]
     public int? TechnicianId { get; set; }
     public Technician? Technician { get; set; }
+
+    // Positions of the request (one-to-many)
+    public List<OrderItem> Items { get; set; } = new();
+
+    // History of status changes (one-to-many)
+    public List<OrderStatusHistory> StatusHistory { get; set; } = new();
 }

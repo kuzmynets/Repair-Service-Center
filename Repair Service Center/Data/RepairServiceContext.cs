@@ -19,6 +19,10 @@ public class RepairServiceContext : DbContext
     public DbSet<Technician> Technicians => Set<Technician>();
     public DbSet<PriceListItem> PriceListItems => Set<PriceListItem>();
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<Slot> Slots => Set<Slot>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<OrderStatusHistory> OrderStatusHistory => Set<OrderStatusHistory>();
+    public DbSet<Review> Reviews => Set<Review>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,13 +56,66 @@ public class RepairServiceContext : DbContext
             .HasConversion<string>()
             .HasMaxLength(20);
 
-        SeedData(modelBuilder);
+        // ----- Laboratory work 4: schedule, order items, status history, reviews -----
+
+        // Slots of a technician are deleted together with the technician
+        modelBuilder.Entity<Slot>()
+            .HasOne(s => s.Technician).WithMany()
+            .HasForeignKey(s => s.TechnicianId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // A technician cannot have two slots that start at the same time
+        modelBuilder.Entity<Slot>()
+            .HasIndex(s => new { s.TechnicianId, s.StartTime })
+            .IsUnique();
+
+        // Order items are deleted together with the order
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(i => i.Order).WithMany(o => o.Items)
+            .HasForeignKey(i => i.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // A service from the price list cannot be deleted while it is used in orders
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(i => i.PriceListItem).WithMany()
+            .HasForeignKey(i => i.PriceListItemId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // A booked slot cannot be deleted
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(i => i.Slot).WithMany()
+            .HasForeignKey(i => i.SlotId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // One slot can be booked only by one order item (protection from double booking)
+        modelBuilder.Entity<OrderItem>()
+            .HasIndex(i => i.SlotId)
+            .IsUnique()
+            .HasFilter("[SlotId] IS NOT NULL");
+
+        modelBuilder.Entity<OrderStatusHistory>()
+            .HasOne(h => h.Order).WithMany(o => o.StatusHistory)
+            .HasForeignKey(h => h.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<OrderStatusHistory>()
+            .Property(h => h.Status)
+            .HasConversion<string>()
+            .HasMaxLength(20);
+
+        // If an order is deleted, the review stays without the order number
+        modelBuilder.Entity<Review>()
+            .HasOne(r => r.Order).WithMany()
+            .HasForeignKey(r => r.OrderId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        AddInitialData(modelBuilder);
     }
 
     /// <summary>
     /// Initial data that is added to the database by the migration.
     /// </summary>
-    private static void SeedData(ModelBuilder modelBuilder)
+    private static void AddInitialData(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DeviceType>().HasData(
             new DeviceType { Id = 1, Name = "Smartphone" },
@@ -106,5 +163,19 @@ public class RepairServiceContext : DbContext
                 CreatedAt = new DateTime(2026, 9, 22, 14, 15, 0), Status = OrderStatus.Pending,
                 ProblemDescription = "Laptop turns off after 10 minutes of work"
             });
+
+        // Items and status history of the two demo orders
+        modelBuilder.Entity<OrderItem>().HasData(
+            new OrderItem { Id = 1, OrderId = 1, PriceListItemId = 2, Price = 1500m, DurationMinutes = 60 });
+
+        modelBuilder.Entity<OrderStatusHistory>().HasData(
+            new OrderStatusHistory { Id = 1, OrderId = 1, Status = OrderStatus.Accepted, ChangedAt = new DateTime(2026, 9, 20, 10, 30, 0), Comment = "Request created" },
+            new OrderStatusHistory { Id = 2, OrderId = 2, Status = OrderStatus.Pending, ChangedAt = new DateTime(2026, 9, 22, 14, 15, 0), Comment = "Request created" });
+
+        modelBuilder.Entity<Review>().HasData(
+            new Review { Id = 1, AuthorName = "Anna Shevchenko", Rating = 5, Text = "The screen of my phone was replaced in one hour. Thank you!", OrderId = 1, CreatedAt = new DateTime(2026, 9, 21), IsApproved = true },
+            new Review { Id = 2, AuthorName = "Ihor Petrenko", Rating = 4, Text = "Good diagnostics of my washing machine and a clear price.", CreatedAt = new DateTime(2026, 9, 15), IsApproved = true },
+            new Review { Id = 3, AuthorName = "Olena Kravets", Rating = 5, Text = "Fast laptop cleaning, now it is quiet again.", CreatedAt = new DateTime(2026, 9, 18), IsApproved = true },
+            new Review { Id = 4, AuthorName = "Taras", Rating = 3, Text = "Still waiting for an answer about my laptop.", CreatedAt = new DateTime(2026, 9, 25), IsApproved = false });
     }
 }

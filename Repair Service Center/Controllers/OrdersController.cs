@@ -33,8 +33,14 @@ public class OrdersController : Controller
             return NotFound();
         }
 
+        // Order with its items (service + time slot) and the history of statuses
         var order = await _context.Orders
             .Include(x => x.Technician)
+            .Include(x => x.Items).ThenInclude(i => i.Slot)
+            .Include(x => x.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.DeviceType)
+            .Include(x => x.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.RepairType)
+            .Include(x => x.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.ComplexityLevel)
+            .Include(x => x.StatusHistory)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (order == null)
         {
@@ -60,6 +66,12 @@ public class OrdersController : Controller
 
         if (ModelState.IsValid)
         {
+            order.StatusHistory.Add(new OrderStatusHistory
+            {
+                Status = order.Status,
+                ChangedAt = DateTime.Now,
+                Comment = "Request created by the administrator"
+            });
             _context.Add(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -88,30 +100,46 @@ public class OrdersController : Controller
     // POST: Orders/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,CustomerPhone,CreatedAt,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,CustomerPhone,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
     {
         if (id != order.Id)
         {
             return NotFound();
         }
 
+        // The order is loaded from the database, so the creation date and items are not lost
+        var existing = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+        if (existing == null)
+        {
+            return NotFound();
+        }
+
         if (ModelState.IsValid)
         {
-            try
+            // A new record in the history only when the status is changed
+            if (existing.Status != order.Status)
             {
-                _context.Update(order);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(order.Id))
+                _context.OrderStatusHistory.Add(new OrderStatusHistory
                 {
-                    return NotFound();
-                }
-                throw;
+                    OrderId = existing.Id,
+                    Status = order.Status,
+                    ChangedAt = DateTime.Now,
+                    Comment = $"Status changed from {existing.Status.GetDisplayName()}"
+                });
             }
+
+            existing.CustomerName = order.CustomerName;
+            existing.CustomerPhone = order.CustomerPhone;
+            existing.Status = order.Status;
+            existing.ProblemDescription = order.ProblemDescription;
+            existing.TotalCost = order.TotalCost;
+            existing.TechnicianId = order.TechnicianId;
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        order.CreatedAt = existing.CreatedAt;
         ViewData["TechnicianId"] = new SelectList(_context.Technicians.OrderBy(x => x.FullName), "Id", "FullName", order?.TechnicianId);
         return View(order);
     }
@@ -142,6 +170,7 @@ public class OrdersController : Controller
     {
         var order = await _context.Orders
             .Include(x => x.Technician)
+            .Include(x => x.Items).ThenInclude(i => i.Slot)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (order == null)
         {
@@ -150,6 +179,16 @@ public class OrdersController : Controller
 
         try
         {
+            // The booked time slots become free again
+            foreach (var item in order.Items)
+            {
+                if (item.Slot != null)
+                {
+                    item.Slot.IsBooked = false;
+                }
+            }
+
+            // Items and history are deleted by cascade
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }

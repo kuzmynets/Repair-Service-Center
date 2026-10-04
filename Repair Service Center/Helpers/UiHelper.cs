@@ -32,6 +32,15 @@ public static class UiHelper
     }
 
     /// <summary>
+    /// 4 -> "★★★★☆"
+    /// </summary>
+    public static string Stars(int rating)
+    {
+        rating = Math.Clamp(rating, 0, 5);
+        return new string('\u2605', rating) + new string('\u2606', 5 - rating);
+    }
+
+    /// <summary>
     /// Bootstrap color class for the order status badge.
     /// </summary>
     public static string StatusBadge(Models.OrderStatus status) => status switch

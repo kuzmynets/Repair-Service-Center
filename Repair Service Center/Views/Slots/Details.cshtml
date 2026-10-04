@@ -1,0 +1,32 @@
+@model Repair_Service_Center.Models.Slot
+
+@{
+    ViewData["Title"] = "Time Slot Details";
+    var orderId = ViewData["OrderId"] as int?;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Time slot</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TechnicianId)</dt>
+        <dd class="col-sm-9">@Model.Technician?.FullName</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.StartTime)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.StartTime)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.EndTime)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.EndTime)</dd>
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">@(Model.IsBooked ? "Booked" : "Free")</dd>
+        @if (orderId != null)
+        {
+            <dt class="col-sm-3">Order</dt>
+            <dd class="col-sm-9"><a asp-controller="Orders" asp-action="Details" asp-route-id="@orderId">Request #@orderId</a></dd>
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">Edit</a>
+    <a asp-action="Index" class="btn btn-link">Back to List</a>
+</div>

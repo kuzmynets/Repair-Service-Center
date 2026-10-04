@@ -7,4 +7,5 @@ public class HomeIndexViewModel
 {
     public List<DeviceType> DeviceTypes { get; set; } = new();
     public List<PriceListItem> FeaturedServices { get; set; } = new();
+    public List<Review> LatestReviews { get; set; } = new();
 }

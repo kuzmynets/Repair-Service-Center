@@ -145,7 +145,7 @@ public class TechniciansController : Controller
         }
         catch (DbUpdateException)
         {
-            ViewData["Error"] = "This record cannot be deleted because other data depends on it.";
+            ViewData["Error"] = "This technician has booked time slots and cannot be deleted.";
             return View(technician);
         }
 

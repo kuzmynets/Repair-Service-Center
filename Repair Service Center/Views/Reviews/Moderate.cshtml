@@ -1,0 +1,60 @@
+@model IEnumerable<Review>
+@{
+    ViewData["Title"] = "Reviews moderation";
+}
+
+<h1>Reviews moderation</h1>
+<p class="text-muted">New reviews are not visible on the site until they are approved.</p>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Author</th>
+            <th>Rating</th>
+            <th>Review</th>
+            <th>Request</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var review in Model)
+{
+        <tr class="@(review.IsApproved ? "" : "table-warning")">
+            <td class="text-nowrap">@review.CreatedAt.ToString("dd.MM.yyyy")</td>
+            <td>@review.AuthorName</td>
+            <td class="stars text-nowrap">@UiHelper.Stars(review.Rating)</td>
+            <td>@review.Text</td>
+            <td>
+                @if (review.OrderId != null)
+                {
+                    <a asp-controller="Orders" asp-action="Details" asp-route-id="@review.OrderId">#@review.OrderId</a>
+                }
+            </td>
+            <td>
+                @if (review.IsApproved)
+                {
+                    <span class="badge bg-success">Published</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning text-dark">New</span>
+                }
+            </td>
+            <td class="text-end text-nowrap">
+                <form asp-action="SetApproved" asp-route-id="@review.Id" method="post" class="d-inline">
+                    <input type="hidden" name="approved" value="@(review.IsApproved ? "false" : "true")"/>
+                    <button type="submit" class="btn btn-sm @(review.IsApproved ? "btn-outline-secondary" : "btn-success")">
+                        @(review.IsApproved ? "Hide" : "Approve")
+                    </button>
+                </form>
+                <form asp-action="Delete" asp-route-id="@review.Id" method="post" class="d-inline"
+                      onsubmit="return confirm('Delete this review?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

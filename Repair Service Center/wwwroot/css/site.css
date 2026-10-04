@@ -223,6 +223,27 @@ h1, h2, h3, h4, h5 {
   max-width: 720px;
 }
 
+/* ---------- reviews ---------- */
+.stars {
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- order status history ---------- */
+.status-history {
+  list-style: none;
+  padding-left: 0;
+  border-left: 3px solid var(--brand-soft);
+}
+.status-history li {
+  padding: 0.35rem 0 0.35rem 1rem;
+}
+
 /* ---------- footer ---------- */
 .site-footer {
   background: var(--brand-dark);

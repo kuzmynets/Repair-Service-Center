@@ -14,8 +14,9 @@
     // Current controller is used to highlight the active menu item
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
-    string[] adminControllers = { "Orders", "PriceListItems", "DeviceTypes", "RepairTypes", "ComplexityLevels", "Technicians" };
-    var isAdmin = adminControllers.Contains(controller);
+    string[] adminControllers = { "Orders", "PriceListItems", "DeviceTypes", "RepairTypes", "ComplexityLevels", "Technicians", "Slots" };
+    var isModeration = controller == "Reviews" && action == "Moderate";
+    var isAdmin = adminControllers.Contains(controller) || isModeration;
     string Active(string c, string? a = null) =>
         c == controller && (a == null || a == action) ? "active" : "";
 }
@@ -40,6 +41,9 @@
                         <a class="nav-link @Active("Services")" asp-controller="Services" asp-action="Index">Services &amp; prices</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link @(controller == "Reviews" && !isModeration ? "active" : "")" asp-controller="Reviews" asp-action="Index">Reviews</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link @Active("Home", "About")" asp-controller="Home" asp-action="About">About us</a>
                     </li>
                 </ul>
@@ -50,6 +54,8 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">Orders</a></li>
                             <li><a class="dropdown-item" asp-controller="PriceListItems" asp-action="Index">Price list</a></li>
+                            <li><a class="dropdown-item" asp-controller="Slots" asp-action="Index">Time slots</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reviews" asp-action="Moderate">Reviews moderation</a></li>
                             <li><hr class="dropdown-divider"/></li>
                             <li><h6 class="dropdown-header">Directories</h6></li>
                             <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">Device types</a></li>
@@ -101,6 +107,7 @@
                 <ul class="list-unstyled small mb-0">
                     <li><a asp-controller="Services" asp-action="Index">Services &amp; prices</a></li>
                     <li><a asp-controller="RepairRequest" asp-action="Create">Request a repair</a></li>
+                    <li><a asp-controller="Reviews" asp-action="Index">Reviews</a></li>
                     <li><a asp-controller="Home" asp-action="About">About us</a></li>
                 </ul>
             </div>
