@@ -15,13 +15,24 @@ public class TechniciansController : Controller
         _context = context;
     }
 
-    // GET: Technicians
-    public async Task<IActionResult> Index()
+    // GET: Technicians?searchString=iryna
+    public async Task<IActionResult> Index(string? searchString)
     {
-        var items = await _context.Technicians
-            .OrderBy(x => x.FullName)
-            .ToListAsync();
-        return View(items);
+        var technicians = from t in _context.Technicians
+                          select t;
+
+        // Search by name, specialization or phone
+        if (!string.IsNullOrWhiteSpace(searchString))
+        {
+            var text = searchString.Trim();
+            technicians = technicians.Where(t =>
+                t.FullName.Contains(text) ||
+                t.Specialization.Contains(text) ||
+                (t.Phone != null && t.Phone.Contains(text)));
+        }
+
+        ViewData["SearchString"] = searchString;
+        return View(await technicians.OrderBy(t => t.FullName).ToListAsync());
     }
 
     // GET: Technicians/Details/5
@@ -51,7 +62,7 @@ public class TechniciansController : Controller
     // POST: Technicians/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,FullName,Specialization,Phone")] Technician technician)
+    public async Task<IActionResult> Create([Bind("Id,FullName,Specialization,Phone,ExperienceYears")] Technician technician)
     {
         if (ModelState.IsValid)
         {
@@ -81,7 +92,7 @@ public class TechniciansController : Controller
     // POST: Technicians/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Specialization,Phone")] Technician technician)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Specialization,Phone,ExperienceYears")] Technician technician)
     {
         if (id != technician.Id)
         {

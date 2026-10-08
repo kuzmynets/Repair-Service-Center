@@ -7,7 +7,8 @@
     <div class="text-center mb-4">
         <img src="~/images/success.svg" alt="" width="96" height="96" class="no-print"/>
         <h1 class="h2 mt-3">Thank you! Your request is sent.</h1>
-        <p class="text-muted">Keep the request number. We will call you soon.</p>
+        <p class="text-muted">Keep the request number. You can check the status on the page
+            <a asp-action="Track" asp-route-orderId="@Model.Id">Track request</a>.</p>
     </div>
 
     <div class="card p-4">
@@ -18,6 +19,12 @@
         <dl class="row mb-0">
             <dt class="col-sm-4">Date</dt>
             <dd class="col-sm-8">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+
+            @if (!string.IsNullOrEmpty(Model.DeviceBrand) || !string.IsNullOrEmpty(Model.DeviceModel))
+            {
+                <dt class="col-sm-4">Device</dt>
+                <dd class="col-sm-8">@Model.DeviceBrand @Model.DeviceModel</dd>
+            }
 
             <dt class="col-sm-4">Customer</dt>
             <dd class="col-sm-8">@Model.CustomerName, @Model.CustomerPhone</dd>

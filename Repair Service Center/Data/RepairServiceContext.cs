@@ -137,9 +137,9 @@ public class RepairServiceContext : DbContext
             new ComplexityLevel { Id = 3, Name = "Premium" });
 
         modelBuilder.Entity<Technician>().HasData(
-            new Technician { Id = 1, FullName = "Oleksandr Kovalenko", Specialization = "Smartphones and tablets", Phone = "+380671234567" },
-            new Technician { Id = 2, FullName = "Iryna Melnyk", Specialization = "Laptops and computers", Phone = "+380502345678" },
-            new Technician { Id = 3, FullName = "Petro Bondarenko", Specialization = "Home appliances", Phone = "+380933456789" });
+            new Technician { Id = 1, FullName = "Oleksandr Kovalenko", Specialization = "Smartphones and tablets", Phone = "+380671234567", ExperienceYears = 7 },
+            new Technician { Id = 2, FullName = "Iryna Melnyk", Specialization = "Laptops and computers", Phone = "+380502345678", ExperienceYears = 5 },
+            new Technician { Id = 3, FullName = "Petro Bondarenko", Specialization = "Home appliances", Phone = "+380933456789", ExperienceYears = 10 });
 
         modelBuilder.Entity<PriceListItem>().HasData(
             new PriceListItem { Id = 1, DeviceTypeId = 1, RepairTypeId = 1, ComplexityLevelId = 1, Price = 200m, DurationMinutes = 30 },
@@ -154,12 +154,14 @@ public class RepairServiceContext : DbContext
             new Order
             {
                 Id = 1, CustomerName = "Anna Shevchenko", CustomerPhone = "+380501112233",
+                CustomerEmail = "anna.shevchenko@example.com", DeviceBrand = "Samsung", DeviceModel = "Galaxy A54",
                 CreatedAt = new DateTime(2026, 9, 20, 10, 30, 0), Status = OrderStatus.Accepted,
                 ProblemDescription = "Broken screen after a fall", TotalCost = 1500m, TechnicianId = 1
             },
             new Order
             {
                 Id = 2, CustomerName = "Dmytro Tkachenko", CustomerPhone = "+380672223344",
+                DeviceBrand = "Lenovo", DeviceModel = "IdeaPad 5",
                 CreatedAt = new DateTime(2026, 9, 22, 14, 15, 0), Status = OrderStatus.Pending,
                 ProblemDescription = "Laptop turns off after 10 minutes of work"
             });

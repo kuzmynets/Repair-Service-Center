@@ -6,15 +6,23 @@
 
 <h1>Technicians</h1>
 
-<p>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+
+    <!-- Simple search, as in the example of the methodical recommendations -->
+    <form asp-controller="Technicians" asp-action="Index" method="get" class="d-flex gap-2">
+        <input type="search" name="searchString" value="@ViewData["SearchString"]" class="form-control"
+               placeholder="Name, specialization or phone"/>
+        <button type="submit" class="btn btn-brand">Search</button>
+    </form>
+</div>
 <table class="table table-striped align-middle">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.FullName)</th>
             <th>@Html.DisplayNameFor(model => model.Specialization)</th>
             <th>@Html.DisplayNameFor(model => model.Phone)</th>
+            <th>@Html.DisplayNameFor(model => model.ExperienceYears)</th>
             <th></th>
         </tr>
     </thead>
@@ -25,6 +33,7 @@
             <td>@Html.DisplayFor(modelItem => item.FullName)</td>
             <td>@Html.DisplayFor(modelItem => item.Specialization)</td>
             <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+            <td>@Html.DisplayFor(modelItem => item.ExperienceYears)</td>
             <td class="text-end text-nowrap">
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
@@ -34,3 +43,8 @@
 }
     </tbody>
 </table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No technicians were found.</p>
+}

@@ -21,6 +21,20 @@ public class Order
     [Display(Name = "Phone")]
     public string CustomerPhone { get; set; } = string.Empty;
 
+    // ----- Laboratory work 5: new fields -----
+    [EmailAddress]
+    [StringLength(100)]
+    [Display(Name = "Email")]
+    public string? CustomerEmail { get; set; }
+
+    [StringLength(50)]
+    [Display(Name = "Brand")]
+    public string? DeviceBrand { get; set; }
+
+    [StringLength(50)]
+    [Display(Name = "Model")]
+    public string? DeviceModel { get; set; }
+
     [DataType(DataType.DateTime)]
     [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}")]
     [Display(Name = "Created")]

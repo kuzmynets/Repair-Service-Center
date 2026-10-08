@@ -22,6 +22,21 @@
                     <input asp-for="CustomerPhone" class="form-control" placeholder="+380..."/>
                     <span asp-validation-for="CustomerPhone" class="text-danger small"></span>
                 </div>
+                <div class="col-md-4">
+                    <label asp-for="CustomerEmail" class="form-label"></label>
+                    <input asp-for="CustomerEmail" class="form-control" placeholder="name@example.com"/>
+                    <span asp-validation-for="CustomerEmail" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="DeviceBrand" class="form-label"></label>
+                    <input asp-for="DeviceBrand" class="form-control" placeholder="e.g. Samsung"/>
+                    <span asp-validation-for="DeviceBrand" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="DeviceModel" class="form-label"></label>
+                    <input asp-for="DeviceModel" class="form-control" placeholder="e.g. Galaxy A54"/>
+                    <span asp-validation-for="DeviceModel" class="text-danger small"></span>
+                </div>
                 <div class="col-12">
                     <label asp-for="PriceListItemId" class="form-label"></label>
                     <select asp-for="PriceListItemId" asp-items="Model.Services" class="form-select">

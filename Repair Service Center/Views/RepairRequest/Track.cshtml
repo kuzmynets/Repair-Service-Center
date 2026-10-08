@@ -1,0 +1,95 @@
+@model TrackRequestViewModel
+@{
+    ViewData["Title"] = "Track request";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1>Track your request</h1>
+        <p class="text-muted">Enter the request number and the phone number from the request.</p>
+
+        <form asp-action="Track" method="get" class="card p-3 mb-4">
+            <div class="row g-2 align-items-end">
+                <div class="col-sm-4">
+                    <label asp-for="OrderId" class="form-label small"></label>
+                    <input asp-for="OrderId" type="number" min="1" class="form-control" required/>
+                </div>
+                <div class="col-sm-5">
+                    <label asp-for="Phone" class="form-label small"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="+380..." required/>
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-brand w-100">Find</button>
+                </div>
+            </div>
+        </form>
+
+        @if (Model.Searched && Model.Order == null)
+        {
+            <div class="alert alert-warning">
+                The request was not found. Please check the number and the phone.
+            </div>
+        }
+
+        @if (Model.Order != null)
+        {
+            var order = Model.Order;
+            <div class="card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h4 mb-0">Request #@order.Id</h2>
+                    <span class="badge fs-6 @UiHelper.StatusBadge(order.Status)">@order.Status.GetDisplayName()</span>
+                </div>
+                <dl class="row mb-3">
+                    <dt class="col-sm-4">Created</dt>
+                    <dd class="col-sm-8">@order.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+
+                    @if (!string.IsNullOrEmpty(order.DeviceBrand) || !string.IsNullOrEmpty(order.DeviceModel))
+                    {
+                        <dt class="col-sm-4">Device</dt>
+                        <dd class="col-sm-8">@order.DeviceBrand @order.DeviceModel</dd>
+                    }
+
+                    @foreach (var item in order.Items)
+                    {
+                        <dt class="col-sm-4">Service</dt>
+                        <dd class="col-sm-8">@item.PriceListItem?.DeviceType?.Name &ndash; @item.PriceListItem?.RepairType?.Name</dd>
+                        if (item.Slot != null)
+                        {
+                            <dt class="col-sm-4">Time</dt>
+                            <dd class="col-sm-8">@item.Slot.TimeText</dd>
+                        }
+                    }
+
+                    <dt class="col-sm-4">Price</dt>
+                    <dd class="col-sm-8">
+                        @if (order.TotalCost.HasValue)
+                        {
+                            <b>@order.TotalCost.Value.ToString("0") UAH</b>
+                        }
+                        else
+                        {
+                            <span class="text-muted">will be set after diagnostics</span>
+                        }
+                    </dd>
+
+                    @if (order.Technician != null)
+                    {
+                        <dt class="col-sm-4">Technician</dt>
+                        <dd class="col-sm-8">@order.Technician.FullName</dd>
+                    }
+                </dl>
+
+                <h3 class="h6">History</h3>
+                <ul class="status-history mb-0">
+                    @foreach (var record in order.StatusHistory.OrderBy(h => h.ChangedAt))
+                    {
+                        <li>
+                            <span class="badge @UiHelper.StatusBadge(record.Status)">@record.Status.GetDisplayName()</span>
+                            <span class="text-muted small ms-2">@record.ChangedAt.ToString("dd.MM.yyyy HH:mm")</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
+using Repair_Service_Center.Models.ViewModels;
 
 namespace Repair_Service_Center.Controllers;
 
@@ -15,14 +16,62 @@ public class OrdersController : Controller
         _context = context;
     }
 
-    // GET: Orders
-    public async Task<IActionResult> Index()
+    // GET: Orders?searchString=samsung&status=2&technicianId=1&dateFrom=2026-10-01&dateTo=2026-10-31
+    public async Task<IActionResult> Index(string? searchString, OrderStatus? status, int? technicianId,
+        DateTime? dateFrom, DateTime? dateTo)
     {
-        var items = await _context.Orders
-            .Include(x => x.Technician)
-            .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
-        return View(items);
+        IQueryable<Order> orders = _context.Orders.Include(x => x.Technician);
+
+        // One field searches by customer name, phone, email, device brand and model,
+        // or by the request number if the text is a number
+        if (!string.IsNullOrWhiteSpace(searchString))
+        {
+            var text = searchString.Trim();
+            var isNumber = int.TryParse(text.TrimStart('#'), out var orderId);
+
+            orders = orders.Where(o =>
+                (isNumber && o.Id == orderId) ||
+                o.CustomerName.Contains(text) ||
+                o.CustomerPhone.Contains(text) ||
+                (o.CustomerEmail != null && o.CustomerEmail.Contains(text)) ||
+                (o.DeviceBrand != null && o.DeviceBrand.Contains(text)) ||
+                (o.DeviceModel != null && o.DeviceModel.Contains(text)));
+        }
+
+        if (status.HasValue)
+        {
+            orders = orders.Where(o => o.Status == status.Value);
+        }
+
+        if (technicianId.HasValue)
+        {
+            orders = orders.Where(o => o.TechnicianId == technicianId.Value);
+        }
+
+        // Date range (the end date is included in the result)
+        if (dateFrom.HasValue)
+        {
+            orders = orders.Where(o => o.CreatedAt >= dateFrom.Value.Date);
+        }
+        if (dateTo.HasValue)
+        {
+            var end = dateTo.Value.Date.AddDays(1);
+            orders = orders.Where(o => o.CreatedAt < end);
+        }
+
+        var model = new OrderSearchViewModel
+        {
+            Orders = await orders.OrderByDescending(o => o.CreatedAt).ToListAsync(),
+            Technicians = new SelectList(
+                await _context.Technicians.OrderBy(t => t.FullName).ToListAsync(), "Id", "FullName", technicianId),
+            SearchString = searchString,
+            Status = status,
+            TechnicianId = technicianId,
+            DateFrom = dateFrom,
+            DateTo = dateTo
+        };
+
+        return View(model);
     }
 
     // GET: Orders/Details/5
@@ -60,7 +109,7 @@ public class OrdersController : Controller
     // POST: Orders/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,CustomerName,CustomerPhone,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
+    public async Task<IActionResult> Create([Bind("Id,CustomerName,CustomerPhone,CustomerEmail,DeviceBrand,DeviceModel,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
     {
         order.CreatedAt = DateTime.Now;
 
@@ -100,7 +149,7 @@ public class OrdersController : Controller
     // POST: Orders/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,CustomerPhone,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,CustomerPhone,CustomerEmail,DeviceBrand,DeviceModel,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
     {
         if (id != order.Id)
         {
@@ -130,6 +179,9 @@ public class OrdersController : Controller
 
             existing.CustomerName = order.CustomerName;
             existing.CustomerPhone = order.CustomerPhone;
+            existing.CustomerEmail = order.CustomerEmail;
+            existing.DeviceBrand = order.DeviceBrand;
+            existing.DeviceModel = order.DeviceModel;
             existing.Status = order.Status;
             existing.ProblemDescription = order.ProblemDescription;
             existing.TotalCost = order.TotalCost;

@@ -1,36 +1,76 @@
-@model IEnumerable<Repair_Service_Center.Models.Order>
+@model OrderSearchViewModel
 
 @{
     ViewData["Title"] = "Orders";
 }
 
-<h1>Orders</h1>
-
-<p>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h1 class="mb-0">Orders</h1>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+</div>
+
+<!-- Search of orders by several criteria -->
+<form asp-action="Index" method="get" class="card p-3 mb-3 search-panel">
+    <div class="row g-2 align-items-end">
+        <div class="col-lg-4">
+            <label asp-for="SearchString" class="form-label small"></label>
+            <input asp-for="SearchString" type="search" class="form-control"
+                   placeholder="No., name, phone, email, brand or model"/>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label asp-for="Status" class="form-label small"></label>
+            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<OrderStatus>()">
+                <option value="">All statuses</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label asp-for="TechnicianId" class="form-label small"></label>
+            <select asp-for="TechnicianId" class="form-select" asp-items="Model.Technicians">
+                <option value="">All technicians</option>
+            </select>
+        </div>
+        <div class="col-6 col-lg-2">
+            <label asp-for="DateFrom" class="form-label small"></label>
+            <input asp-for="DateFrom" class="form-control"/>
+        </div>
+        <div class="col-6 col-lg-2">
+            <label asp-for="DateTo" class="form-label small"></label>
+            <input asp-for="DateTo" class="form-control"/>
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-brand">Search</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+            <span class="ms-auto align-self-center small text-muted">Found: <b>@Model.Orders.Count</b></span>
+        </div>
+    </div>
+</form>
+
 <table class="table table-striped align-middle">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.CustomerName)</th>
-            <th>@Html.DisplayNameFor(model => model.CustomerPhone)</th>
-            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
-            <th>@Html.DisplayNameFor(model => model.Status)</th>
-            <th>@Html.DisplayNameFor(model => model.TotalCost)</th>
-            <th>@Html.DisplayNameFor(model => model.TechnicianId)</th>
+            <th>No.</th>
+            <th>@Html.DisplayNameFor(model => model.Orders[0].CreatedAt)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders[0].CustomerName)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders[0].CustomerPhone)</th>
+            <th>Device</th>
+            <th>@Html.DisplayNameFor(model => model.Orders[0].Status)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders[0].TotalCost)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders[0].TechnicianId)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
+@foreach (var item in Model.Orders)
 {
         <tr>
+            <td>@item.Id</td>
+            <td class="text-nowrap">@Html.DisplayFor(modelItem => item.CreatedAt)</td>
             <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
-            <td>@Html.DisplayFor(modelItem => item.CustomerPhone)</td>
-            <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
-            <td>@item.Status.GetDisplayName()</td>
-            <td>@Html.DisplayFor(modelItem => item.TotalCost)</td>
-            <td>@Html.DisplayFor(modelItem => item.Technician!.FullName)</td>
+            <td class="text-nowrap">@Html.DisplayFor(modelItem => item.CustomerPhone)</td>
+            <td>@item.DeviceBrand @item.DeviceModel</td>
+            <td><span class="badge @UiHelper.StatusBadge(item.Status)">@item.Status.GetDisplayName()</span></td>
+            <td class="text-nowrap">@Html.DisplayFor(modelItem => item.TotalCost)</td>
+            <td>@item.Technician?.FullName</td>
             <td class="text-end text-nowrap">
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
@@ -40,3 +80,8 @@
 }
     </tbody>
 </table>
+
+@if (!Model.Orders.Any())
+{
+    <p class="text-muted">No orders match the search criteria.</p>
+}

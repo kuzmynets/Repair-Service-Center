@@ -223,6 +223,12 @@ h1, h2, h3, h4, h5 {
   max-width: 720px;
 }
 
+/* ---------- search forms ---------- */
+.search-panel {
+  background: #fff;
+  border-left: 4px solid var(--accent);
+}
+
 /* ---------- reviews ---------- */
 .stars {
   color: var(--accent);

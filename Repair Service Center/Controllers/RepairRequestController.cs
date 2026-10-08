@@ -80,6 +80,9 @@ public class RepairRequestController : Controller
         {
             CustomerName = model.CustomerName.Trim(),
             CustomerPhone = model.CustomerPhone.Trim(),
+            CustomerEmail = string.IsNullOrWhiteSpace(model.CustomerEmail) ? null : model.CustomerEmail.Trim(),
+            DeviceBrand = string.IsNullOrWhiteSpace(model.DeviceBrand) ? null : model.DeviceBrand.Trim(),
+            DeviceModel = string.IsNullOrWhiteSpace(model.DeviceModel) ? null : model.DeviceModel.Trim(),
             CreatedAt = DateTime.Now,
             // Standard request -> price is known; custom request -> waits for the administrator
             Status = service != null ? OrderStatus.Accepted : OrderStatus.Pending,
@@ -153,6 +156,44 @@ public class RepairRequestController : Controller
         }
 
         return View(order);
+    }
+
+    // GET: /RepairRequest/Track?orderId=7&phone=0501112233
+    // The customer finds the request by its number and the phone number
+    [HttpGet]
+    public async Task<IActionResult> Track(int? orderId, string? phone)
+    {
+        var model = new TrackRequestViewModel { OrderId = orderId, Phone = phone };
+
+        if (orderId.HasValue && !string.IsNullOrWhiteSpace(phone))
+        {
+            model.Searched = true;
+
+            var order = await _context.Orders
+                .Include(o => o.Technician)
+                .Include(o => o.StatusHistory)
+                .Include(o => o.Items).ThenInclude(i => i.Slot)
+                .Include(o => o.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.DeviceType)
+                .Include(o => o.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.RepairType)
+                .FirstOrDefaultAsync(o => o.Id == orderId.Value);
+
+            // The phone is compared only by digits, so "+38 050 111-22-33" = "0501112233"
+            if (order != null && PhoneMatches(order.CustomerPhone, phone))
+            {
+                model.Order = order;
+            }
+        }
+
+        return View(model);
+    }
+
+    private static bool PhoneMatches(string stored, string entered)
+    {
+        var a = new string(stored.Where(char.IsDigit).ToArray());
+        var b = new string(entered.Where(char.IsDigit).ToArray());
+
+        // The last 9 digits are enough: 050 111 22 33 and +380 50 111 22 33 are the same number
+        return b.Length >= 9 && a.Length >= 9 && a[^9..] == b[^9..];
     }
 
     /// <summary>

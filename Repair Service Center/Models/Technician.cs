@@ -21,4 +21,9 @@ public class Technician
     [Phone]
     [StringLength(20)]
     public string? Phone { get; set; }
+
+    // Laboratory work 5: new field
+    [Range(0, 50)]
+    [Display(Name = "Experience (years)")]
+    public int ExperienceYears { get; set; }
 }

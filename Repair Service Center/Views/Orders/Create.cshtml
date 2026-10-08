@@ -23,6 +23,23 @@
                 <span asp-validation-for="CustomerPhone" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label asp-for="CustomerEmail" class="form-label"></label>
+                <input asp-for="CustomerEmail" class="form-control" />
+                <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label asp-for="DeviceBrand" class="form-label"></label>
+                    <input asp-for="DeviceBrand" class="form-control" />
+                    <span asp-validation-for="DeviceBrand" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label asp-for="DeviceModel" class="form-label"></label>
+                    <input asp-for="DeviceModel" class="form-control" />
+                    <span asp-validation-for="DeviceModel" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3">
                 <label asp-for="Status" class="form-label"></label>
                 <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>

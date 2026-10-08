@@ -21,6 +21,19 @@ public class RepairRequestViewModel
     [Display(Name = "Phone number")]
     public string CustomerPhone { get; set; } = string.Empty;
 
+    [EmailAddress(ErrorMessage = "Please enter a correct email.")]
+    [StringLength(100)]
+    [Display(Name = "Email (optional)")]
+    public string? CustomerEmail { get; set; }
+
+    [StringLength(50)]
+    [Display(Name = "Device brand")]
+    public string? DeviceBrand { get; set; }
+
+    [StringLength(50)]
+    [Display(Name = "Device model")]
+    public string? DeviceModel { get; set; }
+
     [Display(Name = "Service")]
     public int? PriceListItemId { get; set; }
 
