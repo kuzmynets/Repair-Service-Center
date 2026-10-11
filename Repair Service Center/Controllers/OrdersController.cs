@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ using Repair_Service_Center.Models.ViewModels;
 
 namespace Repair_Service_Center.Controllers;
 
+// Laboratory work 6: only the administrator can open these pages
+[Authorize(Roles = AppRoles.Admin)]
 public class OrdersController : Controller
 {
     private readonly RepairServiceContext _context;
@@ -85,6 +88,7 @@ public class OrdersController : Controller
         // Order with its items (service + time slot) and the history of statuses
         var order = await _context.Orders
             .Include(x => x.Technician)
+            .Include(x => x.User)
             .Include(x => x.Items).ThenInclude(i => i.Slot)
             .Include(x => x.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.DeviceType)
             .Include(x => x.Items).ThenInclude(i => i.PriceListItem!).ThenInclude(p => p.RepairType)

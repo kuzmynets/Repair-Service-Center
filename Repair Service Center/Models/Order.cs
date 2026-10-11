@@ -57,6 +57,11 @@ public class Order
     public int? TechnicianId { get; set; }
     public Technician? Technician { get; set; }
 
+    // Laboratory work 6: the account that created the request
+    // (null for old requests and for requests created by the administrator)
+    public string? UserId { get; set; }
+    public ApplicationUser? User { get; set; }
+
     // Positions of the request (one-to-many)
     public List<OrderItem> Items { get; set; } = new();
 

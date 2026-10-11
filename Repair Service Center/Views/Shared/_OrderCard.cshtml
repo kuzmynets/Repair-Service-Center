@@ -1,0 +1,64 @@
+@model Order
+@* Card of a request: used on the pages "Track request" and "My requests" *@
+<div class="card p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4 mb-0">Request #@Model.Id</h2>
+        <span class="badge fs-6 @UiHelper.StatusBadge(Model.Status)">@Model.Status.GetDisplayName()</span>
+    </div>
+    <dl class="row mb-3">
+        <dt class="col-sm-4">Created</dt>
+        <dd class="col-sm-8">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+
+        @if (!string.IsNullOrEmpty(Model.DeviceBrand) || !string.IsNullOrEmpty(Model.DeviceModel))
+        {
+            <dt class="col-sm-4">Device</dt>
+            <dd class="col-sm-8">@Model.DeviceBrand @Model.DeviceModel</dd>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.ProblemDescription))
+        {
+            <dt class="col-sm-4">Problem</dt>
+            <dd class="col-sm-8">@Model.ProblemDescription</dd>
+        }
+
+        @foreach (var item in Model.Items)
+        {
+            <dt class="col-sm-4">Service</dt>
+            <dd class="col-sm-8">@item.PriceListItem?.DeviceType?.Name &ndash; @item.PriceListItem?.RepairType?.Name</dd>
+            if (item.Slot != null)
+            {
+                <dt class="col-sm-4">Time</dt>
+                <dd class="col-sm-8">@item.Slot.TimeText</dd>
+            }
+        }
+
+        <dt class="col-sm-4">Price</dt>
+        <dd class="col-sm-8">
+            @if (Model.TotalCost.HasValue)
+            {
+                <b>@Model.TotalCost.Value.ToString("0") UAH</b>
+            }
+            else
+            {
+                <span class="text-muted">will be set after diagnostics</span>
+            }
+        </dd>
+
+        @if (Model.Technician != null)
+        {
+            <dt class="col-sm-4">Technician</dt>
+            <dd class="col-sm-8">@Model.Technician.FullName</dd>
+        }
+    </dl>
+
+    <h3 class="h6">History</h3>
+    <ul class="status-history mb-0">
+        @foreach (var record in Model.StatusHistory.OrderBy(h => h.ChangedAt))
+        {
+            <li>
+                <span class="badge @UiHelper.StatusBadge(record.Status)">@record.Status.GetDisplayName()</span>
+                <span class="text-muted small ms-2">@record.ChangedAt.ToString("dd.MM.yyyy HH:mm")</span>
+            </li>
+        }
+    </ul>
+</div>

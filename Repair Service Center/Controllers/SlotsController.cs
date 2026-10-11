@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ namespace Repair_Service_Center.Controllers;
 /// <summary>
 /// Administrator: schedule (time slots) of the technicians.
 /// </summary>
+// Laboratory work 6: only the administrator can open these pages
+[Authorize(Roles = AppRoles.Admin)]
 public class SlotsController : Controller
 {
     private readonly RepairServiceContext _context;

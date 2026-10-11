@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,15 +10,21 @@ using Repair_Service_Center.Models.ViewModels;
 namespace Repair_Service_Center.Controllers;
 
 /// <summary>
-/// Public form where a customer submits a repair request.
+/// Form where a customer submits a repair request.
+/// Laboratory work 6: a request can be submitted by an authorized customer or by the administrator
+/// (for a customer who called by phone). A guest is sent to the login page.
+/// Several roles are written with a comma: Customer OR Admin.
 /// </summary>
+[Authorize(Roles = AppRoles.Customer + "," + AppRoles.Admin)]
 public class RepairRequestController : Controller
 {
     private readonly RepairServiceContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public RepairRequestController(RepairServiceContext context)
+    public RepairRequestController(RepairServiceContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     // GET: /RepairRequest/Create?serviceId=5
@@ -24,6 +32,19 @@ public class RepairRequestController : Controller
     public async Task<IActionResult> Create(int? serviceId)
     {
         var model = new RepairRequestViewModel { PriceListItemId = serviceId };
+
+        // A customer does not need to type his contacts again: they are taken from the profile
+        if (User.IsInRole(AppRoles.Customer))
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                model.CustomerName = user.FullName;
+                model.CustomerPhone = user.PhoneNumber ?? string.Empty;
+                model.CustomerEmail = user.Email;
+            }
+        }
+
         await FillListsAsync(model);
         return View(model);
     }
@@ -90,7 +111,10 @@ public class RepairRequestController : Controller
             TechnicianId = slot?.TechnicianId,
             ProblemDescription = string.IsNullOrWhiteSpace(model.ProblemDescription)
                 ? null
-                : model.ProblemDescription.Trim()
+                : model.ProblemDescription.Trim(),
+            // The request of a customer is linked to his account ("My requests");
+            // a request created by the administrator has no account
+            UserId = User.IsInRole(AppRoles.Customer) ? _userManager.GetUserId(User) : null
         };
 
         if (service != null && slot != null)
@@ -155,12 +179,20 @@ public class RepairRequestController : Controller
             return NotFound();
         }
 
+        // A customer can see only his own request; the administrator can see any request
+        if (!User.IsInRole(AppRoles.Admin) && order.UserId != _userManager.GetUserId(User))
+        {
+            return Forbid();
+        }
+
         return View(order);
     }
 
     // GET: /RepairRequest/Track?orderId=7&phone=0501112233
-    // The customer finds the request by its number and the phone number
+    // The customer finds the request by its number and the phone number.
+    // [AllowAnonymous]: this page is open for everybody, also for guests
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Track(int? orderId, string? phone)
     {
         var model = new TrackRequestViewModel { OrderId = orderId, Phone = phone };

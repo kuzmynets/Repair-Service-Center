@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repair_Service_Center.Models;
 
@@ -5,8 +6,10 @@ namespace Repair_Service_Center.Data;
 
 /// <summary>
 /// Database context of the application. Each DbSet is a table in the database.
+/// Laboratory work 6: the context inherits IdentityDbContext, so it also has the tables
+/// of users and roles (AspNetUsers, AspNetRoles, AspNetUserRoles, ...).
 /// </summary>
-public class RepairServiceContext : DbContext
+public class RepairServiceContext : IdentityDbContext<ApplicationUser>
 {
     public RepairServiceContext(DbContextOptions<RepairServiceContext> options)
         : base(options)
@@ -107,6 +110,13 @@ public class RepairServiceContext : DbContext
         modelBuilder.Entity<Review>()
             .HasOne(r => r.Order).WithMany()
             .HasForeignKey(r => r.OrderId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // ----- Laboratory work 6: requests of a user -----
+        // If a user account is deleted, the requests stay, only the link is removed
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.User).WithMany(u => u.Orders)
+            .HasForeignKey(o => o.UserId)
             .OnDelete(DeleteBehavior.SetNull);
 
         AddInitialData(modelBuilder);

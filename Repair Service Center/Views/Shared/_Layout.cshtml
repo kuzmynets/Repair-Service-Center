@@ -14,11 +14,18 @@
     // Current controller is used to highlight the active menu item
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
-    string[] adminControllers = { "Orders", "PriceListItems", "DeviceTypes", "RepairTypes", "ComplexityLevels", "Technicians", "Slots" };
+    string[] adminControllers = { "Orders", "PriceListItems", "DeviceTypes", "RepairTypes", "ComplexityLevels", "Technicians", "Slots", "Users" };
     var isModeration = controller == "Reviews" && action == "Moderate";
     var isAdmin = adminControllers.Contains(controller) || isModeration;
     string Active(string c, string? a = null) =>
         c == controller && (a == null || a == action) ? "active" : "";
+
+    // Laboratory work 6: the menu depends on the role of the user
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var userIsAdmin = User.IsInRole(AppRoles.Admin);
+    var userIsModerator = User.IsInRole(AppRoles.Moderator);
+    var userIsCustomer = User.IsInRole(AppRoles.Customer);
+    var displayName = User.FindFirst(AppClaimsPrincipalFactory.FullNameClaim)?.Value ?? User.Identity?.Name;
 }
 <body class="d-flex flex-column min-vh-100">
 <header class="no-print">
@@ -51,33 +58,79 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav align-items-lg-center gap-lg-2">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle @(isAdmin ? "active" : "")" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">Admin panel</a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">Orders</a></li>
-                            <li><a class="dropdown-item" asp-controller="PriceListItems" asp-action="Index">Price list</a></li>
-                            <li><a class="dropdown-item" asp-controller="Slots" asp-action="Index">Time slots</a></li>
-                            <li><a class="dropdown-item" asp-controller="Reviews" asp-action="Moderate">Reviews moderation</a></li>
-                            <li><hr class="dropdown-divider"/></li>
-                            <li><h6 class="dropdown-header">Directories</h6></li>
-                            <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">Device types</a></li>
-                            <li><a class="dropdown-item" asp-controller="RepairTypes" asp-action="Index">Repair types</a></li>
-                            <li><a class="dropdown-item" asp-controller="ComplexityLevels" asp-action="Index">Complexity levels</a></li>
-                            <li><a class="dropdown-item" asp-controller="Technicians" asp-action="Index">Technicians</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-accent" asp-controller="RepairRequest" asp-action="Create">Request a repair</a>
-                    </li>
+                    @if (userIsAdmin)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(isAdmin ? "active" : "")" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Admin panel</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">Orders</a></li>
+                                <li><a class="dropdown-item" asp-controller="PriceListItems" asp-action="Index">Price list</a></li>
+                                <li><a class="dropdown-item" asp-controller="Slots" asp-action="Index">Time slots</a></li>
+                                <li><a class="dropdown-item" asp-controller="Reviews" asp-action="Moderate">Reviews moderation</a></li>
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Users and roles</a></li>
+                                <li><hr class="dropdown-divider"/></li>
+                                <li><h6 class="dropdown-header">Directories</h6></li>
+                                <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">Device types</a></li>
+                                <li><a class="dropdown-item" asp-controller="RepairTypes" asp-action="Index">Repair types</a></li>
+                                <li><a class="dropdown-item" asp-controller="ComplexityLevels" asp-action="Index">Complexity levels</a></li>
+                                <li><a class="dropdown-item" asp-controller="Technicians" asp-action="Index">Technicians</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (userIsModerator)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(isModeration ? "active" : "")" asp-controller="Reviews" asp-action="Moderate">Moderation</a>
+                        </li>
+                    }
+
+                    @if (signedIn)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(controller is "Account" or "MyOrders" ? "active" : "")" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">@displayName</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                @if (userIsCustomer)
+                                {
+                                    <li><a class="dropdown-item" asp-controller="MyOrders" asp-action="Index">My requests</a></li>
+                                }
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Profile</a></li>
+                                <li><hr class="dropdown-divider"/></li>
+                                <li>
+                                    <form asp-controller="Account" asp-action="Logout" method="post">
+                                        <button type="submit" class="dropdown-item">Log out</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @Active("Account", "Login")" asp-controller="Account" asp-action="Login">Log in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @Active("Account", "Register")" asp-controller="Account" asp-action="Register">Sign up</a>
+                        </li>
+                    }
+
+                    @if (!userIsModerator)
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-accent" asp-controller="RepairRequest" asp-action="Create">Request a repair</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
-    @if (isAdmin)
+    @if (isAdmin && (userIsAdmin || userIsModerator))
     {
         <div class="admin-bar">
-            <div class="container small">Admin panel &middot; manage directories, price list and orders</div>
+            <div class="container small">
+                @(userIsAdmin ? "Admin panel · manage directories, price list, orders and users" : "Moderation of customer reviews")
+            </div>
         </div>
     }
 </header>

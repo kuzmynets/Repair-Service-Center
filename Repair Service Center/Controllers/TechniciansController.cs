@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,8 @@ using Repair_Service_Center.Models;
 
 namespace Repair_Service_Center.Controllers;
 
+// Laboratory work 6: only the administrator can open these pages
+[Authorize(Roles = AppRoles.Admin)]
 public class TechniciansController : Controller
 {
     private readonly RepairServiceContext _context;

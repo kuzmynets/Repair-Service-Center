@@ -15,7 +15,15 @@
             </div>
         }
     </div>
-    <a asp-action="Create" class="btn btn-accent">Write a review</a>
+    @* Laboratory work 6: only a customer can write a review; a guest is offered to log in *@
+    @if (User.IsInRole(AppRoles.Customer))
+    {
+        <a asp-action="Create" class="btn btn-accent">Write a review</a>
+    }
+    else if (User.Identity?.IsAuthenticated != true)
+    {
+        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Reviews/Create" class="btn btn-outline-brand">Log in to write a review</a>
+    }
 </div>
 
 @if (TempData["Message"] != null)

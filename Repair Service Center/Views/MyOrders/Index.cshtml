@@ -1,0 +1,65 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "My requests";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <h1 class="mb-0">My requests</h1>
+    <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent">New request</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You have no requests yet. Choose a service in the
+        <a asp-controller="Services" asp-action="Index">catalog</a> or describe your problem in a new request.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Created</th>
+                <th>Device / service</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var order in Model)
+            {
+                var item = order.Items.FirstOrDefault();
+                <tr>
+                    <td>@order.Id</td>
+                    <td class="text-nowrap">@order.CreatedAt.ToString("dd.MM.yyyy")</td>
+                    <td>
+                        @if (item?.PriceListItem != null)
+                        {
+                            <span>@item.PriceListItem.DeviceType?.Name &ndash; @item.PriceListItem.RepairType?.Name</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Custom request</span>
+                        }
+                        @if (!string.IsNullOrEmpty(order.DeviceBrand) || !string.IsNullOrEmpty(order.DeviceModel))
+                        {
+                            <div class="small text-muted">@order.DeviceBrand @order.DeviceModel</div>
+                        }
+                    </td>
+                    <td class="text-nowrap">@(item?.Slot?.TimeText ?? "-")</td>
+                    <td><span class="badge @UiHelper.StatusBadge(order.Status)">@order.Status.GetDisplayName()</span></td>
+                    <td class="text-nowrap">@(order.TotalCost.HasValue ? order.TotalCost.Value.ToString("0") + " UAH" : "-")</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

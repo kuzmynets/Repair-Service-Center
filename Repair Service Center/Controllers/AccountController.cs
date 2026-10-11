@@ -1,0 +1,178 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Repair_Service_Center.Models;
+using Repair_Service_Center.Models.ViewModels;
+
+namespace Repair_Service_Center.Controllers;
+
+/// <summary>
+/// Registration, login, logout and profile.
+/// The whole controller needs a logged-in user ([Authorize]),
+/// but registration, login and the "access denied" page are open for guests ([AllowAnonymous]).
+/// </summary>
+[Authorize]
+public class AccountController : Controller
+{
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    {
+        _userManager = userManager;
+        _signInManager = signInManager;
+    }
+
+    // GET: /Account/Register
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Register(string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        return View();
+    }
+
+    // POST: /Account/Register
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(RegisterViewModel model, string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = new ApplicationUser
+        {
+            UserName = model.Email.Trim(),
+            Email = model.Email.Trim(),
+            FullName = model.FullName.Trim(),
+            PhoneNumber = model.PhoneNumber.Trim()
+        };
+
+        // UserManager checks the password rules and saves the hash of the password
+        var result = await _userManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
+        {
+            // Every new user is a customer; other roles are given by the administrator
+            await _userManager.AddToRoleAsync(user, AppRoles.Customer);
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return LocalRedirect(SafeUrl(returnUrl));
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+        return View(model);
+    }
+
+    // GET: /Account/Login?returnUrl=/RepairRequest/Create
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Login(string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        return View();
+    }
+
+    // POST: /Account/Login
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // After 5 wrong passwords the account is locked for 5 minutes (see Program.cs)
+        var result = await _signInManager.PasswordSignInAsync(model.Email.Trim(), model.Password,
+            model.RememberMe, lockoutOnFailure: true);
+
+        if (result.Succeeded)
+        {
+            return LocalRedirect(SafeUrl(returnUrl));
+        }
+
+        ModelState.AddModelError(string.Empty, result.IsLockedOut
+            ? "Too many failed attempts. Please try again in 5 minutes."
+            : "Wrong e-mail or password.");
+        return View(model);
+    }
+
+    // POST: /Account/Logout
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
+    // GET: /Account/AccessDenied - the user is logged in, but his role does not allow the page
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult AccessDenied(string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        return View();
+    }
+
+    // GET: /Account/Profile
+    [HttpGet]
+    public async Task<IActionResult> Profile()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return View(new ProfileViewModel
+        {
+            Email = user.Email ?? string.Empty,
+            Role = string.Join(", ", roles),
+            FullName = user.FullName,
+            PhoneNumber = user.PhoneNumber ?? string.Empty
+        });
+    }
+
+    // POST: /Account/Profile
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Profile(ProfileViewModel model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            model.Email = user.Email ?? string.Empty;
+            model.Role = string.Join(", ", await _userManager.GetRolesAsync(user));
+            return View(model);
+        }
+
+        user.FullName = model.FullName.Trim();
+        user.PhoneNumber = model.PhoneNumber.Trim();
+        await _userManager.UpdateAsync(user);
+
+        // The new name must appear in the menu, so the login cookie is created again
+        await _signInManager.RefreshSignInAsync(user);
+
+        TempData["Message"] = "Your profile is saved.";
+        return RedirectToAction(nameof(Profile));
+    }
+
+    // Only addresses of this site are allowed after login (protection from open redirect)
+    private string SafeUrl(string? returnUrl) =>
+        !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl) ? returnUrl : "/";
+}

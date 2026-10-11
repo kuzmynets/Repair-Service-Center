@@ -71,6 +71,10 @@
 
     <div class="d-flex flex-wrap gap-2 justify-content-center mt-4 no-print">
         <button type="button" class="btn btn-outline-brand" onclick="window.print()">Print</button>
+        @if (User.IsInRole(AppRoles.Customer))
+        {
+            <a asp-controller="MyOrders" asp-action="Index" class="btn btn-outline-brand">My requests</a>
+        }
         <a asp-controller="Services" asp-action="Index" class="btn btn-outline-brand">Back to services</a>
         <a asp-controller="Home" asp-action="Index" class="btn btn-brand">Home page</a>
     </div>

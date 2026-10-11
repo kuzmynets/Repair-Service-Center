@@ -1,0 +1,19 @@
+@model Order
+@{
+    ViewData["Title"] = $"Request #{Model.Id}";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <partial name="_OrderCard" model="Model"/>
+
+        <div class="d-flex flex-wrap gap-2 mt-4 no-print">
+            <a asp-action="Index" class="btn btn-outline-brand">Back to my requests</a>
+            <button type="button" class="btn btn-outline-brand" onclick="window.print()">Print</button>
+            @if (Model.Status == OrderStatus.Issued)
+            {
+                <a asp-controller="Reviews" asp-action="Create" asp-route-orderId="@Model.Id" class="btn btn-accent">Write a review</a>
+            }
+        </div>
+    </div>
+</div>

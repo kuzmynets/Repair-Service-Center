@@ -32,6 +32,10 @@
         <dd class="col-sm-9">
             @Model?.DeviceBrand @Model?.DeviceModel
         </dd>
+        <dt class="col-sm-3">Account</dt>
+        <dd class="col-sm-9">
+            @(Model?.User?.Email ?? "without account (created by the administrator or before registration)")
+        </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.CreatedAt)
         </dt>

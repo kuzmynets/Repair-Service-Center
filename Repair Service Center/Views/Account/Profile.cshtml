@@ -1,0 +1,42 @@
+@model Repair_Service_Center.Models.ViewModels.ProfileViewModel
+@{
+    ViewData["Title"] = "My profile";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-6">
+        <h1>My profile</h1>
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">@TempData["Message"]</div>
+        }
+
+        <form asp-action="Profile" method="post" class="card p-4">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <dl class="row mb-3">
+                <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Email)</dt>
+                <dd class="col-sm-8">@Model.Email</dd>
+                <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Role)</dt>
+                <dd class="col-sm-8"><span class="badge bg-brand">@Model.Role</span></dd>
+            </dl>
+
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control"/>
+                <span asp-validation-for="FullName" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control"/>
+                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+            </div>
+            <button type="submit" class="btn btn-accent">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
