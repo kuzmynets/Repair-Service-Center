@@ -48,8 +48,9 @@ public class AccountController : Controller
         {
             UserName = model.Email.Trim(),
             Email = model.Email.Trim(),
-            FullName = model.FullName.Trim(),
-            PhoneNumber = model.PhoneNumber.Trim()
+            FullName = $"{model.FirstName.Trim()} {model.LastName.Trim()}",
+            PhoneNumber = model.PhoneNumber.Trim(),
+            Address = string.IsNullOrWhiteSpace(model.Address) ? null : model.Address.Trim()
         };
 
         // UserManager checks the password rules and saves the hash of the password
@@ -134,12 +135,15 @@ public class AccountController : Controller
         }
 
         var roles = await _userManager.GetRolesAsync(user);
+        var (firstName, lastName) = SplitName(user.FullName);
         return View(new ProfileViewModel
         {
             Email = user.Email ?? string.Empty,
             Role = string.Join(", ", roles),
-            FullName = user.FullName,
-            PhoneNumber = user.PhoneNumber ?? string.Empty
+            FirstName = firstName,
+            LastName = lastName,
+            PhoneNumber = user.PhoneNumber ?? string.Empty,
+            Address = user.Address
         });
     }
 
@@ -161,8 +165,9 @@ public class AccountController : Controller
             return View(model);
         }
 
-        user.FullName = model.FullName.Trim();
+        user.FullName = $"{model.FirstName.Trim()} {model.LastName.Trim()}";
         user.PhoneNumber = model.PhoneNumber.Trim();
+        user.Address = string.IsNullOrWhiteSpace(model.Address) ? null : model.Address.Trim();
         await _userManager.UpdateAsync(user);
 
         // The new name must appear in the menu, so the login cookie is created again
@@ -170,6 +175,18 @@ public class AccountController : Controller
 
         TempData["Message"] = "Your profile is saved.";
         return RedirectToAction(nameof(Profile));
+    }
+
+    // "Anna Shevchenko" -> ("Anna", "Shevchenko"); the full name is stored in one field
+    private static (string FirstName, string LastName) SplitName(string fullName)
+    {
+        var parts = fullName.Trim().Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length switch
+        {
+            0 => (string.Empty, string.Empty),
+            1 => (parts[0], string.Empty),
+            _ => (parts[0], parts[1])
+        };
     }
 
     // Only addresses of this site are allowed after login (protection from open redirect)

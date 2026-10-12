@@ -22,13 +22,13 @@ public class PriceListItem
     public int ComplexityLevelId { get; set; }
     public ComplexityLevel? ComplexityLevel { get; set; }
 
-    [Range(typeof(decimal), "1", "100000")]
+    [Range(typeof(decimal), "1", "100000", ErrorMessage = "The price must be from 1 to 100 000 UAH.")]
     [Column(TypeName = "decimal(10, 2)")]
     [DisplayFormat(DataFormatString = "{0:0.00} UAH")]
     [Display(Name = "Price")]
     public decimal Price { get; set; }
 
-    [Range(5, 10080)]
+    [Range(5, 10080, ErrorMessage = "The duration must be from 5 minutes to 7 days (10 080 minutes).")]
     [Display(Name = "Duration (min)")]
     public int DurationMinutes { get; set; }
 }

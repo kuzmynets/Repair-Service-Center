@@ -113,7 +113,7 @@ public class OrdersController : Controller
     // POST: Orders/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,CustomerName,CustomerPhone,CustomerEmail,DeviceBrand,DeviceModel,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
+    public async Task<IActionResult> Create([Bind("Id,CustomerName,CustomerPhone,CustomerEmail,DeviceBrand,DeviceModel,CustomerAddress,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
     {
         order.CreatedAt = DateTime.Now;
 
@@ -153,7 +153,7 @@ public class OrdersController : Controller
     // POST: Orders/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,CustomerPhone,CustomerEmail,DeviceBrand,DeviceModel,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,CustomerPhone,CustomerEmail,DeviceBrand,DeviceModel,CustomerAddress,Status,ProblemDescription,TotalCost,TechnicianId")] Order order)
     {
         if (id != order.Id)
         {
@@ -186,6 +186,7 @@ public class OrdersController : Controller
             existing.CustomerEmail = order.CustomerEmail;
             existing.DeviceBrand = order.DeviceBrand;
             existing.DeviceModel = order.DeviceModel;
+            existing.CustomerAddress = order.CustomerAddress;
             existing.Status = order.Status;
             existing.ProblemDescription = order.ProblemDescription;
             existing.TotalCost = order.TotalCost;

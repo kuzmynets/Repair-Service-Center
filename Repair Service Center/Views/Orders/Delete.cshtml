@@ -39,6 +39,12 @@
             @Model?.DeviceBrand @Model?.DeviceModel
         </dd>
         <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CustomerAddress)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CustomerAddress)
+        </dd>
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.CreatedAt)
         </dt>
         <dd class="col-sm-9">

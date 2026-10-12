@@ -20,7 +20,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="CustomerPhone" class="form-label"></label>
-                <input asp-for="CustomerPhone" class="form-control" />
+                <input asp-for="CustomerPhone" class="form-control" placeholder="+380501234567" />
                 <span asp-validation-for="CustomerPhone" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -39,6 +39,11 @@
                     <input asp-for="DeviceModel" class="form-control" />
                     <span asp-validation-for="DeviceModel" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CustomerAddress" class="form-label"></label>
+                <input asp-for="CustomerAddress" class="form-control" placeholder="Khmelnytskyi, Instytutska St, 11" />
+                <span asp-validation-for="CustomerAddress" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="CreatedAt" />
             <div class="mb-3">

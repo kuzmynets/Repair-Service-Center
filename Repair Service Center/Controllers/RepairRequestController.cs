@@ -42,6 +42,7 @@ public class RepairRequestController : Controller
                 model.CustomerName = user.FullName;
                 model.CustomerPhone = user.PhoneNumber ?? string.Empty;
                 model.CustomerEmail = user.Email;
+                model.CustomerAddress = user.Address;
             }
         }
 
@@ -104,6 +105,7 @@ public class RepairRequestController : Controller
             CustomerEmail = string.IsNullOrWhiteSpace(model.CustomerEmail) ? null : model.CustomerEmail.Trim(),
             DeviceBrand = string.IsNullOrWhiteSpace(model.DeviceBrand) ? null : model.DeviceBrand.Trim(),
             DeviceModel = string.IsNullOrWhiteSpace(model.DeviceModel) ? null : model.DeviceModel.Trim(),
+            CustomerAddress = string.IsNullOrWhiteSpace(model.CustomerAddress) ? null : model.CustomerAddress.Trim(),
             CreatedAt = DateTime.Now,
             // Standard request -> price is known; custom request -> waits for the administrator
             Status = service != null ? OrderStatus.Accepted : OrderStatus.Pending,

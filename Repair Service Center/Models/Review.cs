@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Repair_Service_Center.Validation;
 
 namespace Repair_Service_Center.Models;
 
@@ -9,8 +10,10 @@ public class Review
 {
     public int Id { get; set; }
 
+    // Laboratory work 7: the author - one to three words with capital letters
     [Required(ErrorMessage = "Please enter your name.")]
     [StringLength(100, MinimumLength = 2)]
+    [PersonName(1, 3)]
     [Display(Name = "Your name")]
     public string AuthorName { get; set; } = string.Empty;
 

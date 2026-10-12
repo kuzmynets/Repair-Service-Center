@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-6">
                     <label asp-for="CustomerPhone" class="form-label"></label>
-                    <input asp-for="CustomerPhone" class="form-control" placeholder="+380..."/>
+                    <input asp-for="CustomerPhone" class="form-control" placeholder="+380501234567"/>
                     <span asp-validation-for="CustomerPhone" class="text-danger small"></span>
                 </div>
                 <div class="col-md-4">
@@ -36,6 +36,12 @@
                     <label asp-for="DeviceModel" class="form-label"></label>
                     <input asp-for="DeviceModel" class="form-control" placeholder="e.g. Galaxy A54"/>
                     <span asp-validation-for="DeviceModel" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="CustomerAddress" class="form-label"></label>
+                    <input asp-for="CustomerAddress" class="form-control" placeholder="e.g. Khmelnytskyi, Instytutska St, 11"/>
+                    <div class="form-text">For washing machines and refrigerators the technician can come to your home.</div>
+                    <span asp-validation-for="CustomerAddress" class="text-danger small"></span>
                 </div>
                 <div class="col-12">
                     <label asp-for="PriceListItemId" class="form-label"></label>

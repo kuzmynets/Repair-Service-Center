@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Repair_Service_Center.Validation;
 
 namespace Repair_Service_Center.Models.ViewModels;
 
@@ -7,22 +8,37 @@ namespace Repair_Service_Center.Models.ViewModels;
 /// </summary>
 public class RegisterViewModel
 {
-    [Required(ErrorMessage = "Please enter your full name.")]
-    [StringLength(100, MinimumLength = 3, ErrorMessage = "The name must be from 3 to 100 characters.")]
-    [Display(Name = "Full name")]
-    public string FullName { get; set; } = string.Empty;
+    // Laboratory work 7: first name and last name are checked separately
+    [Required(ErrorMessage = "Please enter your first name.")]
+    [StringLength(50, MinimumLength = 2)]
+    [PersonName]
+    [Display(Name = "First name")]
+    public string FirstName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Please enter your last name.")]
+    [StringLength(50, MinimumLength = 2)]
+    [PersonName]
+    [Display(Name = "Last name")]
+    public string LastName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter your e-mail.")]
-    [EmailAddress(ErrorMessage = "Please enter a correct e-mail.")]
+    [EmailFormat]
+    [DataType(DataType.EmailAddress)]
     [StringLength(100)]
     [Display(Name = "E-mail")]
     public string Email { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please enter your phone number.")]
-    [Phone(ErrorMessage = "Please enter a correct phone number.")]
+    [Required(ErrorMessage = "Please enter your mobile phone.")]
+    [MobilePhone]
+    [DataType(DataType.PhoneNumber)]
     [StringLength(20)]
-    [Display(Name = "Phone")]
+    [Display(Name = "Mobile phone")]
     public string PhoneNumber { get; set; } = string.Empty;
+
+    [StringLength(200)]
+    [Address]
+    [Display(Name = "Address (optional)")]
+    public string? Address { get; set; }
 
     [Required(ErrorMessage = "Please enter a password.")]
     [StringLength(100, MinimumLength = 8, ErrorMessage = "The password must have at least 8 characters.")]
@@ -43,7 +59,8 @@ public class RegisterViewModel
 public class LoginViewModel
 {
     [Required(ErrorMessage = "Please enter your e-mail.")]
-    [EmailAddress(ErrorMessage = "Please enter a correct e-mail.")]
+    [EmailFormat]
+    [DataType(DataType.EmailAddress)]
     [Display(Name = "E-mail")]
     public string Email { get; set; } = string.Empty;
 
@@ -67,16 +84,29 @@ public class ProfileViewModel
     [Display(Name = "Role")]
     public string Role { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please enter your full name.")]
-    [StringLength(100, MinimumLength = 3, ErrorMessage = "The name must be from 3 to 100 characters.")]
-    [Display(Name = "Full name")]
-    public string FullName { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Please enter your first name.")]
+    [StringLength(50, MinimumLength = 2)]
+    [PersonName]
+    [Display(Name = "First name")]
+    public string FirstName { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please enter your phone number.")]
-    [Phone(ErrorMessage = "Please enter a correct phone number.")]
+    [Required(ErrorMessage = "Please enter your last name.")]
+    [StringLength(50, MinimumLength = 2)]
+    [PersonName]
+    [Display(Name = "Last name")]
+    public string LastName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Please enter your mobile phone.")]
+    [MobilePhone]
+    [DataType(DataType.PhoneNumber)]
     [StringLength(20)]
-    [Display(Name = "Phone")]
+    [Display(Name = "Mobile phone")]
     public string PhoneNumber { get; set; } = string.Empty;
+
+    [StringLength(200)]
+    [Address]
+    [Display(Name = "Address (optional)")]
+    public string? Address { get; set; }
 }
 
 /// <summary>

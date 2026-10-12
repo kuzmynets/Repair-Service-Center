@@ -79,8 +79,12 @@ public class SlotsController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        // Default values: tomorrow 10:00-12:00
+        // Default values: tomorrow 10:00-12:00 (Monday, if tomorrow is Sunday)
         var start = DateTime.Today.AddDays(1).AddHours(10);
+        if (start.DayOfWeek == DayOfWeek.Sunday)
+        {
+            start = start.AddDays(1);
+        }
         var slot = new Slot { StartTime = start, EndTime = start.AddHours(2) };
         FillTechnicians(slot.TechnicianId);
         return View(slot);
@@ -91,10 +95,8 @@ public class SlotsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("TechnicianId,StartTime,EndTime")] Slot slot)
     {
-        if (slot.StartTime <= DateTime.Now)
-        {
-            ModelState.AddModelError(nameof(slot.StartTime), "Start time must be in the future.");
-        }
+        // Laboratory work 7: "start in the future", working hours, length of the slot
+        // are checked by the model itself ([FutureDate] and IValidatableObject in Slot.cs)
         await CheckOverlapAsync(slot);
 
         if (ModelState.IsValid)

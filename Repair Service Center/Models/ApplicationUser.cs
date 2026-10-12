@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Repair_Service_Center.Validation;
 
 namespace Repair_Service_Center.Models;
 
@@ -14,6 +15,12 @@ public class ApplicationUser : IdentityUser
     [StringLength(100, MinimumLength = 3)]
     [Display(Name = "Full name")]
     public string FullName { get; set; } = string.Empty;
+
+    // Laboratory work 7: address of the customer (used for a visit of the technician)
+    [StringLength(200)]
+    [Address]
+    [Display(Name = "Address")]
+    public string? Address { get; set; }
 
     // Requests created by this user
     public List<Order> Orders { get; set; } = new();

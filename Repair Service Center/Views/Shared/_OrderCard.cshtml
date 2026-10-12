@@ -15,6 +15,12 @@
             <dd class="col-sm-8">@Model.DeviceBrand @Model.DeviceModel</dd>
         }
 
+        @if (!string.IsNullOrEmpty(Model.CustomerAddress))
+        {
+            <dt class="col-sm-4">Address</dt>
+            <dd class="col-sm-8">@Model.CustomerAddress</dd>
+        }
+
         @if (!string.IsNullOrEmpty(Model.ProblemDescription))
         {
             <dt class="col-sm-4">Problem</dt>

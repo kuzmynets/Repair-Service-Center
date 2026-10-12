@@ -13,10 +13,15 @@
             <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
             <div class="row g-3">
-                <div class="col-12">
-                    <label asp-for="FullName" class="form-label"></label>
-                    <input asp-for="FullName" class="form-control" placeholder="e.g. Anna Shevchenko" autocomplete="name"/>
-                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                <div class="col-md-6">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" placeholder="e.g. Anna" autocomplete="given-name"/>
+                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" placeholder="e.g. Shevchenko" autocomplete="family-name"/>
+                    <span asp-validation-for="LastName" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Email" class="form-label"></label>
@@ -25,8 +30,13 @@
                 </div>
                 <div class="col-md-6">
                     <label asp-for="PhoneNumber" class="form-label"></label>
-                    <input asp-for="PhoneNumber" class="form-control" placeholder="+380..." autocomplete="tel"/>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="+380501234567" autocomplete="tel"/>
                     <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Address" class="form-label"></label>
+                    <input asp-for="Address" class="form-control" placeholder="e.g. Khmelnytskyi, Instytutska St, 11" autocomplete="street-address"/>
+                    <span asp-validation-for="Address" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Password" class="form-label"></label>
