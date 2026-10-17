@@ -1,6 +1,6 @@
 @model Order
 @{
-    ViewData["Title"] = $"Request #{Model.Id}";
+    ViewData["Title"] = SharedLocalizer["Request #{0}", Model.Id];
 }
 
 <div class="row justify-content-center">
@@ -8,11 +8,11 @@
         <partial name="_OrderCard" model="Model"/>
 
         <div class="d-flex flex-wrap gap-2 mt-4 no-print">
-            <a asp-action="Index" class="btn btn-outline-brand">Back to my requests</a>
-            <button type="button" class="btn btn-outline-brand" onclick="window.print()">Print</button>
+            <a asp-action="Index" class="btn btn-outline-brand">@Localizer["Back to my requests"]</a>
+            <button type="button" class="btn btn-outline-brand" onclick="window.print()">@SharedLocalizer["Print"]</button>
             @if (Model.Status == OrderStatus.Issued)
             {
-                <a asp-controller="Reviews" asp-action="Create" asp-route-orderId="@Model.Id" class="btn btn-accent">Write a review</a>
+                <a asp-controller="Reviews" asp-action="Create" asp-route-orderId="@Model.Id" class="btn btn-accent">@Localizer["Write a review"]</a>
             }
         </div>
     </div>

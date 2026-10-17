@@ -1,18 +1,17 @@
 @model List<Order>
 @{
-    ViewData["Title"] = "My requests";
+    ViewData["Title"] = Localizer["My requests"];
 }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-    <h1 class="mb-0">My requests</h1>
-    <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent">New request</a>
+    <h1 class="mb-0">@Localizer["My requests"]</h1>
+    <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent">@Localizer["New request"]</a>
 </div>
 
 @if (!Model.Any())
 {
     <div class="alert alert-info">
-        You have no requests yet. Choose a service in the
-        <a asp-controller="Services" asp-action="Index">catalog</a> or describe your problem in a new request.
+        @(Localizer["You have no requests yet. Choose a service in the <a href='{0}'>catalog</a> or describe your problem in a new request.", Url.Action("Index", "Services")!])
     </div>
 }
 else
@@ -21,12 +20,12 @@ else
         <table class="table table-striped align-middle">
             <thead>
             <tr>
-                <th>No.</th>
-                <th>Created</th>
-                <th>Device / service</th>
-                <th>Time</th>
-                <th>Status</th>
-                <th>Price</th>
+                <th>@Localizer["No."]</th>
+                <th>@Localizer["Created"]</th>
+                <th>@Localizer["Device / service"]</th>
+                <th>@Localizer["Time"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["Price"]</th>
                 <th></th>
             </tr>
             </thead>
@@ -44,7 +43,7 @@ else
                         }
                         else
                         {
-                            <span class="text-muted">Custom request</span>
+                            <span class="text-muted">@Localizer["Custom request"]</span>
                         }
                         @if (!string.IsNullOrEmpty(order.DeviceBrand) || !string.IsNullOrEmpty(order.DeviceModel))
                         {
@@ -52,10 +51,10 @@ else
                         }
                     </td>
                     <td class="text-nowrap">@(item?.Slot?.TimeText ?? "-")</td>
-                    <td><span class="badge @UiHelper.StatusBadge(order.Status)">@order.Status.GetDisplayName()</span></td>
-                    <td class="text-nowrap">@(order.TotalCost.HasValue ? order.TotalCost.Value.ToString("0") + " UAH" : "-")</td>
+                    <td><span class="badge @UiHelper.StatusBadge(order.Status)">@SharedLocalizer[order.Status.GetDisplayName()]</span></td>
+                    <td class="text-nowrap">@(order.TotalCost.HasValue ? SharedLocalizer.GetString("{0} UAH", order.TotalCost.Value.ToString("0")).Value : "-")</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">@SharedLocalizer["Details"]</a>
                     </td>
                 </tr>
             }

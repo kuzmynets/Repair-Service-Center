@@ -12,11 +12,12 @@ public class Review
 
     // Laboratory work 7: the author - one to three words with capital letters
     [Required(ErrorMessage = "Please enter your name.")]
-    [StringLength(100, MinimumLength = 2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName(1, 3)]
     [Display(Name = "Your name")]
     public string AuthorName { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "The field {0} is required.")]
     [Range(1, 5, ErrorMessage = "Rating must be from 1 to 5.")]
     [Display(Name = "Rating")]
     public int Rating { get; set; } = 5;

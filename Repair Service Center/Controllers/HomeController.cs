@@ -63,6 +63,7 @@ public class HomeController : Controller
         {
             FullName = "Didyk Maksym",
             Group = "SEs-26-1",
+            University = "Khmelnytskyi National University",
             ProjectTopic = "Repair Service Center"
         };
 

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Laboratory work 8. Texts of the view Views/Home/Index.cshtml (IViewLocalizer). -->
+  <data name="1. Choose a service" xml:space="preserve">
+    <value>1. Оберіть послугу</value>
+  </data>
+  <data name="2. Send a request" xml:space="preserve">
+    <value>2. Надішліть заявку</value>
+  </data>
+  <data name="3. Get your device back" xml:space="preserve">
+    <value>3. Отримайте пристрій</value>
+  </data>
+  <data name="A technician repairs the device, and you get it back with a warranty." xml:space="preserve">
+    <value>Майстер ремонтує пристрій, і ви отримуєте його з гарантією.</value>
+  </data>
+  <data name="All reviews →" xml:space="preserve">
+    <value>Усі відгуки →</value>
+  </data>
+  <data name="All services →" xml:space="preserve">
+    <value>Усі послуги →</value>
+  </data>
+  <data name="Describe the problem" xml:space="preserve">
+    <value>Опишіть проблему</value>
+  </data>
+  <data name="Describe the problem — our technician will check it and tell you the price." xml:space="preserve">
+    <value>Опишіть проблему — наш майстер перевірить пристрій і назве ціну.</value>
+  </data>
+  <data name="experienced technicians" xml:space="preserve">
+    <value>досвідчених майстрів</value>
+  </data>
+  <data name="Fill in a short form. If the problem is not in the list, just describe it." xml:space="preserve">
+    <value>Заповніть коротку форму. Якщо проблеми немає в списку, просто опишіть її.</value>
+  </data>
+  <data name="Find your device in the price list and see the price and time at once." xml:space="preserve">
+    <value>Знайдіть свій пристрій у прайс-листі й одразу побачте ціну та час.</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Головна</value>
+  </data>
+  <data name="How it works" xml:space="preserve">
+    <value>Як це працює</value>
+  </data>
+  <data name="Not sure what is broken?" xml:space="preserve">
+    <value>Не знаєте, що зламалося?</value>
+  </data>
+  <data name="orders in work now" xml:space="preserve">
+    <value>заявок зараз у роботі</value>
+  </data>
+  <data name="Popular services" xml:space="preserve">
+    <value>Популярні послуги</value>
+  </data>
+  <data name="Repair of a laptop and a smartphone" xml:space="preserve">
+    <value>Ремонт ноутбука та смартфона</value>
+  </data>
+  <data name="Request a repair" xml:space="preserve">
+    <value>Замовити ремонт</value>
+  </data>
+  <data name="See prices" xml:space="preserve">
+    <value>Переглянути ціни</value>
+  </data>
+  <data name="Service center · Khmelnytskyi" xml:space="preserve">
+    <value>Сервісний центр · Хмельницький</value>
+  </data>
+  <data name="services in the price list" xml:space="preserve">
+    <value>послуг у прайс-листі</value>
+  </data>
+  <data name="Smartphones, laptops, tablets and home appliances. Choose a service from the price list or simply describe the problem — we will call you back." xml:space="preserve">
+    <value>Смартфони, ноутбуки, планшети та побутова техніка. Оберіть послугу з прайс-листа або просто опишіть проблему — ми вам передзвонимо.</value>
+  </data>
+  <data name="We repair your devices quickly and with a warranty" xml:space="preserve">
+    <value>Ремонтуємо ваші пристрої швидко та з гарантією</value>
+  </data>
+  <data name="What customers say" xml:space="preserve">
+    <value>Що кажуть клієнти</value>
+  </data>
+  <data name="What do we repair?" xml:space="preserve">
+    <value>Що ми ремонтуємо?</value>
+  </data>
+</root>

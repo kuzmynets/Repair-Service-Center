@@ -2,4 +2,10 @@
 @using Repair_Service_Center.Models
 @using Repair_Service_Center.Models.ViewModels
 @using Repair_Service_Center.Helpers
+@using Microsoft.AspNetCore.Mvc.Localization
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@* Laboratory work 8: localizers for all views.
+   Localizer - texts of this view (Resources/Views/<Folder>/<View>.uk.resx);
+   SharedLocalizer - texts used on many pages (Resources/SharedResource.uk.resx). *@
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer

@@ -12,22 +12,25 @@ public class Technician
 
     // Laboratory work 7: first and last name with capital letters
     [Required(ErrorMessage = "Please enter the full name.")]
-    [StringLength(100, MinimumLength = 3)]
+    [StringLength(100, MinimumLength = 3, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName(2, 4)]
     [Display(Name = "Full name")]
     public string FullName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter the specialization.")]
-    [StringLength(100)]
+    [StringLength(100, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [RegularExpression(ValidationPatterns.Title, ErrorMessage = ValidationPatterns.TitleMessage)]
+    [Display(Name = "Specialization")]
     public string Specialization { get; set; } = string.Empty;
 
     [MobilePhone]
     [DataType(DataType.PhoneNumber)]
-    [StringLength(20)]
+    [StringLength(20, ErrorMessage = "The field {0} must be at most {1} characters long.")]
+    [Display(Name = "Phone")]
     public string? Phone { get; set; }
 
     // Laboratory work 5: new field
+    [Required(ErrorMessage = "The field {0} is required.")]
     [Range(0, 50, ErrorMessage = "The experience must be from 0 to 50 years.")]
     [Display(Name = "Experience (years)")]
     public int ExperienceYears { get; set; }

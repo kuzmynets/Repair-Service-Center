@@ -1,20 +1,20 @@
 @model IEnumerable<Review>
 @{
-    ViewData["Title"] = "Reviews moderation";
+    ViewData["Title"] = Localizer["Reviews moderation"];
 }
 
-<h1>Reviews moderation</h1>
-<p class="text-muted">New reviews are not visible on the site until they are approved.</p>
+<h1>@Localizer["Reviews moderation"]</h1>
+<p class="text-muted">@Localizer["New reviews are not visible on the site until they are approved."]</p>
 
 <table class="table align-middle">
     <thead>
         <tr>
-            <th>Date</th>
-            <th>Author</th>
-            <th>Rating</th>
-            <th>Review</th>
-            <th>Request</th>
-            <th>Status</th>
+            <th>@Localizer["Date"]</th>
+            <th>@Localizer["Author"]</th>
+            <th>@Localizer["Rating"]</th>
+            <th>@Localizer["Review"]</th>
+            <th>@Localizer["Request"]</th>
+            <th>@Localizer["Status"]</th>
             <th></th>
         </tr>
     </thead>
@@ -35,23 +35,23 @@
             <td>
                 @if (review.IsApproved)
                 {
-                    <span class="badge bg-success">Published</span>
+                    <span class="badge bg-success">@Localizer["Published"]</span>
                 }
                 else
                 {
-                    <span class="badge bg-warning text-dark">New</span>
+                    <span class="badge bg-warning text-dark">@Localizer["New"]</span>
                 }
             </td>
             <td class="text-end text-nowrap">
                 <form asp-action="SetApproved" asp-route-id="@review.Id" method="post" class="d-inline">
                     <input type="hidden" name="approved" value="@(review.IsApproved ? "false" : "true")"/>
                     <button type="submit" class="btn btn-sm @(review.IsApproved ? "btn-outline-secondary" : "btn-success")">
-                        @(review.IsApproved ? "Hide" : "Approve")
+                        @(review.IsApproved ? Localizer["Hide"] : Localizer["Approve"])
                     </button>
                 </form>
                 <form asp-action="Delete" asp-route-id="@review.Id" method="post" class="d-inline"
-                      onsubmit="return confirm('Delete this review?');">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                      data-confirm="@Localizer.GetString("Delete this review?")" onsubmit="return confirm(this.dataset.confirm);">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">@SharedLocalizer["Delete"]</button>
                 </form>
             </td>
         </tr>

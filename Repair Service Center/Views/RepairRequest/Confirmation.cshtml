@@ -1,81 +1,80 @@
 @model Order
 @{
-    ViewData["Title"] = $"Request #{Model.Id}";
+    ViewData["Title"] = SharedLocalizer["Request #{0}", Model.Id];
 }
 
 <div class="confirmation mx-auto">
     <div class="text-center mb-4">
         <img src="~/images/success.svg" alt="" width="96" height="96" class="no-print"/>
-        <h1 class="h2 mt-3">Thank you! Your request is sent.</h1>
-        <p class="text-muted">Keep the request number. You can check the status on the page
-            <a asp-action="Track" asp-route-orderId="@Model.Id">Track request</a>.</p>
+        <h1 class="h2 mt-3">@Localizer["Thank you! Your request is sent."]</h1>
+        <p class="text-muted">@(Localizer["Keep the request number. You can check the status on the page <a href='{0}'>Track request</a>.", Url.Action("Track", new { orderId = Model.Id })!])</p>
     </div>
 
     <div class="card p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="h4 mb-0">Request #@Model.Id</h2>
-            <span class="badge fs-6 @UiHelper.StatusBadge(Model.Status)">@Model.Status.GetDisplayName()</span>
+            <h2 class="h4 mb-0">@(SharedLocalizer["Request #{0}", Model.Id])</h2>
+            <span class="badge fs-6 @UiHelper.StatusBadge(Model.Status)">@SharedLocalizer[Model.Status.GetDisplayName()]</span>
         </div>
         <dl class="row mb-0">
-            <dt class="col-sm-4">Date</dt>
+            <dt class="col-sm-4">@Localizer["Date"]</dt>
             <dd class="col-sm-8">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
 
             @if (!string.IsNullOrEmpty(Model.DeviceBrand) || !string.IsNullOrEmpty(Model.DeviceModel))
             {
-                <dt class="col-sm-4">Device</dt>
+                <dt class="col-sm-4">@Localizer["Device"]</dt>
                 <dd class="col-sm-8">@Model.DeviceBrand @Model.DeviceModel</dd>
             }
 
-            <dt class="col-sm-4">Customer</dt>
+            <dt class="col-sm-4">@Localizer["Customer"]</dt>
             <dd class="col-sm-8">@Model.CustomerName, @Model.CustomerPhone</dd>
 
             @foreach (var item in Model.Items)
             {
-                <dt class="col-sm-4">Service</dt>
+                <dt class="col-sm-4">@Localizer["Service"]</dt>
                 <dd class="col-sm-8">
                     @item.PriceListItem?.DeviceType?.Name &ndash; @item.PriceListItem?.RepairType?.Name
                     (@item.PriceListItem?.ComplexityLevel?.Name)
                 </dd>
                 if (item.Slot != null)
                 {
-                    <dt class="col-sm-4">Time</dt>
+                    <dt class="col-sm-4">@Localizer["Time"]</dt>
                     <dd class="col-sm-8"><b>@item.Slot.TimeText</b></dd>
                 }
             }
 
             @if (Model.Technician != null)
             {
-                <dt class="col-sm-4">Technician</dt>
+                <dt class="col-sm-4">@Localizer["Technician"]</dt>
                 <dd class="col-sm-8">@Model.Technician.FullName</dd>
             }
 
             @if (!string.IsNullOrEmpty(Model.ProblemDescription))
             {
-                <dt class="col-sm-4">Problem</dt>
+                <dt class="col-sm-4">@Localizer["Problem"]</dt>
                 <dd class="col-sm-8">@Model.ProblemDescription</dd>
             }
 
-            <dt class="col-sm-4">Price</dt>
+            <dt class="col-sm-4">@Localizer["Price"]</dt>
             <dd class="col-sm-8">
                 @if (Model.TotalCost.HasValue)
                 {
-                    <span class="price">@Model.TotalCost.Value.ToString("0") UAH</span>
+                    <span class="price">@(SharedLocalizer["{0} UAH", Model.TotalCost.Value.ToString("0")])</span>
                 }
                 else
                 {
-                    <span class="text-muted">will be set after diagnostics</span>
+                    <span class="text-muted">@SharedLocalizer["will be set after diagnostics"]</span>
                 }
             </dd>
         </dl>
     </div>
 
     <div class="d-flex flex-wrap gap-2 justify-content-center mt-4 no-print">
-        <button type="button" class="btn btn-outline-brand" onclick="window.print()">Print</button>
+        <button type="button" class="btn btn-outline-brand" onclick="window.print()">@SharedLocalizer["Print"]</button>
         @if (User.IsInRole(AppRoles.Customer))
         {
-            <a asp-controller="MyOrders" asp-action="Index" class="btn btn-outline-brand">My requests</a>
+            <a asp-controller="MyOrders" asp-action="Index" class="btn btn-outline-brand">@Localizer["My requests"]</a>
         }
-        <a asp-controller="Services" asp-action="Index" class="btn btn-outline-brand">Back to services</a>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-brand">Home page</a>
+        <a asp-controller="Services" asp-action="Index" class="btn btn-outline-brand">@Localizer["Back to services"]</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-brand">@SharedLocalizer["Home page"]</a>
     </div>
 </div>

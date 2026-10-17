@@ -1,12 +1,12 @@
 @model OrderSearchViewModel
 
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = Localizer["Orders"];
 }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-    <h1 class="mb-0">Orders</h1>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <h1 class="mb-0">@Localizer["Orders"]</h1>
+    <a asp-action="Create" class="btn btn-primary">@SharedLocalizer["Create new"]</a>
 </div>
 
 <!-- Search of orders by several criteria -->
@@ -15,18 +15,18 @@
         <div class="col-lg-4">
             <label asp-for="SearchString" class="form-label small"></label>
             <input asp-for="SearchString" type="search" class="form-control"
-                   placeholder="No., name, phone, email, brand or model"/>
+                   placeholder="@Localizer["No., name, phone, email, brand or model"]"/>
         </div>
         <div class="col-sm-6 col-lg-2">
             <label asp-for="Status" class="form-label small"></label>
             <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<OrderStatus>()">
-                <option value="">All statuses</option>
+                <option value="">@Localizer["All statuses"]</option>
             </select>
         </div>
         <div class="col-sm-6 col-lg-2">
             <label asp-for="TechnicianId" class="form-label small"></label>
             <select asp-for="TechnicianId" class="form-select" asp-items="Model.Technicians">
-                <option value="">All technicians</option>
+                <option value="">@Localizer["All technicians"]</option>
             </select>
         </div>
         <div class="col-6 col-lg-2">
@@ -38,9 +38,9 @@
             <input asp-for="DateTo" class="form-control"/>
         </div>
         <div class="col-12 d-flex gap-2">
-            <button type="submit" class="btn btn-brand">Search</button>
-            <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
-            <span class="ms-auto align-self-center small text-muted">Found: <b>@Model.Orders.Count</b></span>
+            <button type="submit" class="btn btn-brand">@SharedLocalizer["Search"]</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">@SharedLocalizer["Reset"]</a>
+            <span class="ms-auto align-self-center small text-muted">@(Localizer["Found: <b>{0}</b>", Model.Orders.Count])</span>
         </div>
     </div>
 </form>
@@ -48,11 +48,11 @@
 <table class="table table-striped align-middle">
     <thead>
         <tr>
-            <th>No.</th>
+            <th>@Localizer["No."]</th>
             <th>@Html.DisplayNameFor(model => model.Orders[0].CreatedAt)</th>
             <th>@Html.DisplayNameFor(model => model.Orders[0].CustomerName)</th>
             <th>@Html.DisplayNameFor(model => model.Orders[0].CustomerPhone)</th>
-            <th>Device</th>
+            <th>@Localizer["Device"]</th>
             <th>@Html.DisplayNameFor(model => model.Orders[0].Status)</th>
             <th>@Html.DisplayNameFor(model => model.Orders[0].TotalCost)</th>
             <th>@Html.DisplayNameFor(model => model.Orders[0].TechnicianId)</th>
@@ -68,13 +68,13 @@
             <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
             <td class="text-nowrap">@Html.DisplayFor(modelItem => item.CustomerPhone)</td>
             <td>@item.DeviceBrand @item.DeviceModel</td>
-            <td><span class="badge @UiHelper.StatusBadge(item.Status)">@item.Status.GetDisplayName()</span></td>
-            <td class="text-nowrap">@Html.DisplayFor(modelItem => item.TotalCost)</td>
+            <td><span class="badge @UiHelper.StatusBadge(item.Status)">@SharedLocalizer[item.Status.GetDisplayName()]</span></td>
+            <td class="text-nowrap">@if (item.TotalCost != null) { <text>@Html.DisplayFor(modelItem => item.TotalCost) @SharedLocalizer["UAH"]</text> }</td>
             <td>@item.Technician?.FullName</td>
             <td class="text-end text-nowrap">
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">@SharedLocalizer["Edit"]</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">@SharedLocalizer["Details"]</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">@SharedLocalizer["Delete"]</a>
             </td>
         </tr>
 }
@@ -83,5 +83,5 @@
 
 @if (!Model.Orders.Any())
 {
-    <p class="text-muted">No orders match the search criteria.</p>
+    <p class="text-muted">@Localizer["No orders match the search criteria."]</p>
 }

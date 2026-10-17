@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 
@@ -12,9 +13,13 @@ namespace Repair_Service_Center.Controllers;
 public class TechniciansController : Controller
 {
     private readonly RepairServiceContext _context;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public TechniciansController(RepairServiceContext context)
+    public TechniciansController(RepairServiceContext context,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _context = context;
     }
 
@@ -159,7 +164,7 @@ public class TechniciansController : Controller
         }
         catch (DbUpdateException)
         {
-            ViewData["Error"] = "This technician has booked time slots and cannot be deleted.";
+            ViewData["Error"] = _localizer["This technician has booked time slots and cannot be deleted."].Value;
             return View(technician);
         }
 

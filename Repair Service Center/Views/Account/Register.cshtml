@@ -1,13 +1,13 @@
 @model Repair_Service_Center.Models.ViewModels.RegisterViewModel
 @{
-    ViewData["Title"] = "Sign up";
+    ViewData["Title"] = Localizer["Sign up"];
     var returnUrl = ViewData["ReturnUrl"] as string;
 }
 
 <div class="row justify-content-center">
     <div class="col-md-10 col-lg-7">
-        <h1 class="text-center">Sign up</h1>
-        <p class="text-muted text-center">With an account you can submit requests, see their history and write reviews.</p>
+        <h1 class="text-center">@Localizer["Sign up"]</h1>
+        <p class="text-muted text-center">@Localizer["With an account you can submit requests, see their history and write reviews."]</p>
 
         <form asp-action="Register" asp-route-returnUrl="@returnUrl" method="post" class="card p-4">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
@@ -15,12 +15,12 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label asp-for="FirstName" class="form-label"></label>
-                    <input asp-for="FirstName" class="form-control" placeholder="e.g. Anna" autocomplete="given-name"/>
+                    <input asp-for="FirstName" class="form-control" placeholder="@Localizer["e.g. Anna"]" autocomplete="given-name"/>
                     <span asp-validation-for="FirstName" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="LastName" class="form-label"></label>
-                    <input asp-for="LastName" class="form-control" placeholder="e.g. Shevchenko" autocomplete="family-name"/>
+                    <input asp-for="LastName" class="form-control" placeholder="@Localizer["e.g. Shevchenko"]" autocomplete="family-name"/>
                     <span asp-validation-for="LastName" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
@@ -35,13 +35,13 @@
                 </div>
                 <div class="col-12">
                     <label asp-for="Address" class="form-label"></label>
-                    <input asp-for="Address" class="form-control" placeholder="e.g. Khmelnytskyi, Instytutska St, 11" autocomplete="street-address"/>
+                    <input asp-for="Address" class="form-control" placeholder="@SharedLocalizer["e.g. Khmelnytskyi, Instytutska St, 11"]" autocomplete="street-address"/>
                     <span asp-validation-for="Address" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Password" class="form-label"></label>
                     <input asp-for="Password" class="form-control" autocomplete="new-password"/>
-                    <div class="form-text">At least 8 characters with a digit and a small letter.</div>
+                    <div class="form-text">@Localizer["At least 8 characters with a digit and a small letter."]</div>
                     <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
@@ -50,14 +50,14 @@
                     <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-accent w-100">Create account</button>
+                    <button type="submit" class="btn btn-accent w-100">@Localizer["Create account"]</button>
                 </div>
             </div>
         </form>
 
         <p class="text-center mt-3">
-            Already have an account?
-            <a asp-action="Login" asp-route-returnUrl="@returnUrl">Log in</a>
+            @Localizer["Already have an account?"]
+            <a asp-action="Login" asp-route-returnUrl="@returnUrl">@Localizer["Log in"]</a>
         </p>
     </div>
 </div>

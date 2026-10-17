@@ -1,13 +1,13 @@
 @model Repair_Service_Center.Models.Order
 
 @{
-    ViewData["Title"] = "Order Details";
+    ViewData["Title"] = Localizer["Order Details"];
 }
 
-<h1>Details</h1>
+<h1>@SharedLocalizer["Details"]</h1>
 
 <div>
-    <h4>Order</h4>
+    <h4>@Localizer["Order"]</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-3">
@@ -28,7 +28,7 @@
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.CustomerEmail)
         </dd>
-        <dt class="col-sm-3">Device</dt>
+        <dt class="col-sm-3">@Localizer["Device"]</dt>
         <dd class="col-sm-9">
             @Model?.DeviceBrand @Model?.DeviceModel
         </dd>
@@ -38,9 +38,9 @@
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.CustomerAddress)
         </dd>
-        <dt class="col-sm-3">Account</dt>
+        <dt class="col-sm-3">@Localizer["Account"]</dt>
         <dd class="col-sm-9">
-            @(Model?.User?.Email ?? "without account (created by the administrator or before registration)")
+            @(Model?.User?.Email ?? Localizer.GetString("without account (created by the administrator or before registration)").Value)
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.CreatedAt)
@@ -52,7 +52,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class="col-sm-9">
-            @Model?.Status.GetDisplayName()
+            @if (Model != null) { @SharedLocalizer[Model.Status.GetDisplayName()] }
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.ProblemDescription)
@@ -64,7 +64,11 @@
             @Html.DisplayNameFor(model => model.TotalCost)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.TotalCost)
+            @* Laboratory work 8: the number is formatted by [DisplayFormat], the currency is translated *@
+            @if (Model?.TotalCost != null)
+            {
+                <text>@Html.DisplayFor(model => model.TotalCost) @SharedLocalizer["UAH"]</text>
+            }
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.TechnicianId)
@@ -75,12 +79,12 @@
     </dl>
 </div>
 
-<h4 class="mt-4">Items</h4>
+<h4 class="mt-4">@Localizer["Items"]</h4>
 @if (Model!.Items.Any())
 {
     <table class="table table-sm align-middle">
         <thead>
-            <tr><th>Service</th><th>Time slot</th><th>Duration</th><th class="text-end">Price</th></tr>
+            <tr><th>@Localizer["Service"]</th><th>@Localizer["Time slot"]</th><th>@Localizer["Duration"]</th><th class="text-end">@Localizer["Price"]</th></tr>
         </thead>
         <tbody>
         @foreach (var item in Model.Items)
@@ -93,7 +97,7 @@
                     }
                     else
                     {
-                        <span class="text-muted">custom work</span>
+                        <span class="text-muted">@Localizer["custom work"]</span>
                     }
                 </td>
                 <td>
@@ -102,8 +106,8 @@
                         <a asp-controller="Slots" asp-action="Details" asp-route-id="@item.SlotId">@item.Slot.TimeText</a>
                     }
                 </td>
-                <td>@UiHelper.FormatDuration(item.DurationMinutes)</td>
-                <td class="text-end">@item.Price.ToString("0.00") UAH</td>
+                <td>@UiHelper.FormatDuration(item.DurationMinutes, SharedLocalizer)</td>
+                <td class="text-end">@(SharedLocalizer["{0} UAH", item.Price.ToString("0.00")])</td>
             </tr>
         }
         </tbody>
@@ -111,15 +115,15 @@
 }
 else
 {
-    <p class="text-muted">No items. This is a custom request: the administrator sets the price after diagnostics.</p>
+    <p class="text-muted">@Localizer["No items. This is a custom request: the administrator sets the price after diagnostics."]</p>
 }
 
-<h4 class="mt-4">Status history</h4>
+<h4 class="mt-4">@Localizer["Status history"]</h4>
 <ul class="status-history">
     @foreach (var record in Model.StatusHistory.OrderBy(h => h.ChangedAt))
     {
         <li>
-            <span class="badge @UiHelper.StatusBadge(record.Status)">@record.Status.GetDisplayName()</span>
+            <span class="badge @UiHelper.StatusBadge(record.Status)">@SharedLocalizer[record.Status.GetDisplayName()]</span>
             <span class="text-muted small ms-2">@record.ChangedAt.ToString("dd.MM.yyyy HH:mm")</span>
             @if (!string.IsNullOrEmpty(record.Comment))
             {
@@ -130,6 +134,6 @@ else
 </ul>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">Edit</a>
-    <a asp-action="Index" class="btn btn-link">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">@SharedLocalizer["Edit"]</a>
+    <a asp-action="Index" class="btn btn-link">@SharedLocalizer["Back to list"]</a>
 </div>

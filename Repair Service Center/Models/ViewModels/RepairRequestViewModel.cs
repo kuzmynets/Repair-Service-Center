@@ -13,7 +13,7 @@ public class RepairRequestViewModel
 {
     // Laboratory work 7: the same rules as in the model Order (Validation/AppValidationAttributes.cs)
     [Required(ErrorMessage = "Please enter your name.")]
-    [StringLength(100, MinimumLength = 3)]
+    [StringLength(100, MinimumLength = 3, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName(2, 4)]
     [Display(Name = "Your name")]
     public string CustomerName { get; set; } = string.Empty;
@@ -21,27 +21,27 @@ public class RepairRequestViewModel
     [Required(ErrorMessage = "Please enter your phone number.")]
     [MobilePhone]
     [DataType(DataType.PhoneNumber)]
-    [StringLength(20)]
+    [StringLength(20, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "Mobile phone")]
     public string CustomerPhone { get; set; } = string.Empty;
 
     [EmailFormat]
     [DataType(DataType.EmailAddress)]
-    [StringLength(100)]
+    [StringLength(100, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "Email (optional)")]
     public string? CustomerEmail { get; set; }
 
-    [StringLength(50)]
+    [StringLength(50, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [RegularExpression(ValidationPatterns.Device, ErrorMessage = ValidationPatterns.DeviceMessage)]
     [Display(Name = "Device brand")]
     public string? DeviceBrand { get; set; }
 
-    [StringLength(50)]
+    [StringLength(50, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [RegularExpression(ValidationPatterns.Device, ErrorMessage = ValidationPatterns.DeviceMessage)]
     [Display(Name = "Device model")]
     public string? DeviceModel { get; set; }
 
-    [StringLength(200)]
+    [StringLength(200, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Address]
     [Display(Name = "Address (if the technician must come to you)")]
     public string? CustomerAddress { get; set; }

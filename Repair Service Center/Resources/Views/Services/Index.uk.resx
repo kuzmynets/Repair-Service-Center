@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Laboratory work 8. Texts of the view Views/Services/Index.cshtml (IViewLocalizer). -->
+  <data name="All devices" xml:space="preserve">
+    <value>Усі пристрої</value>
+  </data>
+  <data name="All repairs" xml:space="preserve">
+    <value>Усі види ремонту</value>
+  </data>
+  <data name="Any level" xml:space="preserve">
+    <value>Будь-який рівень</value>
+  </data>
+  <data name="Complexity" xml:space="preserve">
+    <value>Складність</value>
+  </data>
+  <data name="Device" xml:space="preserve">
+    <value>Пристрій</value>
+  </data>
+  <data name="e.g. screen, battery, laptop" xml:space="preserve">
+    <value>напр. screen, battery, laptop</value>
+  </data>
+  <data name="filters are applied" xml:space="preserve">
+    <value>застосовано фільтри</value>
+  </data>
+  <data name="Find a service by name, device, type of repair or price." xml:space="preserve">
+    <value>Знайдіть послугу за назвою, пристроєм, видом ремонту або ціною.</value>
+  </data>
+  <data name="Nothing was found. Try to change the search criteria, or &lt;a href='{0}'&gt;describe your problem&lt;/a&gt; — we will help." xml:space="preserve">
+    <value>Нічого не знайдено. Змініть умови пошуку або &lt;a href='{0}'&gt;опишіть свою проблему&lt;/a&gt; — ми допоможемо.</value>
+  </data>
+  <data name="Price from, UAH" xml:space="preserve">
+    <value>Ціна від, грн</value>
+  </data>
+  <data name="Price to, UAH" xml:space="preserve">
+    <value>Ціна до, грн</value>
+  </data>
+  <data name="Repair type" xml:space="preserve">
+    <value>Вид ремонту</value>
+  </data>
+  <data name="Services &amp; prices" xml:space="preserve">
+    <value>Послуги та ціни</value>
+  </data>
+  <data name="Services found: &lt;b&gt;{0}&lt;/b&gt;" xml:space="preserve">
+    <value>Знайдено послуг: &lt;b&gt;{0}&lt;/b&gt;</value>
+  </data>
+  <data name="Sort by" xml:space="preserve">
+    <value>Сортування</value>
+  </data>
+</root>

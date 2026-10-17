@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Laboratory work 8. Texts of the view Views/RepairRequest/Create.cshtml (IViewLocalizer). -->
+  <data name="e.g. Galaxy A54" xml:space="preserve">
+    <value>напр. Galaxy A54</value>
+  </data>
+  <data name="e.g. Samsung" xml:space="preserve">
+    <value>напр. Samsung</value>
+  </data>
+  <data name="Fill in the form and we will call you back to confirm the time." xml:space="preserve">
+    <value>Заповніть форму, і ми передзвонимо, щоб підтвердити час.</value>
+  </data>
+  <data name="For a service from the price list you choose a free time at once. For a custom problem we call you to agree on the time." xml:space="preserve">
+    <value>Для послуги з прайс-листа ви одразу обираєте вільний час. Для іншої проблеми ми зателефонуємо, щоб узгодити час.</value>
+  </data>
+  <data name="For washing machines and refrigerators the technician can come to your home." xml:space="preserve">
+    <value>До пральних машин і холодильників майстер може приїхати додому.</value>
+  </data>
+  <data name="If you chose a service, the request is &lt;b&gt;accepted&lt;/b&gt; at once with the price from the price list." xml:space="preserve">
+    <value>Якщо ви обрали послугу, заявка одразу &lt;b&gt;приймається&lt;/b&gt; з ціною з прайс-листа.</value>
+  </data>
+  <data name="If you described a problem, the request gets the status &lt;b&gt;pending&lt;/b&gt;. Our technician checks it and tells you the price." xml:space="preserve">
+    <value>Якщо ви описали проблему, заявка отримує статус &lt;b&gt;очікує&lt;/b&gt;. Наш майстер перевіряє її та називає ціну.</value>
+  </data>
+  <data name="Request a repair" xml:space="preserve">
+    <value>Замовити ремонт</value>
+  </data>
+  <data name="Send request" xml:space="preserve">
+    <value>Надіслати заявку</value>
+  </data>
+  <data name="The technician is chosen automatically by the time slot." xml:space="preserve">
+    <value>Майстер обирається автоматично за часовим слотом.</value>
+  </data>
+  <data name="What happened with the device? Required if you did not choose a service." xml:space="preserve">
+    <value>Що сталося з пристроєм? Обов’язково, якщо ви не обрали послугу.</value>
+  </data>
+  <data name="What happens next?" xml:space="preserve">
+    <value>Що буде далі?</value>
+  </data>
+  <data name="— choose a free time —" xml:space="preserve">
+    <value>— оберіть вільний час —</value>
+  </data>
+  <data name="— I don’t know / other problem —" xml:space="preserve">
+    <value>— Не знаю / інша проблема —</value>
+  </data>
+</root>

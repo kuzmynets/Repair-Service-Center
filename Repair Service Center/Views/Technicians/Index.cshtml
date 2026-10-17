@@ -1,19 +1,19 @@
 @model IEnumerable<Repair_Service_Center.Models.Technician>
 
 @{
-    ViewData["Title"] = "Technicians";
+    ViewData["Title"] = Localizer["Technicians"];
 }
 
-<h1>Technicians</h1>
+<h1>@Localizer["Technicians"]</h1>
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">@SharedLocalizer["Create new"]</a>
 
     <!-- Simple search, as in the example of the methodical recommendations -->
     <form asp-controller="Technicians" asp-action="Index" method="get" class="d-flex gap-2">
         <input type="search" name="searchString" value="@ViewData["SearchString"]" class="form-control"
-               placeholder="Name, specialization or phone"/>
-        <button type="submit" class="btn btn-brand">Search</button>
+               placeholder="@Localizer["Name, specialization or phone"]"/>
+        <button type="submit" class="btn btn-brand">@SharedLocalizer["Search"]</button>
     </form>
 </div>
 <table class="table table-striped align-middle">
@@ -35,9 +35,9 @@
             <td>@Html.DisplayFor(modelItem => item.Phone)</td>
             <td>@Html.DisplayFor(modelItem => item.ExperienceYears)</td>
             <td class="text-end text-nowrap">
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">@SharedLocalizer["Edit"]</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">@SharedLocalizer["Details"]</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">@SharedLocalizer["Delete"]</a>
             </td>
         </tr>
 }
@@ -46,5 +46,5 @@
 
 @if (!Model.Any())
 {
-    <p class="text-muted">No technicians were found.</p>
+    <p class="text-muted">@Localizer["No technicians were found."]</p>
 }

@@ -11,13 +11,13 @@ namespace Repair_Service_Center.Models;
 /// </summary>
 public class ApplicationUser : IdentityUser
 {
-    [Required]
-    [StringLength(100, MinimumLength = 3)]
+    [Required(ErrorMessage = "The field {0} is required.")]
+    [StringLength(100, MinimumLength = 3, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [Display(Name = "Full name")]
     public string FullName { get; set; } = string.Empty;
 
     // Laboratory work 7: address of the customer (used for a visit of the technician)
-    [StringLength(200)]
+    [StringLength(200, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Address]
     [Display(Name = "Address")]
     public string? Address { get; set; }

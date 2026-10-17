@@ -1,12 +1,12 @@
 @model Repair_Service_Center.Models.Technician
 
 @{
-    ViewData["Title"] = "Create Technician";
+    ViewData["Title"] = Localizer["Create Technician"];
 }
 
-<h1>Create</h1>
+<h1>@SharedLocalizer["Create"]</h1>
 
-<h4>Technician</h4>
+<h4>@Localizer["Technician"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
                 <label asp-for="FullName" class="form-label"></label>
-                <input asp-for="FullName" class="form-control" placeholder="e.g. Oleksandr Kovalenko" />
+                <input asp-for="FullName" class="form-control" placeholder="@SharedLocalizer["e.g. Oleksandr Kovalenko"]" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -33,8 +33,8 @@
                 <span asp-validation-for="ExperienceYears" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a asp-action="Index" class="btn btn-link">Back to List</a>
+                <button type="submit" class="btn btn-primary">@SharedLocalizer["Save"]</button>
+                <a asp-action="Index" class="btn btn-link">@SharedLocalizer["Back to list"]</a>
             </div>
         </form>
     </div>

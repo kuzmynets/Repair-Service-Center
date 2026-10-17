@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 using Repair_Service_Center.Models.ViewModels;
@@ -20,9 +21,13 @@ public class RepairRequestController : Controller
 {
     private readonly RepairServiceContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public RepairRequestController(RepairServiceContext context, UserManager<ApplicationUser> userManager)
+    public RepairRequestController(RepairServiceContext context, UserManager<ApplicationUser> userManager,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _context = context;
         _userManager = userManager;
     }
@@ -66,12 +71,12 @@ public class RepairRequestController : Controller
 
             if (service == null)
             {
-                ModelState.AddModelError(nameof(model.PriceListItemId), "The selected service does not exist.");
+                ModelState.AddModelError(nameof(model.PriceListItemId), _localizer["The selected service does not exist."].Value);
             }
 
             if (!model.SlotId.HasValue)
             {
-                ModelState.AddModelError(nameof(model.SlotId), "Please choose a convenient time.");
+                ModelState.AddModelError(nameof(model.SlotId), _localizer["Please choose a convenient time."].Value);
             }
             else
             {
@@ -81,7 +86,7 @@ public class RepairRequestController : Controller
                 if (slot == null || slot.IsBooked || slot.StartTime <= DateTime.Now)
                 {
                     ModelState.AddModelError(nameof(model.SlotId),
-                        "This time is already taken. Please choose another time.");
+                        _localizer["This time is already taken. Please choose another time."].Value);
                 }
             }
         }
@@ -89,7 +94,7 @@ public class RepairRequestController : Controller
         {
             // Custom request: the customer must describe the problem
             ModelState.AddModelError(nameof(model.ProblemDescription),
-                "Choose a service or describe the problem.");
+                _localizer["Choose a service or describe the problem."].Value);
         }
 
         if (!ModelState.IsValid)
@@ -151,7 +156,7 @@ public class RepairRequestController : Controller
             // the unique index on OrderItems.SlotId does not allow it
             _context.ChangeTracker.Clear();
             ModelState.AddModelError(nameof(model.SlotId),
-                "This time has just been booked by another customer. Please choose another time.");
+                _localizer["This time has just been booked by another customer. Please choose another time."].Value);
             await FillListsAsync(model);
             return View(model);
         }
@@ -246,7 +251,9 @@ public class RepairRequestController : Controller
         model.Services = services.Select(p => new SelectListItem
         {
             Value = p.Id.ToString(),
-            Text = $"{p.DeviceType!.Name} \u2013 {p.RepairType!.Name} ({p.ComplexityLevel!.Name}) \u2013 {p.Price:0} UAH",
+            // Names come from the database; the currency is translated (laboratory work 8)
+            Text = $"{p.DeviceType!.Name} \u2013 {p.RepairType!.Name} ({p.ComplexityLevel!.Name}) \u2013 "
+                   + _localizer["{0} UAH", p.Price.ToString("0")].Value,
             Selected = p.Id == model.PriceListItemId
         }).ToList();
 

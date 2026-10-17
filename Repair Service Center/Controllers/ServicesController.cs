@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 using Repair_Service_Center.Models.ViewModels;
@@ -13,9 +14,13 @@ namespace Repair_Service_Center.Controllers;
 public class ServicesController : Controller
 {
     private readonly RepairServiceContext _context;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public ServicesController(RepairServiceContext context)
+    public ServicesController(RepairServiceContext context,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _context = context;
     }
 
@@ -94,10 +99,11 @@ public class ServicesController : Controller
                 await _context.ComplexityLevels.OrderBy(c => c.Name).ToListAsync(), "Id", "Name", complexityLevelId),
             SortList = new SelectList(new[]
             {
-                new { Value = "price", Text = "Price: low to high" },
-                new { Value = "price_desc", Text = "Price: high to low" },
-                new { Value = "duration", Text = "Fastest first" },
-                new { Value = "popular", Text = "Most popular" }
+                // Laboratory work 8: texts of the sort list in the language of the user
+                new { Value = "price", Text = _localizer["Price: low to high"].Value },
+                new { Value = "price_desc", Text = _localizer["Price: high to low"].Value },
+                new { Value = "duration", Text = _localizer["Fastest first"].Value },
+                new { Value = "popular", Text = _localizer["Most popular"].Value }
             }, "Value", "Text", sort ?? "price"),
             SearchString = searchString,
             SelectedDeviceTypeId = deviceTypeId,

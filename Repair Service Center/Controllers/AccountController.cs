@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Models;
 using Repair_Service_Center.Models.ViewModels;
 
@@ -16,9 +17,13 @@ public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _userManager = userManager;
         _signInManager = signInManager;
     }
@@ -101,8 +106,8 @@ public class AccountController : Controller
         }
 
         ModelState.AddModelError(string.Empty, result.IsLockedOut
-            ? "Too many failed attempts. Please try again in 5 minutes."
-            : "Wrong e-mail or password.");
+            ? _localizer["Too many failed attempts. Please try again in 5 minutes."].Value
+            : _localizer["Wrong e-mail or password."].Value);
         return View(model);
     }
 
@@ -139,7 +144,8 @@ public class AccountController : Controller
         return View(new ProfileViewModel
         {
             Email = user.Email ?? string.Empty,
-            Role = string.Join(", ", roles),
+            // Laboratory work 8: the names of the roles are translated (Customer -> Клієнт)
+            Role = string.Join(", ", roles.Select(r => _localizer[r].Value)),
             FirstName = firstName,
             LastName = lastName,
             PhoneNumber = user.PhoneNumber ?? string.Empty,
@@ -161,7 +167,7 @@ public class AccountController : Controller
         if (!ModelState.IsValid)
         {
             model.Email = user.Email ?? string.Empty;
-            model.Role = string.Join(", ", await _userManager.GetRolesAsync(user));
+            model.Role = string.Join(", ", (await _userManager.GetRolesAsync(user)).Select(r => _localizer[r].Value));
             return View(model);
         }
 
@@ -173,7 +179,7 @@ public class AccountController : Controller
         // The new name must appear in the menu, so the login cookie is created again
         await _signInManager.RefreshSignInAsync(user);
 
-        TempData["Message"] = "Your profile is saved.";
+        TempData["Message"] = _localizer["Your profile is saved."].Value;
         return RedirectToAction(nameof(Profile));
     }
 

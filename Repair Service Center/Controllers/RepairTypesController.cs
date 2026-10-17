@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 
@@ -12,9 +13,13 @@ namespace Repair_Service_Center.Controllers;
 public class RepairTypesController : Controller
 {
     private readonly RepairServiceContext _context;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public RepairTypesController(RepairServiceContext context)
+    public RepairTypesController(RepairServiceContext context,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _context = context;
     }
 
@@ -148,7 +153,7 @@ public class RepairTypesController : Controller
         }
         catch (DbUpdateException)
         {
-            ViewData["Error"] = "This repair type is used in the price list and cannot be deleted.";
+            ViewData["Error"] = _localizer["This repair type is used in the price list and cannot be deleted."].Value;
             return View(repairType);
         }
 

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Repair_Service_Center.Validation;
 
 namespace Repair_Service_Center.Models.ViewModels;
@@ -10,13 +11,13 @@ public class RegisterViewModel
 {
     // Laboratory work 7: first name and last name are checked separately
     [Required(ErrorMessage = "Please enter your first name.")]
-    [StringLength(50, MinimumLength = 2)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName]
     [Display(Name = "First name")]
     public string FirstName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter your last name.")]
-    [StringLength(50, MinimumLength = 2)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName]
     [Display(Name = "Last name")]
     public string LastName { get; set; } = string.Empty;
@@ -24,18 +25,18 @@ public class RegisterViewModel
     [Required(ErrorMessage = "Please enter your e-mail.")]
     [EmailFormat]
     [DataType(DataType.EmailAddress)]
-    [StringLength(100)]
+    [StringLength(100, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "E-mail")]
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter your mobile phone.")]
     [MobilePhone]
     [DataType(DataType.PhoneNumber)]
-    [StringLength(20)]
+    [StringLength(20, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "Mobile phone")]
     public string PhoneNumber { get; set; } = string.Empty;
 
-    [StringLength(200)]
+    [StringLength(200, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Address]
     [Display(Name = "Address (optional)")]
     public string? Address { get; set; }
@@ -78,20 +79,24 @@ public class LoginViewModel
 /// </summary>
 public class ProfileViewModel
 {
+    // These two fields are only shown, the form does not send them,
+    // so they are not validated (otherwise the implicit [Required] of a non-nullable string fails)
+    [ValidateNever]
     [Display(Name = "E-mail")]
     public string Email { get; set; } = string.Empty;
 
+    [ValidateNever]
     [Display(Name = "Role")]
     public string Role { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter your first name.")]
-    [StringLength(50, MinimumLength = 2)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName]
     [Display(Name = "First name")]
     public string FirstName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter your last name.")]
-    [StringLength(50, MinimumLength = 2)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName]
     [Display(Name = "Last name")]
     public string LastName { get; set; } = string.Empty;
@@ -99,11 +104,11 @@ public class ProfileViewModel
     [Required(ErrorMessage = "Please enter your mobile phone.")]
     [MobilePhone]
     [DataType(DataType.PhoneNumber)]
-    [StringLength(20)]
+    [StringLength(20, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "Mobile phone")]
     public string PhoneNumber { get; set; } = string.Empty;
 
-    [StringLength(200)]
+    [StringLength(200, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Address]
     [Display(Name = "Address (optional)")]
     public string? Address { get; set; }

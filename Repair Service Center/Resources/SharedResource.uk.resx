@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Laboratory work 8. Shared texts: [Display] names, validation messages, controllers, common words of views. Key = English text. -->
+  <data name="-- Not assigned --" xml:space="preserve">
+    <value>-- Не призначено --</value>
+  </data>
+  <data name="A slot must last from 30 minutes to 4 hours." xml:space="preserve">
+    <value>Слот має тривати від 30 хвилин до 4 годин.</value>
+  </data>
+  <data name="A slot must start and end on the same day." xml:space="preserve">
+    <value>Слот має починатися й закінчуватися в один день.</value>
+  </data>
+  <data name="A value is required." xml:space="preserve">
+    <value>Потрібно вказати значення.</value>
+  </data>
+  <data name="about {0}" xml:space="preserve">
+    <value>близько {0}</value>
+  </data>
+  <data name="Accepted" xml:space="preserve">
+    <value>Прийнято</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Адреса</value>
+  </data>
+  <data name="Address (if the technician must come to you)" xml:space="preserve">
+    <value>Адреса (якщо майстер має приїхати до вас)</value>
+  </data>
+  <data name="Address (optional)" xml:space="preserve">
+    <value>Адреса (необов’язково)</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Адміністратор</value>
+  </data>
+  <data name="An unknown error has occurred." xml:space="preserve">
+    <value>Сталася невідома помилка.</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Схвалено</value>
+  </data>
+  <data name="Are you sure you want to delete this?" xml:space="preserve">
+    <value>Ви дійсно хочете видалити цей запис?</value>
+  </data>
+  <data name="Back to list" xml:space="preserve">
+    <value>До списку</value>
+  </data>
+  <data name="Booked" xml:space="preserve">
+    <value>Заброньовано</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Бренд</value>
+  </data>
+  <data name="Changed" xml:space="preserve">
+    <value>Змінено</value>
+  </data>
+  <data name="Choose a service or describe the problem." xml:space="preserve">
+    <value>Оберіть послугу або опишіть проблему.</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="Complexity level" xml:space="preserve">
+    <value>Рівень складності</value>
+  </data>
+  <data name="Confirm password" xml:space="preserve">
+    <value>Підтвердження пароля</value>
+  </data>
+  <data name="Convenient time" xml:space="preserve">
+    <value>Зручний час</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Створення</value>
+  </data>
+  <data name="Create new" xml:space="preserve">
+    <value>Додати</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Створено</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Клієнт</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Describe the problem" xml:space="preserve">
+    <value>Опишіть проблему</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Деталі</value>
+  </data>
+  <data name="Device brand" xml:space="preserve">
+    <value>Бренд пристрою</value>
+  </data>
+  <data name="Device model" xml:space="preserve">
+    <value>Модель пристрою</value>
+  </data>
+  <data name="Device type" xml:space="preserve">
+    <value>Тип пристрою</value>
+  </data>
+  <data name="Duration (min)" xml:space="preserve">
+    <value>Тривалість (хв)</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="e.g. Anna Shevchenko" xml:space="preserve">
+    <value>напр. Анна Шевченко</value>
+  </data>
+  <data name="e.g. Khmelnytskyi, Instytutska St, 11" xml:space="preserve">
+    <value>напр. Хмельницький, вул. Інститутська, 11</value>
+  </data>
+  <data name="e.g. Oleksandr Kovalenko" xml:space="preserve">
+    <value>напр. Олександр Коваленко</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Email (optional)" xml:space="preserve">
+    <value>E-mail (необов’язково)</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Кінець</value>
+  </data>
+  <data name="End time must be later than start time." xml:space="preserve">
+    <value>Кінець має бути пізніше за початок.</value>
+  </data>
+  <data name="Enter a correct e-mail (e.g. name@example.com)." xml:space="preserve">
+    <value>Введіть правильний e-mail (напр. name@example.com).</value>
+  </data>
+  <data name="Enter a Ukrainian mobile number in the format +380XXXXXXXXX (e.g. +380501234567)." xml:space="preserve">
+    <value>Введіть український мобільний номер у форматі +380XXXXXXXXX (напр. +380501234567).</value>
+  </data>
+  <data name="Enter the city, the street and the house number (e.g. Khmelnytskyi, Instytutska St, 11)." xml:space="preserve">
+    <value>Вкажіть місто, вулицю та номер будинку (напр. Хмельницький, вул. Інститутська, 11).</value>
+  </data>
+  <data name="Enter the first and the last name with capital letters (e.g. Anna Shevchenko)." xml:space="preserve">
+    <value>Введіть ім’я та прізвище з великої літери (напр. Анна Шевченко).</value>
+  </data>
+  <data name="Experience (years)" xml:space="preserve">
+    <value>Стаж (років)</value>
+  </data>
+  <data name="Fastest first" xml:space="preserve">
+    <value>Спочатку найшвидші</value>
+  </data>
+  <data name="First name" xml:space="preserve">
+    <value>Ім’я</value>
+  </data>
+  <data name="Free" xml:space="preserve">
+    <value>Вільно</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>З дати</value>
+  </data>
+  <data name="Full name" xml:space="preserve">
+    <value>Повне ім’я</value>
+  </data>
+  <data name="Home page" xml:space="preserve">
+    <value>На головну</value>
+  </data>
+  <data name="In Progress" xml:space="preserve">
+    <value>У роботі</value>
+  </data>
+  <data name="Issued" xml:space="preserve">
+    <value>Видано</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Мова</value>
+  </data>
+  <data name="Last name" xml:space="preserve">
+    <value>Прізвище</value>
+  </data>
+  <data name="Mobile phone" xml:space="preserve">
+    <value>Мобільний телефон</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Модель</value>
+  </data>
+  <data name="Moderator" xml:space="preserve">
+    <value>Модератор</value>
+  </data>
+  <data name="Most popular" xml:space="preserve">
+    <value>Найпопулярніші</value>
+  </data>
+  <data name="Must start with a capital letter; only letters, digits, spaces and - ' ( ) , . &amp; are allowed." xml:space="preserve">
+    <value>Має починатися з великої літери; дозволені лише літери, цифри, пробіли та - ' ( ) , . &amp;</value>
+  </data>
+  <data name="New time slots were added: {0}." xml:space="preserve">
+    <value>Додано нових часових слотів: {0}.</value>
+  </data>
+  <data name="Only letters, digits, spaces and the characters . + - are allowed." xml:space="preserve">
+    <value>Дозволені лише літери, цифри, пробіли та символи . + -</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Очікує</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>Номер телефону</value>
+  </data>
+  <data name="Please choose a convenient time." xml:space="preserve">
+    <value>Оберіть зручний час.</value>
+  </data>
+  <data name="Please enter a password." xml:space="preserve">
+    <value>Введіть пароль.</value>
+  </data>
+  <data name="Please enter the full name." xml:space="preserve">
+    <value>Введіть повне ім’я.</value>
+  </data>
+  <data name="Please enter the name of the customer." xml:space="preserve">
+    <value>Введіть ім’я клієнта.</value>
+  </data>
+  <data name="Please enter the name." xml:space="preserve">
+    <value>Введіть назву.</value>
+  </data>
+  <data name="Please enter the phone number." xml:space="preserve">
+    <value>Введіть номер телефону.</value>
+  </data>
+  <data name="Please enter the specialization." xml:space="preserve">
+    <value>Введіть спеціалізацію.</value>
+  </data>
+  <data name="Please enter your e-mail." xml:space="preserve">
+    <value>Введіть ваш e-mail.</value>
+  </data>
+  <data name="Please enter your first name." xml:space="preserve">
+    <value>Введіть ваше ім’я.</value>
+  </data>
+  <data name="Please enter your last name." xml:space="preserve">
+    <value>Введіть ваше прізвище.</value>
+  </data>
+  <data name="Please enter your mobile phone." xml:space="preserve">
+    <value>Введіть ваш мобільний телефон.</value>
+  </data>
+  <data name="Please enter your name." xml:space="preserve">
+    <value>Введіть ваше ім’я.</value>
+  </data>
+  <data name="Please enter your password." xml:space="preserve">
+    <value>Введіть ваш пароль.</value>
+  </data>
+  <data name="Please enter your phone number." xml:space="preserve">
+    <value>Введіть ваш номер телефону.</value>
+  </data>
+  <data name="Please repeat the password." xml:space="preserve">
+    <value>Повторіть пароль.</value>
+  </data>
+  <data name="Please write a few words." xml:space="preserve">
+    <value>Напишіть кілька слів.</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Price: high to low" xml:space="preserve">
+    <value>Ціна: від більшої</value>
+  </data>
+  <data name="Price: low to high" xml:space="preserve">
+    <value>Ціна: від меншої</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Друкувати</value>
+  </data>
+  <data name="Problem description" xml:space="preserve">
+    <value>Опис проблеми</value>
+  </data>
+  <data name="Quoted" xml:space="preserve">
+    <value>Ціну визначено</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Оцінка</value>
+  </data>
+  <data name="Rating must be from 1 to 5." xml:space="preserve">
+    <value>Оцінка має бути від 1 до 5.</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Запам’ятати мене</value>
+  </data>
+  <data name="Repair type" xml:space="preserve">
+    <value>Вид ремонту</value>
+  </data>
+  <data name="Request #{0}" xml:space="preserve">
+    <value>Заявка №{0}</value>
+  </data>
+  <data name="Request number" xml:space="preserve">
+    <value>Номер заявки</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Скинути</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Відгук</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роль</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>Послуга</value>
+  </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>Спеціалізація</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Початок</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Sunday is a day off." xml:space="preserve">
+    <value>Неділя – вихідний день.</value>
+  </data>
+  <data name="Technician" xml:space="preserve">
+    <value>Майстер</value>
+  </data>
+  <data name="Thank you! Your review will appear after moderation." xml:space="preserve">
+    <value>Дякуємо! Ваш відгук з’явиться після модерації.</value>
+  </data>
+  <data name="The cost must be from 0 to 1 000 000 UAH." xml:space="preserve">
+    <value>Вартість має бути від 0 до 1 000 000 грн.</value>
+  </data>
+  <data name="The data was changed by another user. Please try again." xml:space="preserve">
+    <value>Дані змінив інший користувач. Спробуйте ще раз.</value>
+  </data>
+  <data name="The date and time must be in the future." xml:space="preserve">
+    <value>Дата й час мають бути в майбутньому.</value>
+  </data>
+  <data name="The description must be from 10 to 1000 characters." xml:space="preserve">
+    <value>Опис має містити від 10 до 1000 символів.</value>
+  </data>
+  <data name="The description must be from 10 to 800 characters." xml:space="preserve">
+    <value>Опис має містити від 10 до 800 символів.</value>
+  </data>
+  <data name="The duration must be from 5 minutes to 7 days (10 080 minutes)." xml:space="preserve">
+    <value>Тривалість має бути від 5 хвилин до 7 днів (10 080 хвилин).</value>
+  </data>
+  <data name="The e-mail {0} is already registered." xml:space="preserve">
+    <value>E-mail {0} уже зареєстрований.</value>
+  </data>
+  <data name="The e-mail {0} is not valid." xml:space="preserve">
+    <value>E-mail {0} недійсний.</value>
+  </data>
+  <data name="The experience must be from 0 to 50 years." xml:space="preserve">
+    <value>Стаж має бути від 0 до 50 років.</value>
+  </data>
+  <data name="The field must be a number." xml:space="preserve">
+    <value>Поле має бути числом.</value>
+  </data>
+  <data name="The field {0} is required." xml:space="preserve">
+    <value>Поле «{0}» є обов’язковим.</value>
+  </data>
+  <data name="The field {0} must be a number." xml:space="preserve">
+    <value>Поле «{0}» має бути числом.</value>
+  </data>
+  <data name="The field {0} must be at most {1} characters long." xml:space="preserve">
+    <value>Поле «{0}» може містити не більше {1} символів.</value>
+  </data>
+  <data name="The field {0} must be from {2} to {1} characters long." xml:space="preserve">
+    <value>Поле «{0}» має містити від {2} до {1} символів.</value>
+  </data>
+  <data name="The login {0} is already taken." xml:space="preserve">
+    <value>Логін {0} уже зайнятий.</value>
+  </data>
+  <data name="The login {0} is not valid." xml:space="preserve">
+    <value>Логін {0} недійсний.</value>
+  </data>
+  <data name="The password must have at least 8 characters." xml:space="preserve">
+    <value>Пароль має містити щонайменше 8 символів.</value>
+  </data>
+  <data name="The password must have at least one capital letter (A-Z)." xml:space="preserve">
+    <value>Пароль має містити хоча б одну велику літеру (A-Z).</value>
+  </data>
+  <data name="The password must have at least one digit (0-9)." xml:space="preserve">
+    <value>Пароль має містити хоча б одну цифру (0-9).</value>
+  </data>
+  <data name="The password must have at least one small letter (a-z)." xml:space="preserve">
+    <value>Пароль має містити хоча б одну малу літеру (a-z).</value>
+  </data>
+  <data name="The password must have at least one special character." xml:space="preserve">
+    <value>Пароль має містити хоча б один спеціальний символ.</value>
+  </data>
+  <data name="The password must have at least {0} characters." xml:space="preserve">
+    <value>Пароль має містити щонайменше {0} символів.</value>
+  </data>
+  <data name="The passwords do not match." xml:space="preserve">
+    <value>Паролі не збігаються.</value>
+  </data>
+  <data name="The price must be from 1 to 100 000 UAH." xml:space="preserve">
+    <value>Ціна має бути від 1 до 100 000 грн.</value>
+  </data>
+  <data name="The review must be from 10 to 1000 characters." xml:space="preserve">
+    <value>Відгук має містити від 10 до 1000 символів.</value>
+  </data>
+  <data name="The schedule for the next week is already full." xml:space="preserve">
+    <value>Розклад на наступний тиждень уже заповнений.</value>
+  </data>
+  <data name="The selected service does not exist." xml:space="preserve">
+    <value>Обраної послуги не існує.</value>
+  </data>
+  <data name="The start of a slot must be in the future." xml:space="preserve">
+    <value>Початок слоту має бути в майбутньому.</value>
+  </data>
+  <data name="The value '{0}' is invalid." xml:space="preserve">
+    <value>Значення «{0}» недійсне.</value>
+  </data>
+  <data name="The value '{0}' is not valid for {1}." xml:space="preserve">
+    <value>Значення «{0}» недійсне для поля «{1}».</value>
+  </data>
+  <data name="The value '{0}' is not valid." xml:space="preserve">
+    <value>Значення «{0}» недійсне.</value>
+  </data>
+  <data name="The value is not valid for {0}." xml:space="preserve">
+    <value>Недійсне значення для поля «{0}».</value>
+  </data>
+  <data name="This complexity level is used in the price list and cannot be deleted." xml:space="preserve">
+    <value>Цей рівень складності використовується в прайсі, тому його не можна видалити.</value>
+  </data>
+  <data name="This device type is used in the price list and cannot be deleted." xml:space="preserve">
+    <value>Цей тип пристрою використовується в прайсі, тому його не можна видалити.</value>
+  </data>
+  <data name="This record cannot be deleted because other data depends on it." xml:space="preserve">
+    <value>Цей запис не можна видалити, бо від нього залежать інші дані.</value>
+  </data>
+  <data name="This repair type is used in the price list and cannot be deleted." xml:space="preserve">
+    <value>Цей вид ремонту використовується в прайсі, тому його не можна видалити.</value>
+  </data>
+  <data name="This service is used in orders and cannot be deleted." xml:space="preserve">
+    <value>Ця послуга використовується в заявках, тому її не можна видалити.</value>
+  </data>
+  <data name="This technician already has a time slot at this time." xml:space="preserve">
+    <value>У цього майстра вже є слот на цей час.</value>
+  </data>
+  <data name="This technician has booked time slots and cannot be deleted." xml:space="preserve">
+    <value>У цього майстра є заброньовані слоти, тому його не можна видалити.</value>
+  </data>
+  <data name="This time has just been booked by another customer. Please choose another time." xml:space="preserve">
+    <value>Цей час щойно забронював інший клієнт. Оберіть інший час.</value>
+  </data>
+  <data name="This time is already taken. Please choose another time." xml:space="preserve">
+    <value>Цей час уже зайнятий. Оберіть інший час.</value>
+  </data>
+  <data name="This time slot is booked in an order and cannot be deleted." xml:space="preserve">
+    <value>Цей часовий слот заброньований у заявці, тому його не можна видалити.</value>
+  </data>
+  <data name="Time slot" xml:space="preserve">
+    <value>Часовий слот</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>По дату</value>
+  </data>
+  <data name="Too many failed attempts. Please try again in 5 minutes." xml:space="preserve">
+    <value>Забагато невдалих спроб. Спробуйте ще раз через 5 хвилин.</value>
+  </data>
+  <data name="Total cost" xml:space="preserve">
+    <value>Загальна вартість</value>
+  </data>
+  <data name="UAH" xml:space="preserve">
+    <value>грн</value>
+  </data>
+  <data name="Use only letters, apostrophe and hyphen; start with a capital letter (e.g. Anna)." xml:space="preserve">
+    <value>Використовуйте лише літери, апостроф і дефіс; почніть з великої літери (напр. Анна).</value>
+  </data>
+  <data name="Use only letters; every word starts with a capital letter (e.g. Anna or Anna Shevchenko)." xml:space="preserve">
+    <value>Використовуйте лише літери; кожне слово з великої літери (напр. Анна або Анна Шевченко).</value>
+  </data>
+  <data name="Use times that are multiples of 15 minutes (10:00, 10:15, 10:30, ...)." xml:space="preserve">
+    <value>Використовуйте час, кратний 15 хвилинам (10:00, 10:15, 10:30, ...).</value>
+  </data>
+  <data name="will be set after diagnostics" xml:space="preserve">
+    <value>буде визначена після діагностики</value>
+  </data>
+  <data name="Working hours are from 08:00 to 20:00." xml:space="preserve">
+    <value>Робочий час – з 08:00 до 20:00.</value>
+  </data>
+  <data name="Wrong e-mail or password." xml:space="preserve">
+    <value>Неправильний e-mail або пароль.</value>
+  </data>
+  <data name="Wrong password." xml:space="preserve">
+    <value>Неправильний пароль.</value>
+  </data>
+  <data name="You cannot change your own role." xml:space="preserve">
+    <value>Ви не можете змінити власну роль.</value>
+  </data>
+  <data name="You have no request with this number." xml:space="preserve">
+    <value>У вас немає заявки з таким номером.</value>
+  </data>
+  <data name="Your name" xml:space="preserve">
+    <value>Ваше ім’я</value>
+  </data>
+  <data name="Your profile is saved." xml:space="preserve">
+    <value>Ваш профіль збережено.</value>
+  </data>
+  <data name="{0} h" xml:space="preserve">
+    <value>{0} год</value>
+  </data>
+  <data name="{0} h {1} min" xml:space="preserve">
+    <value>{0} год {1} хв</value>
+  </data>
+  <data name="{0} min" xml:space="preserve">
+    <value>{0} хв</value>
+  </data>
+  <data name="{0} now has the role {1}." xml:space="preserve">
+    <value>{0} тепер має роль «{1}».</value>
+  </data>
+  <data name="{0} UAH" xml:space="preserve">
+    <value>{0} грн</value>
+  </data>
+</root>

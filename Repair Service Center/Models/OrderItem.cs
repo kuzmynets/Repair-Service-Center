@@ -25,7 +25,9 @@ public class OrderItem
     // The price is copied at the moment of the order,
     // so later changes in the price list do not change old orders
     [Column(TypeName = "decimal(10, 2)")]
-    [DisplayFormat(DataFormatString = "{0:0.00} UAH")]
+    // Laboratory work 8: only the number; the currency (UAH / грн) is added in the view in the language of the user
+    [DisplayFormat(DataFormatString = "{0:0.00}")]
+    [Display(Name = "Price")]
     public decimal Price { get; set; }
 
     [Display(Name = "Duration (min)")]

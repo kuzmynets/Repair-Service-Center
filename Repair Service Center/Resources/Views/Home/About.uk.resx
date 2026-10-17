@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Laboratory work 8. Texts of the view Views/Home/About.cshtml (IViewLocalizer). -->
+  <data name="+380 00 000 00 00 (demo)" xml:space="preserve">
+    <value>+380 00 000 00 00 (демо)</value>
+  </data>
+  <data name="&lt;b&gt;{0}&lt;/b&gt; years of experience" xml:space="preserve">
+    <value>Стаж: &lt;b&gt;{0}&lt;/b&gt; р.</value>
+  </data>
+  <data name="About us" xml:space="preserve">
+    <value>Про нас</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Адреса</value>
+  </data>
+  <data name="Clear prices" xml:space="preserve">
+    <value>Зрозумілі ціни</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Контакти</value>
+  </data>
+  <data name="Khmelnytskyi, Ukraine (demo address)" xml:space="preserve">
+    <value>Хмельницький, Україна (демо-адреса)</value>
+  </data>
+  <data name="Mon–Fri 9:00–19:00, Sat 10:00–16:00" xml:space="preserve">
+    <value>Пн–Пт 9:00–19:00, Сб 10:00–16:00</value>
+  </data>
+  <data name="Online requests" xml:space="preserve">
+    <value>Онлайн-заявки</value>
+  </data>
+  <data name="Our technicians" xml:space="preserve">
+    <value>Наші майстри</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="Repair Service Center is a workshop for repair of phones, computers and home appliances." xml:space="preserve">
+    <value>Repair Service Center – майстерня з ремонту телефонів, комп’ютерів і побутової техніки.</value>
+  </data>
+  <data name="Request a repair" xml:space="preserve">
+    <value>Замовити ремонт</value>
+  </data>
+  <data name="Send a request from the site and follow its status." xml:space="preserve">
+    <value>Надішліть заявку з сайту та стежте за її статусом.</value>
+  </data>
+  <data name="The price and the time of every service are in the price list before you order." xml:space="preserve">
+    <value>Ціна й час кожної послуги є в прайс-листі ще до замовлення.</value>
+  </data>
+  <data name="Warranty" xml:space="preserve">
+    <value>Гарантія</value>
+  </data>
+  <data name="We give a warranty for the work and for the new parts." xml:space="preserve">
+    <value>Ми даємо гарантію на роботу та нові запчастини.</value>
+  </data>
+  <data name="We make the repair process clear for the customer: the prices are published on the site, the request can be sent online, and every repair gets a warranty. For non-standard problems our technician makes diagnostics first and then tells you the price." xml:space="preserve">
+    <value>Ми робимо ремонт зрозумілим для клієнта: ціни опубліковані на сайті, заявку можна надіслати онлайн, а на кожен ремонт діє гарантія. Для нестандартних проблем наш майстер спочатку робить діагностику, а потім називає ціну.</value>
+  </data>
+  <data name="Why customers choose us" xml:space="preserve">
+    <value>Чому клієнти обирають нас</value>
+  </data>
+  <data name="Working hours" xml:space="preserve">
+    <value>Графік роботи</value>
+  </data>
+  <data name="Workshop of the service center" xml:space="preserve">
+    <value>Майстерня сервісного центру</value>
+  </data>
+</root>

@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Extensions.Localization;
 
 namespace Repair_Service_Center.Validation;
 
@@ -23,6 +25,24 @@ public static class ValidationPatterns
 }
 
 /// <summary>
+/// Laboratory work 8. Translation of validation messages with Resources/SharedResource.uk.resx.
+/// Own attributes and IValidatableObject do not get the localizer from MVC,
+/// so they take IStringLocalizerFactory from the services of the current request.
+/// </summary>
+public static class ValidationText
+{
+    public static string Translate(IServiceProvider? services, string text, params object[] args)
+    {
+        var factory = services?.GetService(typeof(IStringLocalizerFactory)) as IStringLocalizerFactory;
+        if (factory == null)
+        {
+            return string.Format(CultureInfo.CurrentCulture, text, args);
+        }
+        return factory.Create(typeof(SharedResource))[text, args].Value;
+    }
+}
+
+/// <summary>
 /// Base class for the rules with a regular expression. The same rule works
 /// on the server (IsValid of RegularExpressionAttribute) and in the browser:
 /// AddValidation writes data-val-regex attributes, and jQuery Validation checks them.
@@ -34,10 +54,24 @@ public abstract class PatternAttribute : RegularExpressionAttribute, IClientMode
         ErrorMessage = message;
     }
 
+    // Server: the message in the language of the user (laboratory work 8)
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    {
+        if (IsValid(value))
+        {
+            return ValidationResult.Success;
+        }
+        var message = ValidationText.Translate(validationContext, ErrorMessageString, validationContext.DisplayName);
+        return new ValidationResult(message, validationContext.MemberName == null ? null : new[] { validationContext.MemberName });
+    }
+
+    // Browser: the same translated message goes to data-val-regex
     public void AddValidation(ClientModelValidationContext context)
     {
+        var message = ValidationText.Translate(context.ActionContext.HttpContext.RequestServices,
+            ErrorMessageString, context.ModelMetadata.GetDisplayName());
         Merge(context.Attributes, "data-val", "true");
-        Merge(context.Attributes, "data-val-regex", FormatErrorMessage(context.ModelMetadata.GetDisplayName()));
+        Merge(context.Attributes, "data-val-regex", message);
         Merge(context.Attributes, "data-val-regex-pattern", Pattern);
     }
 
@@ -130,12 +164,25 @@ public class FutureDateAttribute : ValidationAttribute, IClientModelValidator
     // An empty value is valid: [Required] checks it
     public override bool IsValid(object? value) => value is not DateTime date || date > DateTime.Now;
 
+    // Laboratory work 8: translated message on the server ...
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    {
+        if (IsValid(value))
+        {
+            return ValidationResult.Success;
+        }
+        var message = ValidationText.Translate(validationContext, ErrorMessageString, validationContext.DisplayName);
+        return new ValidationResult(message, validationContext.MemberName == null ? null : new[] { validationContext.MemberName });
+    }
+
+    // ... and in the browser
     public void AddValidation(ClientModelValidationContext context)
     {
         if (!context.Attributes.ContainsKey("data-val"))
         {
             context.Attributes.Add("data-val", "true");
         }
-        context.Attributes["data-val-futuredate"] = FormatErrorMessage(context.ModelMetadata.GetDisplayName());
+        context.Attributes["data-val-futuredate"] = ValidationText.Translate(
+            context.ActionContext.HttpContext.RequestServices, ErrorMessageString, context.ModelMetadata.GetDisplayName());
     }
 }

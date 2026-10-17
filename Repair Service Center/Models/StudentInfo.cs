@@ -4,5 +4,6 @@ public class StudentInfo
 {
     public string FullName { get; set; } = "";
     public string Group { get; set; } = "";
+    public string University { get; set; } = "";
     public string ProjectTopic { get; set; } = "";
 }

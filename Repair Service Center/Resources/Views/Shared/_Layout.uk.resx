@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Laboratory work 8. Texts of the view Views/Shared/_Layout.cshtml (IViewLocalizer). -->
+  <data name="+380 00 000 00 00 (demo)" xml:space="preserve">
+    <value>+380 00 000 00 00 (демо)</value>
+  </data>
+  <data name="About us" xml:space="preserve">
+    <value>Про нас</value>
+  </data>
+  <data name="Admin panel" xml:space="preserve">
+    <value>Адмінпанель</value>
+  </data>
+  <data name="Admin panel · manage directories, price list, orders and users" xml:space="preserve">
+    <value>Адмінпанель · довідники, прайс-лист, заявки та користувачі</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="Complexity levels" xml:space="preserve">
+    <value>Рівні складності</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Контакти</value>
+  </data>
+  <data name="course project" xml:space="preserve">
+    <value>курсовий проєкт</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Клієнтам</value>
+  </data>
+  <data name="Device types" xml:space="preserve">
+    <value>Типи пристроїв</value>
+  </data>
+  <data name="Directories" xml:space="preserve">
+    <value>Довідники</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Головна</value>
+  </data>
+  <data name="Khmelnytskyi, Ukraine" xml:space="preserve">
+    <value>Хмельницький, Україна</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Увійти</value>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>Вийти</value>
+  </data>
+  <data name="Moderation" xml:space="preserve">
+    <value>Модерація</value>
+  </data>
+  <data name="Moderation of customer reviews" xml:space="preserve">
+    <value>Модерація відгуків клієнтів</value>
+  </data>
+  <data name="Mon–Sat, 9:00–19:00" xml:space="preserve">
+    <value>Пн–Сб, 9:00–19:00</value>
+  </data>
+  <data name="My requests" xml:space="preserve">
+    <value>Мої заявки</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>Заявки</value>
+  </data>
+  <data name="Price list" xml:space="preserve">
+    <value>Прайс-лист</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Конфіденційність</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Профіль</value>
+  </data>
+  <data name="Repair of smartphones, laptops, tablets and home appliances. Online requests, clear prices, warranty for every repair." xml:space="preserve">
+    <value>Ремонт смартфонів, ноутбуків, планшетів і побутової техніки. Онлайн-заявки, зрозумілі ціни, гарантія на кожен ремонт.</value>
+  </data>
+  <data name="Repair types" xml:space="preserve">
+    <value>Види ремонту</value>
+  </data>
+  <data name="Request a repair" xml:space="preserve">
+    <value>Замовити ремонт</value>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>Відгуки</value>
+  </data>
+  <data name="Reviews moderation" xml:space="preserve">
+    <value>Модерація відгуків</value>
+  </data>
+  <data name="Services &amp; prices" xml:space="preserve">
+    <value>Послуги та ціни</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="Technicians" xml:space="preserve">
+    <value>Майстри</value>
+  </data>
+  <data name="Time slots" xml:space="preserve">
+    <value>Часові слоти</value>
+  </data>
+  <data name="Toggle navigation" xml:space="preserve">
+    <value>Відкрити меню</value>
+  </data>
+  <data name="Track request" xml:space="preserve">
+    <value>Стан заявки</value>
+  </data>
+  <data name="Users and roles" xml:space="preserve">
+    <value>Користувачі та ролі</value>
+  </data>
+</root>

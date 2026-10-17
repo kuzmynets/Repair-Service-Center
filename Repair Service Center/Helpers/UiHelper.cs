@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Localization;
+
 namespace Repair_Service_Center.Helpers;
 
 /// <summary>
@@ -22,13 +24,17 @@ public static class UiHelper
 
     /// <summary>
     /// 45 -> "45 min", 60 -> "1 h", 90 -> "1 h 30 min".
+    /// Laboratory work 8: with a localizer the units are translated ("1 год 30 хв").
     /// </summary>
-    public static string FormatDuration(int minutes)
+    public static string FormatDuration(int minutes, IHtmlLocalizer? localizer = null)
     {
-        if (minutes < 60) return $"{minutes} min";
+        string T(string format, params object[] args) =>
+            localizer == null ? string.Format(format, args) : localizer.GetString(format, args).Value;
+
+        if (minutes < 60) return T("{0} min", minutes);
         var hours = minutes / 60;
         var rest = minutes % 60;
-        return rest == 0 ? $"{hours} h" : $"{hours} h {rest} min";
+        return rest == 0 ? T("{0} h", hours) : T("{0} h {1} min", hours, rest);
     }
 
     /// <summary>

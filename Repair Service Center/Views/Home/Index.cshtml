@@ -1,6 +1,6 @@
 @model HomeIndexViewModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = Localizer["Home"];
     ViewData["FullWidth"] = true;
 }
 
@@ -9,19 +9,18 @@
     <div class="container">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-lg-6">
-                <span class="hero-label">Service center &middot; Khmelnytskyi</span>
-                <h1 class="display-5 fw-bold mt-3">We repair your devices quickly and with a warranty</h1>
+                <span class="hero-label">@Localizer["Service center · Khmelnytskyi"]</span>
+                <h1 class="display-5 fw-bold mt-3">@Localizer["We repair your devices quickly and with a warranty"]</h1>
                 <p class="lead text-muted my-4">
-                    Smartphones, laptops, tablets and home appliances. Choose a service from the price list
-                    or simply describe the problem &mdash; we will call you back.
+                    @Localizer["Smartphones, laptops, tablets and home appliances. Choose a service from the price list or simply describe the problem — we will call you back."]
                 </p>
                 <div class="d-flex flex-wrap gap-2">
-                    <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent btn-lg">Request a repair</a>
-                    <a asp-controller="Services" asp-action="Index" class="btn btn-outline-brand btn-lg">See prices</a>
+                    <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-accent btn-lg">@Localizer["Request a repair"]</a>
+                    <a asp-controller="Services" asp-action="Index" class="btn btn-outline-brand btn-lg">@Localizer["See prices"]</a>
                 </div>
             </div>
             <div class="col-lg-6 text-center">
-                <img src="~/images/hero.svg" alt="Repair of a laptop and a smartphone" class="img-fluid hero-img"/>
+                <img src="~/images/hero.svg" alt="@Localizer["Repair of a laptop and a smartphone"]" class="img-fluid hero-img"/>
             </div>
         </div>
     </div>
@@ -33,15 +32,15 @@
         <div class="row text-center g-3">
             <div class="col-4">
                 <div class="stat-number">@ViewData["ServicesCount"]</div>
-                <div class="stat-label">services in the price list</div>
+                <div class="stat-label">@Localizer["services in the price list"]</div>
             </div>
             <div class="col-4">
                 <div class="stat-number">@ViewData["TechniciansCount"]</div>
-                <div class="stat-label">experienced technicians</div>
+                <div class="stat-label">@Localizer["experienced technicians"]</div>
             </div>
             <div class="col-4">
                 <div class="stat-number">@ViewData["ActiveOrdersCount"]</div>
-                <div class="stat-label">orders in work now</div>
+                <div class="stat-label">@Localizer["orders in work now"]</div>
             </div>
         </div>
     </div>
@@ -49,7 +48,7 @@
 
 <!-- Device types -->
 <section class="container py-5">
-    <h2 class="section-title">What do we repair?</h2>
+    <h2 class="section-title">@Localizer["What do we repair?"]</h2>
     <div class="row g-3">
         @foreach (var device in Model.DeviceTypes)
         {
@@ -66,22 +65,22 @@
 <!-- How it works -->
 <section class="bg-soft py-5">
     <div class="container">
-        <h2 class="section-title">How it works</h2>
+        <h2 class="section-title">@Localizer["How it works"]</h2>
         <div class="row g-4 text-center">
             <div class="col-md-4">
                 <img src="~/images/step-choose.svg" alt="" width="72" height="72"/>
-                <h5 class="mt-3">1. Choose a service</h5>
-                <p class="text-muted small">Find your device in the price list and see the price and time at once.</p>
+                <h5 class="mt-3">@Localizer["1. Choose a service"]</h5>
+                <p class="text-muted small">@Localizer["Find your device in the price list and see the price and time at once."]</p>
             </div>
             <div class="col-md-4">
                 <img src="~/images/step-request.svg" alt="" width="72" height="72"/>
-                <h5 class="mt-3">2. Send a request</h5>
-                <p class="text-muted small">Fill in a short form. If the problem is not in the list, just describe it.</p>
+                <h5 class="mt-3">@Localizer["2. Send a request"]</h5>
+                <p class="text-muted small">@Localizer["Fill in a short form. If the problem is not in the list, just describe it."]</p>
             </div>
             <div class="col-md-4">
                 <img src="~/images/step-done.svg" alt="" width="72" height="72"/>
-                <h5 class="mt-3">3. Get your device back</h5>
-                <p class="text-muted small">A technician repairs the device, and you get it back with a warranty.</p>
+                <h5 class="mt-3">@Localizer["3. Get your device back"]</h5>
+                <p class="text-muted small">@Localizer["A technician repairs the device, and you get it back with a warranty."]</p>
             </div>
         </div>
     </div>
@@ -90,8 +89,8 @@
 <!-- Featured services -->
 <section class="container py-5">
     <div class="d-flex justify-content-between align-items-end mb-3">
-        <h2 class="section-title mb-0">Popular services</h2>
-        <a asp-controller="Services" asp-action="Index" class="small">All services &rarr;</a>
+        <h2 class="section-title mb-0">@Localizer["Popular services"]</h2>
+        <a asp-controller="Services" asp-action="Index" class="small">@Localizer["All services →"]</a>
     </div>
     <div class="row g-4">
         @foreach (var service in Model.FeaturedServices)
@@ -109,8 +108,8 @@
     <section class="bg-soft py-5">
         <div class="container">
             <div class="d-flex justify-content-between align-items-end mb-3">
-                <h2 class="section-title mb-0">What customers say</h2>
-                <a asp-controller="Reviews" asp-action="Index" class="small">All reviews &rarr;</a>
+                <h2 class="section-title mb-0">@Localizer["What customers say"]</h2>
+                <a asp-controller="Reviews" asp-action="Index" class="small">@Localizer["All reviews →"]</a>
             </div>
             <div class="row g-4">
                 @foreach (var review in Model.LatestReviews)
@@ -128,9 +127,9 @@
 <section class="cta-band">
     <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3 py-4">
         <div>
-            <h4 class="mb-1">Not sure what is broken?</h4>
-            <p class="mb-0">Describe the problem &mdash; our technician will check it and tell you the price.</p>
+            <h4 class="mb-1">@Localizer["Not sure what is broken?"]</h4>
+            <p class="mb-0">@Localizer["Describe the problem — our technician will check it and tell you the price."]</p>
         </div>
-        <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-light btn-lg">Describe the problem</a>
+        <a asp-controller="RepairRequest" asp-action="Create" class="btn btn-light btn-lg">@Localizer["Describe the problem"]</a>
     </div>
 </section>

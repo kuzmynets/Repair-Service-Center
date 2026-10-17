@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -36,25 +36,25 @@
                 <span class="fw-semibold">Repair Service Center</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="mainNav" aria-expanded="false" aria-label="@Localizer["Toggle navigation"]">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link @Active("Home", "Index")" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link @Active("Home", "Index")" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @Active("Services")" asp-controller="Services" asp-action="Index">Services &amp; prices</a>
+                        <a class="nav-link @Active("Services")" asp-controller="Services" asp-action="Index">@Localizer["Services & prices"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @(controller == "Reviews" && !isModeration ? "active" : "")" asp-controller="Reviews" asp-action="Index">Reviews</a>
+                        <a class="nav-link @(controller == "Reviews" && !isModeration ? "active" : "")" asp-controller="Reviews" asp-action="Index">@Localizer["Reviews"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @Active("Home", "About")" asp-controller="Home" asp-action="About">About us</a>
+                        <a class="nav-link @Active("Home", "About")" asp-controller="Home" asp-action="About">@Localizer["About us"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @Active("RepairRequest", "Track")" asp-controller="RepairRequest" asp-action="Track">Track request</a>
+                        <a class="nav-link @Active("RepairRequest", "Track")" asp-controller="RepairRequest" asp-action="Track">@Localizer["Track request"]</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav align-items-lg-center gap-lg-2">
@@ -62,26 +62,26 @@
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle @(isAdmin ? "active" : "")" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">Admin panel</a>
+                               data-bs-toggle="dropdown" aria-expanded="false">@Localizer["Admin panel"]</a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">Orders</a></li>
-                                <li><a class="dropdown-item" asp-controller="PriceListItems" asp-action="Index">Price list</a></li>
-                                <li><a class="dropdown-item" asp-controller="Slots" asp-action="Index">Time slots</a></li>
-                                <li><a class="dropdown-item" asp-controller="Reviews" asp-action="Moderate">Reviews moderation</a></li>
-                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Users and roles</a></li>
+                                <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">@Localizer["Orders"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="PriceListItems" asp-action="Index">@Localizer["Price list"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="Slots" asp-action="Index">@Localizer["Time slots"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="Reviews" asp-action="Moderate">@Localizer["Reviews moderation"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">@Localizer["Users and roles"]</a></li>
                                 <li><hr class="dropdown-divider"/></li>
-                                <li><h6 class="dropdown-header">Directories</h6></li>
-                                <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">Device types</a></li>
-                                <li><a class="dropdown-item" asp-controller="RepairTypes" asp-action="Index">Repair types</a></li>
-                                <li><a class="dropdown-item" asp-controller="ComplexityLevels" asp-action="Index">Complexity levels</a></li>
-                                <li><a class="dropdown-item" asp-controller="Technicians" asp-action="Index">Technicians</a></li>
+                                <li><h6 class="dropdown-header">@Localizer["Directories"]</h6></li>
+                                <li><a class="dropdown-item" asp-controller="DeviceTypes" asp-action="Index">@Localizer["Device types"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="RepairTypes" asp-action="Index">@Localizer["Repair types"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="ComplexityLevels" asp-action="Index">@Localizer["Complexity levels"]</a></li>
+                                <li><a class="dropdown-item" asp-controller="Technicians" asp-action="Index">@Localizer["Technicians"]</a></li>
                             </ul>
                         </li>
                     }
                     else if (userIsModerator)
                     {
                         <li class="nav-item">
-                            <a class="nav-link @(isModeration ? "active" : "")" asp-controller="Reviews" asp-action="Moderate">Moderation</a>
+                            <a class="nav-link @(isModeration ? "active" : "")" asp-controller="Reviews" asp-action="Moderate">@Localizer["Moderation"]</a>
                         </li>
                     }
 
@@ -93,13 +93,13 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 @if (userIsCustomer)
                                 {
-                                    <li><a class="dropdown-item" asp-controller="MyOrders" asp-action="Index">My requests</a></li>
+                                    <li><a class="dropdown-item" asp-controller="MyOrders" asp-action="Index">@Localizer["My requests"]</a></li>
                                 }
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">@Localizer["Profile"]</a></li>
                                 <li><hr class="dropdown-divider"/></li>
                                 <li>
                                     <form asp-controller="Account" asp-action="Logout" method="post">
-                                        <button type="submit" class="dropdown-item">Log out</button>
+                                        <button type="submit" class="dropdown-item">@Localizer["Log out"]</button>
                                     </form>
                                 </li>
                             </ul>
@@ -108,17 +108,22 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link @Active("Account", "Login")" asp-controller="Account" asp-action="Login">Log in</a>
+                            <a class="nav-link @Active("Account", "Login")" asp-controller="Account" asp-action="Login">@Localizer["Log in"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @Active("Account", "Register")" asp-controller="Account" asp-action="Register">Sign up</a>
+                            <a class="nav-link @Active("Account", "Register")" asp-controller="Account" asp-action="Register">@Localizer["Sign up"]</a>
                         </li>
                     }
+
+                    <li class="nav-item">
+                        @* Laboratory work 8: EN / UA *@
+                        <partial name="_LanguageSwitcher"/>
+                    </li>
 
                     @if (!userIsModerator)
                     {
                         <li class="nav-item">
-                            <a class="btn btn-accent" asp-controller="RepairRequest" asp-action="Create">Request a repair</a>
+                            <a class="btn btn-accent" asp-controller="RepairRequest" asp-action="Create">@Localizer["Request a repair"]</a>
                         </li>
                     }
                 </ul>
@@ -129,7 +134,7 @@
     {
         <div class="admin-bar">
             <div class="container small">
-                @(userIsAdmin ? "Admin panel · manage directories, price list, orders and users" : "Moderation of customer reviews")
+                @(userIsAdmin ? Localizer["Admin panel · manage directories, price list, orders and users"] : Localizer["Moderation of customer reviews"])
             </div>
         </div>
     }
@@ -156,33 +161,33 @@
                     <img src="~/images/logo.svg" alt="" width="28" height="28"/>
                     <span class="fw-semibold text-white">Repair Service Center</span>
                 </div>
-                <p class="small mb-0">Repair of smartphones, laptops, tablets and home appliances. Online requests, clear prices, warranty for every repair.</p>
+                <p class="small mb-0">@Localizer["Repair of smartphones, laptops, tablets and home appliances. Online requests, clear prices, warranty for every repair."]</p>
             </div>
             <div class="col-6 col-md-3">
-                <h6 class="text-white">Customers</h6>
+                <h6 class="text-white">@Localizer["Customers"]</h6>
                 <ul class="list-unstyled small mb-0">
-                    <li><a asp-controller="Services" asp-action="Index">Services &amp; prices</a></li>
-                    <li><a asp-controller="RepairRequest" asp-action="Create">Request a repair</a></li>
-                    <li><a asp-controller="RepairRequest" asp-action="Track">Track request</a></li>
-                    <li><a asp-controller="Reviews" asp-action="Index">Reviews</a></li>
-                    <li><a asp-controller="Home" asp-action="About">About us</a></li>
+                    <li><a asp-controller="Services" asp-action="Index">@Localizer["Services & prices"]</a></li>
+                    <li><a asp-controller="RepairRequest" asp-action="Create">@Localizer["Request a repair"]</a></li>
+                    <li><a asp-controller="RepairRequest" asp-action="Track">@Localizer["Track request"]</a></li>
+                    <li><a asp-controller="Reviews" asp-action="Index">@Localizer["Reviews"]</a></li>
+                    <li><a asp-controller="Home" asp-action="About">@Localizer["About us"]</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md-4">
-                <h6 class="text-white">Contacts</h6>
+                <h6 class="text-white">@Localizer["Contacts"]</h6>
                 <ul class="list-unstyled small mb-0">
-                    <li>Mon&ndash;Sat, 9:00&ndash;19:00</li>
-                    <li>+380 00 000 00 00 (demo)</li>
-                    <li>Khmelnytskyi, Ukraine</li>
+                    <li>@Localizer["Mon–Sat, 9:00–19:00"]</li>
+                    <li>@Localizer["+380 00 000 00 00 (demo)"]</li>
+                    <li>@Localizer["Khmelnytskyi, Ukraine"]</li>
                 </ul>
             </div>
         </div>
         <hr class="border-secondary"/>
         <div class="d-flex flex-wrap justify-content-between small">
-            <span>&copy; @DateTime.Now.Year Repair Service Center &middot; course project</span>
+            <span>&copy; @DateTime.Now.Year Repair Service Center &middot; @Localizer["course project"]</span>
             <span>
-                <a asp-controller="Home" asp-action="Author">Author</a> &middot;
-                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <a asp-controller="Home" asp-action="Author">@Localizer["Author"]</a> &middot;
+                <a asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
             </span>
         </div>
     </div>

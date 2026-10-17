@@ -1,28 +1,28 @@
 @model IEnumerable<Review>
 @{
-    ViewData["Title"] = "Reviews";
+    ViewData["Title"] = Localizer["Reviews"];
     var average = (double)(ViewData["Average"] ?? 0d);
 }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
     <div>
-        <h1 class="mb-1">Customer reviews</h1>
+        <h1 class="mb-1">@Localizer["Customer reviews"]</h1>
         @if (Model.Any())
         {
             <div>
                 <span class="stars fs-5">@UiHelper.Stars((int)Math.Round(average))</span>
-                <span class="text-muted ms-2">@average.ToString("0.0") of 5 &middot; @Model.Count() reviews</span>
+                <span class="text-muted ms-2">@(Localizer["{0} of 5 · reviews: {1}", average.ToString("0.0"), Model.Count()])</span>
             </div>
         }
     </div>
     @* Laboratory work 6: only a customer can write a review; a guest is offered to log in *@
     @if (User.IsInRole(AppRoles.Customer))
     {
-        <a asp-action="Create" class="btn btn-accent">Write a review</a>
+        <a asp-action="Create" class="btn btn-accent">@Localizer["Write a review"]</a>
     }
     else if (User.Identity?.IsAuthenticated != true)
     {
-        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Reviews/Create" class="btn btn-outline-brand">Log in to write a review</a>
+        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Reviews/Create" class="btn btn-outline-brand">@Localizer["Log in to write a review"]</a>
     }
 </div>
 
@@ -33,7 +33,7 @@
 
 @if (!Model.Any())
 {
-    <p class="text-muted">There are no reviews yet. Be the first!</p>
+    <p class="text-muted">@Localizer["There are no reviews yet. Be the first!"]</p>
 }
 
 <div class="row g-4">

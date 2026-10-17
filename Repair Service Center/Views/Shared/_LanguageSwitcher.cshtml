@@ -1,0 +1,21 @@
+@using Microsoft.AspNetCore.Localization
+@* Laboratory work 8: language switcher in the menu. The button sends the culture to LanguageController,
+   which saves it in a cookie and returns the user to the same page. *@
+@{
+    var current = Context.Features.Get<IRequestCultureFeature>()?.RequestCulture.UICulture.Name ?? AppCultures.English;
+
+    // The same page without ?culture=... (the address parameter would win over the cookie)
+    var query = Context.Request.Query
+        .Where(q => !q.Key.Equals("culture", StringComparison.OrdinalIgnoreCase) &&
+                    !q.Key.Equals("ui-culture", StringComparison.OrdinalIgnoreCase))
+        .SelectMany(q => q.Value.Select(v => new KeyValuePair<string, string?>(q.Key, v)));
+    var returnUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Microsoft.AspNetCore.Http.QueryString.Create(query)}";
+}
+<form asp-controller="Language" asp-action="Set" method="post" class="lang-switch btn-group" role="group"
+      aria-label="@SharedLocalizer["Language"]">
+    <input type="hidden" name="returnUrl" value="@returnUrl"/>
+    <button type="submit" name="culture" value="@AppCultures.English" title="English"
+            class="btn btn-sm @(current == AppCultures.English ? "btn-light" : "btn-outline-light")">EN</button>
+    <button type="submit" name="culture" value="@AppCultures.Ukrainian" title="Українська"
+            class="btn btn-sm @(current == AppCultures.Ukrainian ? "btn-light" : "btn-outline-light")">UA</button>
+</form>

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 
@@ -15,9 +16,13 @@ namespace Repair_Service_Center.Controllers;
 public class SlotsController : Controller
 {
     private readonly RepairServiceContext _context;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public SlotsController(RepairServiceContext context)
+    public SlotsController(RepairServiceContext context,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _context = context;
     }
 
@@ -200,7 +205,7 @@ public class SlotsController : Controller
         }
         catch (DbUpdateException)
         {
-            ViewData["Error"] = "This time slot is booked in an order and cannot be deleted.";
+            ViewData["Error"] = _localizer["This time slot is booked in an order and cannot be deleted."].Value;
             return View(slot);
         }
 
@@ -214,8 +219,8 @@ public class SlotsController : Controller
     {
         var added = SeedData.AddSlots(_context, DateTime.Today.AddDays(1), 7);
         TempData["Message"] = added > 0
-            ? $"{added} new time slots were added."
-            : "The schedule for the next week is already full.";
+            ? _localizer["New time slots were added: {0}.", added].Value
+            : _localizer["The schedule for the next week is already full."].Value;
         return RedirectToAction(nameof(Index));
     }
 
@@ -232,7 +237,7 @@ public class SlotsController : Controller
 
         if (overlap)
         {
-            ModelState.AddModelError(string.Empty, "This technician already has a time slot at this time.");
+            ModelState.AddModelError(string.Empty, _localizer["This technician already has a time slot at this time."].Value);
         }
     }
 

@@ -1,11 +1,11 @@
 @model Repair_Service_Center.Models.ViewModels.ProfileViewModel
 @{
-    ViewData["Title"] = "My profile";
+    ViewData["Title"] = Localizer["My profile"];
 }
 
 <div class="row justify-content-center">
     <div class="col-md-10 col-lg-6">
-        <h1>My profile</h1>
+        <h1>@Localizer["My profile"]</h1>
 
         @if (TempData["Message"] != null)
         {
@@ -41,10 +41,10 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Address" class="form-label"></label>
-                <input asp-for="Address" class="form-control" placeholder="Khmelnytskyi, Instytutska St, 11"/>
+                <input asp-for="Address" class="form-control" placeholder="@SharedLocalizer["e.g. Khmelnytskyi, Instytutska St, 11"]"/>
                 <span asp-validation-for="Address" class="text-danger small"></span>
             </div>
-            <button type="submit" class="btn btn-accent">Save</button>
+            <button type="submit" class="btn btn-accent">@SharedLocalizer["Save"]</button>
         </form>
     </div>
 </div>

@@ -13,7 +13,7 @@ public class Order
 
     // Laboratory work 7: own validation attributes (Validation/AppValidationAttributes.cs)
     [Required(ErrorMessage = "Please enter the name of the customer.")]
-    [StringLength(100, MinimumLength = 3)]
+    [StringLength(100, MinimumLength = 3, ErrorMessage = "The field {0} must be from {2} to {1} characters long.")]
     [PersonName(2, 4)]
     [Display(Name = "Customer")]
     public string CustomerName { get; set; } = string.Empty;
@@ -21,29 +21,29 @@ public class Order
     [Required(ErrorMessage = "Please enter the phone number.")]
     [MobilePhone]
     [DataType(DataType.PhoneNumber)]
-    [StringLength(20)]
+    [StringLength(20, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "Phone")]
     public string CustomerPhone { get; set; } = string.Empty;
 
     // ----- Laboratory work 5: new fields -----
     [EmailFormat]
     [DataType(DataType.EmailAddress)]
-    [StringLength(100)]
+    [StringLength(100, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Display(Name = "Email")]
     public string? CustomerEmail { get; set; }
 
-    [StringLength(50)]
+    [StringLength(50, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [RegularExpression(ValidationPatterns.Device, ErrorMessage = ValidationPatterns.DeviceMessage)]
     [Display(Name = "Brand")]
     public string? DeviceBrand { get; set; }
 
-    [StringLength(50)]
+    [StringLength(50, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [RegularExpression(ValidationPatterns.Device, ErrorMessage = ValidationPatterns.DeviceMessage)]
     [Display(Name = "Model")]
     public string? DeviceModel { get; set; }
 
     // ----- Laboratory work 7: address for a visit of the technician (washing machines, refrigerators) -----
-    [StringLength(200)]
+    [StringLength(200, ErrorMessage = "The field {0} must be at most {1} characters long.")]
     [Address]
     [Display(Name = "Address")]
     public string? CustomerAddress { get; set; }
@@ -53,6 +53,7 @@ public class Order
     [Display(Name = "Created")]
     public DateTime CreatedAt { get; set; }
 
+    [Display(Name = "Status")]
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
     [StringLength(1000, MinimumLength = 10, ErrorMessage = "The description must be from 10 to 1000 characters.")]
@@ -62,7 +63,8 @@ public class Order
 
     [Range(typeof(decimal), "0", "1000000", ErrorMessage = "The cost must be from 0 to 1 000 000 UAH.")]
     [Column(TypeName = "decimal(10, 2)")]
-    [DisplayFormat(DataFormatString = "{0:0.00} UAH")]
+    // Laboratory work 8: only the number; the currency (UAH / грн) is added in the view in the language of the user
+    [DisplayFormat(DataFormatString = "{0:0.00}")]
     [Display(Name = "Total cost")]
     public decimal? TotalCost { get; set; }
 

@@ -1,13 +1,13 @@
 @model IEnumerable<Repair_Service_Center.Models.RepairType>
 
 @{
-    ViewData["Title"] = "Repair Types";
+    ViewData["Title"] = Localizer["Repair Types"];
 }
 
-<h1>Repair Types</h1>
+<h1>@Localizer["Repair Types"]</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">@SharedLocalizer["Create new"]</a>
 </p>
 <table class="table table-striped align-middle">
     <thead>
@@ -24,9 +24,9 @@
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Description)</td>
             <td class="text-end text-nowrap">
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">@SharedLocalizer["Edit"]</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">@SharedLocalizer["Details"]</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">@SharedLocalizer["Delete"]</a>
             </td>
         </tr>
 }

@@ -1,12 +1,12 @@
 @model Repair_Service_Center.Models.Slot
 
 @{
-    ViewData["Title"] = "Edit Time Slot";
+    ViewData["Title"] = Localizer["Edit Time Slot"];
 }
 
-<h1>Edit</h1>
+<h1>@SharedLocalizer["Edit"]</h1>
 
-<h4>Time slot</h4>
+<h4>@Localizer["Time slot"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -33,8 +33,8 @@
                 <label asp-for="IsBooked" class="form-check-label"></label>
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a asp-action="Index" class="btn btn-link">Back to List</a>
+                <button type="submit" class="btn btn-primary">@SharedLocalizer["Save"]</button>
+                <a asp-action="Index" class="btn btn-link">@SharedLocalizer["Back to list"]</a>
             </div>
         </form>
     </div>

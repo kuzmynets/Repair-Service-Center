@@ -1,11 +1,11 @@
 @model List<Repair_Service_Center.Models.ViewModels.UserRoleViewModel>
 @{
-    ViewData["Title"] = "Users and roles";
+    ViewData["Title"] = Localizer["Users and roles"];
     var roles = AppRoles.All;
 }
 
-<h1>Users and roles</h1>
-<p class="text-muted">A new user gets the role Customer. Here the administrator can make a user a moderator or an administrator.</p>
+<h1>@Localizer["Users and roles"]</h1>
+<p class="text-muted">@Localizer["A new user gets the role Customer. Here the administrator can make a user a moderator or an administrator."]</p>
 
 @if (TempData["Message"] != null)
 {
@@ -20,34 +20,35 @@
     <table class="table table-striped align-middle">
         <thead>
         <tr>
-            <th>Full name</th>
-            <th>E-mail</th>
-            <th>Phone</th>
-            <th>Requests</th>
-            <th>Role</th>
+            <th>@Localizer["Full name"]</th>
+            <th>@Localizer["E-mail"]</th>
+            <th>@Localizer["Phone"]</th>
+            <th>@Localizer["Requests"]</th>
+            <th>@Localizer["Role"]</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var user in Model)
         {
-            // List of roles with the current role of the user selected
-            var roleList = new SelectList(roles, user.Role);
+            // List of roles with the current role of the user selected.
+            // Laboratory work 8: the value is the role (Admin), the text is translated (Адміністратор)
+            var roleList = roles.Select(r => new SelectListItem(SharedLocalizer.GetString(r).Value, r, r == user.Role));
             <tr>
-                <td>@user.FullName @if (user.IsCurrentUser) { <span class="badge bg-secondary ms-1">you</span> }</td>
+                <td>@user.FullName @if (user.IsCurrentUser) { <span class="badge bg-secondary ms-1">@Localizer["you"]</span> }</td>
                 <td>@user.Email</td>
                 <td class="text-nowrap">@user.PhoneNumber</td>
                 <td>@user.OrdersCount</td>
                 <td>
                     @if (user.IsCurrentUser)
                     {
-                        <span class="badge bg-brand">@user.Role</span>
+                        <span class="badge bg-brand">@SharedLocalizer[user.Role]</span>
                     }
                     else
                     {
                         <form asp-action="ChangeRole" method="post" class="d-flex gap-2">
                             <input type="hidden" name="id" value="@user.Id"/>
                             <select name="role" class="form-select form-select-sm w-auto" asp-items="roleList"></select>
-                            <button type="submit" class="btn btn-sm btn-brand">Save</button>
+                            <button type="submit" class="btn btn-sm btn-brand">@SharedLocalizer["Save"]</button>
                         </form>
                     }
                 </td>

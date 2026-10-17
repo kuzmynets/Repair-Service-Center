@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 using Repair_Service_Center.Models.ViewModels;
@@ -17,9 +18,13 @@ public class UsersController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RepairServiceContext _context;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public UsersController(UserManager<ApplicationUser> userManager, RepairServiceContext context)
+    public UsersController(UserManager<ApplicationUser> userManager, RepairServiceContext context,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _userManager = userManager;
         _context = context;
     }
@@ -76,7 +81,7 @@ public class UsersController : Controller
         // The administrator cannot take away his own rights by mistake
         if (user.Id == _userManager.GetUserId(User))
         {
-            TempData["Error"] = "You cannot change your own role.";
+            TempData["Error"] = _localizer["You cannot change your own role."].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -88,7 +93,7 @@ public class UsersController : Controller
         // after the next login (at the latest in 30 minutes)
         await _userManager.UpdateSecurityStampAsync(user);
 
-        TempData["Message"] = $"{user.Email} now has the role {role}.";
+        TempData["Message"] = _localizer["{0} now has the role {1}.", user.Email ?? "", _localizer[role].Value].Value;
         return RedirectToAction(nameof(Index));
     }
 }

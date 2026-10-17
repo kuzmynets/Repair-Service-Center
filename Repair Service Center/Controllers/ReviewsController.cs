@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Repair_Service_Center.Data;
 using Repair_Service_Center.Models;
 
@@ -19,9 +20,13 @@ public class ReviewsController : Controller
 {
     private readonly RepairServiceContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    // Laboratory work 8: messages of the controller in the language of the user
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public ReviewsController(RepairServiceContext context, UserManager<ApplicationUser> userManager)
+    public ReviewsController(RepairServiceContext context, UserManager<ApplicationUser> userManager,
+        IStringLocalizer<SharedResource> localizer)
     {
+        _localizer = localizer;
         _context = context;
         _userManager = userManager;
     }
@@ -60,7 +65,7 @@ public class ReviewsController : Controller
         if (review.OrderId.HasValue &&
             !await _context.Orders.AnyAsync(o => o.Id == review.OrderId.Value && o.UserId == userId))
         {
-            ModelState.AddModelError(nameof(review.OrderId), "You have no request with this number.");
+            ModelState.AddModelError(nameof(review.OrderId), _localizer["You have no request with this number."].Value);
         }
 
         if (!ModelState.IsValid)
@@ -74,7 +79,7 @@ public class ReviewsController : Controller
         _context.Reviews.Add(review);
         await _context.SaveChangesAsync();
 
-        TempData["Message"] = "Thank you! Your review will appear after moderation.";
+        TempData["Message"] = _localizer["Thank you! Your review will appear after moderation."].Value;
         return RedirectToAction(nameof(Index));
     }
 
